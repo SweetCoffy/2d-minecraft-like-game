@@ -113,7 +113,7 @@ MonoBehaviour:
   minimumMiningPower: 1
   breakTime: 1
   breakProgress: 0
-  dropItem: 17
+  dropItem: 18
   dropAmount: 1
   liquidLevel: 8
   fluid: 0
