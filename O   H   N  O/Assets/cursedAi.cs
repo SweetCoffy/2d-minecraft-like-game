@@ -66,7 +66,7 @@ public class cursedAi : MonoBehaviour
        
         
         
-        if(e.getStat("thirst") / e.getMaxStat("thirst") > .5f) {
+        if(e.getStat("thirst") / e.getMaxStat("thirst") > .25f) {
             return;
         }
         int i = 0;
