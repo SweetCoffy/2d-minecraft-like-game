@@ -124,10 +124,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d2efabd516a23428ad00c7602efbeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: 060000000000000004000000
-  inputAmountNeeded: 020000000100000002000000
-  output: 050000000100000009000000
-  outputAmount: 040000000100000001000000
+  input: 06000000000000000400000013000000
+  inputAmountNeeded: 02000000010000000200000001000000
+  output: 05000000010000000900000014000000
+  outputAmount: 04000000010000000100000002000000
   craftingTime: 1.4
   crafterName: Campfire
   b: {fileID: 0}
@@ -163,6 +163,10 @@ MonoBehaviour:
   dropAmount: 1
   liquidLevel: 8
   fluid: 0
+  plant: 0
+  maxGrow: 0
+  grow: 0
+  growTime: 0
   liquidName: water
   canCollideWith:
     serializedVersion: 2
