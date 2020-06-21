@@ -133,3 +133,11 @@ public class block : MonoBehaviour
 
 
 }
+
+public static class item {
+    public static void spawn(Item itemToSpawn, Vector3 position) {
+            GameObject spawnedItem = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/DroppedItem"), position, Quaternion.Euler(0, 0, 0));
+            spawnedItem.GetComponent<droppedItem>().itemId = itemToSpawn.id;
+            spawnedItem.GetComponent<droppedItem>().itemAmount = itemToSpawn.amount;
+    }
+}
