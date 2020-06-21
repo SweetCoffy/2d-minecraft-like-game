@@ -123,10 +123,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d2efabd516a23428ad00c7602efbeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: 0400000006000000090000000f000000
-  inputAmountNeeded: 06000000080000000200000002000000
-  output: 07000000090000000c0000000e000000
-  outputAmount: 01000000010000000100000001000000
+  input: 0400000006000000090000000f00000014000000
+  inputAmountNeeded: 0600000008000000020000000200000004000000
+  output: 07000000090000000c0000000e00000012000000
+  outputAmount: 0100000001000000010000000100000001000000
   craftingTime: 4
   crafterName: Advanced crafting bench
   b: {fileID: 0}
@@ -162,6 +162,10 @@ MonoBehaviour:
   dropAmount: 1
   liquidLevel: 8
   fluid: 0
+  plant: 0
+  maxGrow: 0
+  grow: 0
+  growTime: 0
   liquidName: water
   canCollideWith:
     serializedVersion: 2

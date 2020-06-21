@@ -14,6 +14,9 @@ public class entity : MonoBehaviour
     public float itemCooldown = .5f;
     private float cooldown = 0;
     public float thirstDrainRate = .5f;
+    
+    
+
     public int lastitemUpdate;
 
     public float dryDamageRate = .5f;
