@@ -14,7 +14,7 @@ public class entity : MonoBehaviour
     public float itemCooldown = .5f;
     private float cooldown = 0;
     public float thirstDrainRate = .5f;
-    
+    public int itemCapacity = 17;
     
 
     public int lastitemUpdate;
@@ -99,7 +99,6 @@ public class entity : MonoBehaviour
         if(storedItems.Count <= 0) {
             storedItems.Add(new Item(itemId, itemAmount));
             lastitemUpdate = storedItems.Count - 1;
-            Debug.Log("AAAA");
             return;
         }
         
@@ -116,7 +115,7 @@ public class entity : MonoBehaviour
             storedItems[Mathf.Clamp(i-1, 0, storedItems.Count)].amount += itemAmount;
             lastitemUpdate = Mathf.Clamp(i-1, 0, storedItems.Count);
             
-        } else if (storedItems.Count+ 1 < 16){
+        } else if (storedItems.Count+ 1 < itemCapacity - 1){
             storedItems.Add(new Item(itemId, itemAmount));
             lastitemUpdate = storedItems.Count - 1;
             
