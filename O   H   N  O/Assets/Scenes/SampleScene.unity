@@ -3825,6 +3825,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 593aa62fbac2ca6458daa878152eb69d, type: 3}
   - {fileID: 21300000, guid: 5fac1c9a5e99ae1479cb0de2d4915726, type: 3}
   - {fileID: 21300000, guid: e05289f9748b8404e916f149f54c499f, type: 3}
+  - {fileID: 21300000, guid: 2346d8e5083dc3346b5c835ae7df55c4, type: 3}
   unknownTexture: {fileID: 21300000, guid: a7e9c143b82d5d3469b4f31e061d1a64, type: 3}
   blankTexture: {fileID: 21300000, guid: cd89e3fc33fc5df4a97284da65f6d1c9, type: 3}
   itemNames:
@@ -3850,6 +3851,7 @@ MonoBehaviour:
   - Iron ore
   - Iron ingot
   - Iron pickaxe
+  - Glass block
 --- !u!1001 &499685054
 PrefabInstance:
   m_ObjectHideFlags: 0
