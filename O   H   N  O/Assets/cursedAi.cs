@@ -19,7 +19,7 @@ public class cursedAi : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(transform.position.x < target.position.x) {
+        if(Mathf.Round(transform.position.x) < Mathf.Round(target.position.x)) {
             e.movementHorizontal(e.movementSpeed);
         } else {
             e.movementHorizontal(-e.movementSpeed);
