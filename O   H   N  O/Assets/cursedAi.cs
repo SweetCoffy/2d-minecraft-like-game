@@ -9,6 +9,7 @@ public class cursedAi : MonoBehaviour
     entity e;
     public Transform target;
     public bool ignoreCollisions = true;
+    public ContactFilter2D filter;
 
     
     // Start is called before the first frame update
@@ -24,16 +25,62 @@ public class cursedAi : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(Mathf.Round(transform.position.x) < Mathf.Round(target.position.x)) {
+        if(transform.position.x < target.position.x - (target.localScale.x/1.5)) {
             e.movementHorizontal(e.movementSpeed);
-        } else {
+        } 
+        if(transform.position.x > target.position.x + (target.localScale.x/1.5)) {
             e.movementHorizontal(-e.movementSpeed);
         }
-
-        
         if(target.position.y > transform.position.y) {
             e.jump();
         }
+
+
+        if(Physics2D.OverlapBox(transform.position - Vector3.up, transform.localScale, 0) != null ) {
+            
+            
+            block b = Physics2D.OverlapBox(transform.position - Vector3.up, transform.localScale, 0).GetComponent<block>();
+            if(b != null) {
+            
+            int i2 = 0;
+            foreach(Item item in e.storedItems) {
+                if(item.id == 21) {
+                    break;
+                }
+                if(item.id == 10) {
+                    break;
+                }
+                if(item.id == 3) {
+                    break;
+                }
+                i2++;
+        }
+                e.setSelectedItem(i2);
+                e.mineBlock(b);
+            }
+
+        }
+
+
+       
+        
+        
+        if(e.getStat("thirst") / e.getMaxStat("thirst") > .5f) {
+            return;
+        }
+        int i = 0;
+        foreach(Item item in e.storedItems) {
+            if(item.id == 1) {
+                break;
+            }
+            i++;
+        }
+
+        e.setSelectedItem(i);
+        e.useItem(e.getSelectedItem());
+
+        
+
     
     
     }

@@ -25,6 +25,9 @@ public class droppedItem : MonoBehaviour
         } else if (itemId == 10) {
             properties[0] = 2;
             properties[0] = 2.75f;
+        } else if (itemId == 21) {
+            properties[0] = 3;
+            properties[1] = 5;
         }
     
     

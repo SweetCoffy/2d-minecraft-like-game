@@ -9,6 +9,7 @@ public class inventoryItem : MonoBehaviour
     public Vector2 originalPosition;
     RectTransform thisRect;
     entity playerEntity;
+    public entity e;
     itemManager im;
     // Start is called before the first frame update
     void Start()
@@ -17,18 +18,21 @@ public class inventoryItem : MonoBehaviour
         playerEntity = GameObject.Find("Player").GetComponent<entity>();
         thisRect = GetComponent<RectTransform>();
         originalPosition = GetComponent<RectTransform>().anchoredPosition;
+        if(e != null) {
+            playerEntity = e;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(index > GameObject.Find("Player").GetComponent<entity>().storedItems.Count - 1) {
+        if(index > playerEntity.storedItems.Count - 1) {
             transform.GetChild(0).GetComponent<Text>().text = "";
             GetComponent<Image>().sprite = GameObject.Find("ItemManager").GetComponent<itemManager>().blankTexture;
             return;
         }
-        transform.GetChild(0).GetComponent<Text>().text = GameObject.Find("Player").GetComponent<entity>().storedItems[index].amount.ToString() + "x";
-        GetComponent<Image>().sprite = GameObject.Find("ItemManager").GetComponent<itemManager>().itemTextures[GameObject.Find("Player").GetComponent<entity>().storedItems[index].id];
+        transform.GetChild(0).GetComponent<Text>().text = playerEntity.storedItems[index].amount.ToString() + "x";
+        GetComponent<Image>().sprite = GameObject.Find("ItemManager").GetComponent<itemManager>().itemTextures[playerEntity.storedItems[index].id];
         if(playerEntity.lastitemUpdate == index) {
           playerEntity.lastitemUpdate = -1;
           thisRect.localScale = new Vector2(.6f, 1.6f);

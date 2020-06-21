@@ -9,12 +9,16 @@ public class playerHealthDisplay : MonoBehaviour
     public Gradient colorGradient;
     public float lerpSpeed = .4f;
     entity e;
+    public entity target;
     public string stat = "health";
     public bool useText;
     // Start is called before the first frame update
     void Start()
     {
         e = GameObject.Find("Player").GetComponent<entity>();
+        if(target != null) {
+            e = target;
+        }
     }
 
     // Update is called once per frame
