@@ -10,6 +10,7 @@ public class cursedAi : MonoBehaviour
     public Transform target;
     public bool ignoreCollisions = true;
     public ContactFilter2D filter;
+    public bool mining = false;
 
     
     // Start is called before the first frame update
@@ -25,18 +26,18 @@ public class cursedAi : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(transform.position.x < target.position.x - (target.localScale.x/1.5)) {
+        if(transform.position.x < target.position.x - (target.localScale.x * 1.5)) {
             e.movementHorizontal(e.movementSpeed);
         } 
-        if(transform.position.x > target.position.x + (target.localScale.x/1.5)) {
+        if(transform.position.x > target.position.x + (target.localScale.x * 1.5)) {
             e.movementHorizontal(-e.movementSpeed);
         }
-        if(target.position.y > transform.position.y) {
-            e.jump();
+        if(target.position.y - (target.localScale.y * 1.5) > transform.position.y) {
+            e.jump(e.jumpForce);
         }
 
 
-        if(Physics2D.OverlapBox(transform.position - Vector3.up, transform.localScale, 0) != null ) {
+        if(Physics2D.OverlapBox(transform.position - Vector3.up, transform.localScale, 0) != null && mining) {
             
             
             block b = Physics2D.OverlapBox(transform.position - Vector3.up, transform.localScale, 0).GetComponent<block>();
@@ -83,5 +84,9 @@ public class cursedAi : MonoBehaviour
 
     
     
+    }
+
+    public void SetAutoMining(bool value) {
+        mining = value;
     }
 }

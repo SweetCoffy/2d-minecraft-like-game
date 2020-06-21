@@ -232,7 +232,7 @@ public class entity : MonoBehaviour
             return;
         }
 
-        spawnItem(storedItems[index], transform.localScale.normalized );
+        spawnItem(storedItems[index], transform.localScale.normalized*1.5f);
         storedItems.RemoveAt(index);
         lastitemUpdate = index;
 
