@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8206813186731318448}
   - component: {fileID: 176127512766612693}
   - component: {fileID: 9190943970233776840}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: New Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8088432377848409428}
   - component: {fileID: 23171667019469370}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: New Sprite (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 8164910137230491017}
   - component: {fileID: 8164910137230491016}
   - component: {fileID: 159941252300207477}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: block-11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -322,6 +322,10 @@ MonoBehaviour:
   dropAmount: 1
   liquidLevel: 8
   fluid: 0
+  plant: 0
+  maxGrow: 0
+  grow: 0
+  growTime: 0
   liquidName: water
   canCollideWith:
     serializedVersion: 2

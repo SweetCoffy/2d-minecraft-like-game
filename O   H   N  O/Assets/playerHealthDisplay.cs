@@ -28,6 +28,6 @@ public class playerHealthDisplay : MonoBehaviour
 
         
         
-        GetComponent<Image>().color = Color.Lerp(GetComponent<Image>().color, colorGradient.Evaluate(e.getStat(stat)), .25f);
+        GetComponent<Image>().color = Color.Lerp(GetComponent<Image>().color, colorGradient.Evaluate(e.getStat(stat)/e.getMaxStat(stat)), .25f);
     }
 }

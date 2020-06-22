@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2366217955215442116}
   - component: {fileID: 2366217955215442117}
   - component: {fileID: 8826473548269144762}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: block-16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,6 +143,10 @@ MonoBehaviour:
   dropAmount: 1
   liquidLevel: 8
   fluid: 0
+  plant: 0
+  maxGrow: 0
+  grow: 0
+  growTime: 0
   liquidName: water
   canCollideWith:
     serializedVersion: 2
