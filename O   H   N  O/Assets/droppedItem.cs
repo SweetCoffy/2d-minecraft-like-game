@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteRenderer))]
 public class droppedItem : MonoBehaviour
 {
@@ -28,6 +29,9 @@ public class droppedItem : MonoBehaviour
         } else if (itemId == 21) {
             properties[0] = 3;
             properties[1] = 5;
+        } else {
+            properties[0] = 0;
+            properties[1] = .1f;
         }
     
     
