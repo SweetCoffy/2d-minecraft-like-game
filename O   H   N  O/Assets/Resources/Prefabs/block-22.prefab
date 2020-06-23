@@ -186,6 +186,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd7ddb45c45d044381248ea4d257ce3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pullToCenterSpeed: 10
-  transportSpeed: 6
+  pullToCenterSpeed: 2
+  transportSpeed: 7
   effect: {r: 0, g: 1, b: 0.8793845, a: 1}
