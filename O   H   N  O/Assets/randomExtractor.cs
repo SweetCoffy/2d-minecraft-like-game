@@ -6,7 +6,9 @@ public class randomExtractor : MonoBehaviour
 {
     public float drillTime = 2;
     float drillProgress;
+    public GameObject drillEffect;
     public int[] drops;
+    public Vector3 itemOffset = Vector3.up;
 
     public int dropAmount;
     
@@ -24,7 +26,14 @@ public class randomExtractor : MonoBehaviour
         }
         if(drillProgress >= drillTime) {
             drillProgress = 0;
-            item.spawn(new Item(drops[(int)Mathf.Floor(Random.Range(0, drops.Length))], dropAmount), transform.position + transform.up);
+            item.spawn(new Item(drops[(int)Mathf.Floor(Random.Range(0, drops.Length))], dropAmount), transform.position + itemOffset);
+            if(drillEffect != null) {
+                Instantiate(drillEffect, transform.position + itemOffset, Quaternion.identity);
+            }
         }
+    }
+
+    void OnDrawGizmos() {
+        Gizmos.DrawWireCube(transform.position + itemOffset, Vector3.one);
     }
 }

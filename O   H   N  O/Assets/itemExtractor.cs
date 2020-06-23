@@ -9,6 +9,7 @@ public class itemExtractor : MonoBehaviour
     public int itemAmount;
     public float waitTime = 1;
     float progress;
+    public GameObject drillEffect;
     public float getProgressNormalized() {
         return progress/waitTime;
     }
@@ -36,5 +37,8 @@ public class itemExtractor : MonoBehaviour
         droppedItem i = spawned.GetComponent<droppedItem>();
         i.itemId = itemId;
         i.itemAmount = itemAmount;
+        if(drillEffect != null) {
+            Instantiate(drillEffect, transform.position + offset, Quaternion.identity);
+        }
     }
 }

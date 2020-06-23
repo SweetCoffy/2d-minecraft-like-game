@@ -176,3 +176,5 @@ MonoBehaviour:
   itemId: 6
   itemAmount: 1
   waitTime: 1
+  drillEffect: {fileID: 8599477537375471609, guid: b84716e1bbdcc20449fe35b51fe34813,
+    type: 3}
