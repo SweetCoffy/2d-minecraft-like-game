@@ -7794,8 +7794,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bc02a269d7c33b49aaed5ca35f702fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minimumMiningPower: 9999
-  breakTime: 9999
+  minimumMiningPower: 99999
+  breakTime: Infinity
   breakProgress: 0
   dropItem: 4
   dropAmount: 2
