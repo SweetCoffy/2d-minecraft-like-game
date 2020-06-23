@@ -265,6 +265,7 @@ public class entity : MonoBehaviour
 
 }
 
+[System.Serializable]
 public class Item {
 
     public int id;

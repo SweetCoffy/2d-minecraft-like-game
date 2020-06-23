@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class itemduct : MonoBehaviour
 {
@@ -33,6 +31,7 @@ public class itemduct : MonoBehaviour
             s.color = effect;
         } else if(e != null) {
             e.GetComponent<Rigidbody2D>().position += (Vector2)transform.right * transportSpeed * Time.deltaTime;
+            e.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             //e.GetComponent<Rigidbody2D>().position = Vector3.Lerp(e.GetComponent<Rigidbody2D>().position, transform.position, pullToCenterSpeed * Time.deltaTime);
         }
 

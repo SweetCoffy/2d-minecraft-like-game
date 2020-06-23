@@ -14888,6 +14888,10 @@ MonoBehaviour:
   itemCapacity: 5
   lastitemUpdate: 0
   dryDamageRate: 0.25
+  storedItems:
+  - id: 0
+    amount: 0
+    properties: []
   rb: {fileID: 0}
 --- !u!50 &1601559925
 Rigidbody2D:
@@ -21222,6 +21226,7 @@ MonoBehaviour:
   itemCapacity: 20
   lastitemUpdate: 0
   dryDamageRate: 0.25
+  storedItems: []
   rb: {fileID: 0}
 --- !u!114 &2146203540
 MonoBehaviour:

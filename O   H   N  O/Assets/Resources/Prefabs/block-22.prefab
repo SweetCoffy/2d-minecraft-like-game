@@ -187,5 +187,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pullToCenterSpeed: 10
-  transportSpeed: 15
-  effect: {r: 0, g: 0.66598463, b: 1, a: 1}
+  transportSpeed: 6
+  effect: {r: 0, g: 1, b: 0.8793845, a: 1}
