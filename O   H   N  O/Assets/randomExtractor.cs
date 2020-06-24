@@ -26,7 +26,7 @@ public class randomExtractor : MonoBehaviour
         }
         if(drillProgress >= drillTime) {
             drillProgress = 0;
-            item.spawn(new Item(drops[(int)Mathf.Floor(Random.Range(0, drops.Length))], dropAmount), transform.position + itemOffset);
+            ItemSpawning.Spawn(new Item(drops[(int)Mathf.Floor(Random.Range(0, drops.Length))], dropAmount), transform.position + itemOffset);
             if(drillEffect != null) {
                 Instantiate(drillEffect, transform.position + itemOffset, Quaternion.identity);
             }

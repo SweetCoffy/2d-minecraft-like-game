@@ -9,7 +9,7 @@ public class droppedItem : MonoBehaviour
     public int itemId;
     public int itemAmount;
     int oldItem;
-    public List<float> properties;
+    public List<float> properties = new List<float>(2);
     
     // Start is called before the first frame update
     void Start()
