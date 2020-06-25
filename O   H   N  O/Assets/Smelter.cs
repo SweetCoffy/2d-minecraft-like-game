@@ -37,6 +37,11 @@ public class Smelter : MonoBehaviour
             if(smeltProgress >= recipe.craftDuration) {
                 ItemSpawning.Spawn(recipe.output, transform.position + spawnedItemOffset);
                 smeltProgress = 0;
+                int i2 = 0;
+                foreach(Item item in storedItems) {
+                    item.amount -= recipe.input[i2].amount;
+                    i2++;
+                }
             }
         }
     }
