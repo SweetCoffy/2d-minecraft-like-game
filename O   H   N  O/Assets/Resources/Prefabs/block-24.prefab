@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 5674063458537406100}
   - component: {fileID: 5674063458537406097}
   - component: {fileID: 1885638240}
+  - component: {fileID: 2913533353077580832}
+  - component: {fileID: 7957979923885996735}
   m_Layer: 0
   m_Name: block-24
   m_TagString: Untagged
@@ -173,12 +175,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69f298228a51f8e4a9685a3f9e6efc56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drillTime: 2.5
+  drillTime: 0.25
   drillEffect: {fileID: 8599477537375471609, guid: b84716e1bbdcc20449fe35b51fe34813,
     type: 3}
   drops: 0600000006000000060000000600000004000000130000001300000004000000040000001300000004000000040000000400000013000000040000001300000013000000040000001300000013000000
   itemOffset: {x: 0, y: 2, z: 0}
-  dropAmount: 10
+  dropAmount: 1
 --- !u!114 &1885638240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,9 +193,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69f298228a51f8e4a9685a3f9e6efc56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drillTime: 2.5
+  drillTime: 0.25
   drillEffect: {fileID: 8599477537375471609, guid: b84716e1bbdcc20449fe35b51fe34813,
     type: 3}
   drops: 0600000006000000060000000600000004000000130000001300000004000000040000001300000004000000040000000400000013000000040000001300000013000000040000001300000013000000
   itemOffset: {x: 1, y: 2, z: 0}
-  dropAmount: 10
+  dropAmount: 1
+--- !u!114 &2913533353077580832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5674063458537406123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 243aef3dfdc4a9544be7f54786a65078, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waitTime: 0.05
+  frames:
+  - {fileID: 21300000, guid: da28f774a0e04fb45a42cb180b393272, type: 3}
+  - {fileID: 21300000, guid: 914f7a8bd6dd3dc4dbf3fdccbe773bb1, type: 3}
+  - {fileID: 21300000, guid: e6b97669352f16547a16f19dfe2f115f, type: 3}
+  - {fileID: 21300000, guid: a7f756462b840374ca5d95df40af546b, type: 3}
+  - {fileID: 21300000, guid: 6174ba70db7fbc145a0a0df595dfdb04, type: 3}
+  - {fileID: 21300000, guid: 8ad737f0b93d51549942f41fef191df1, type: 3}
+  - {fileID: 21300000, guid: c6eb9f66204a485458ceeb4ec683e6c8, type: 3}
+  - {fileID: 21300000, guid: b35d18c655e8dd044b4740adca32cc70, type: 3}
+  - {fileID: 21300000, guid: d09d5e704e14f284980ffa6833fd2efa, type: 3}
+  - {fileID: 21300000, guid: 59dbfe299933d0040a054b18dec0adf3, type: 3}
+--- !u!95 &7957979923885996735
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5674063458537406123}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 782295214bebe0140958e2a207f5caef, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
