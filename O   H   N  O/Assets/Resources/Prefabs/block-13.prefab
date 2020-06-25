@@ -274,7 +274,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 243aef3dfdc4a9544be7f54786a65078, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitTime: 0.05
+  waitTime: 0.7
   frames:
   - {fileID: 21300000, guid: 837bfa5ed85fecd4b8fd1a97f9d728bc, type: 3}
   - {fileID: 21300000, guid: 561c06f6460399e4b8e7e5aa05dd2e15, type: 3}
+  - {fileID: 21300000, guid: cab7e95cf4bf05044a683c1a2b7c6904, type: 3}
+  - {fileID: 21300000, guid: 1010831f199bd244ca77e79f214cdd02, type: 3}
