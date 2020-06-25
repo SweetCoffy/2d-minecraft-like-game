@@ -227,15 +227,20 @@ public class entity : MonoBehaviour
             spawnedItem.GetComponent<droppedItem>().properties = itemToSpawn.properties;
     }
 
-    public void dropItem(int index) {
+    public void dropItem(int index, bool droppAll = true) {
         if(index > storedItems.Count - 1) {
             return;
         }
 
-        spawnItem(storedItems[index], transform.localScale.normalized*1.5f);
-        storedItems.RemoveAt(index);
-        lastitemUpdate = index;
-
+        if(droppAll) {
+            spawnItem(storedItems[index], transform.localScale.normalized*1.5f);
+            storedItems.RemoveAt(index);
+            lastitemUpdate = index;
+        } else {
+            spawnItem(new Item(storedItems[index].id, 1), transform.localScale.normalized*1.5f);
+            storedItems[index].amount--;
+            lastitemUpdate = index;
+        }
     }
     
     
@@ -277,8 +282,7 @@ public class Item {
     public Item(int itemId, int itemAmount) {
         id = itemId;
         amount = itemAmount;
-        properties.Add(0);
-        properties.Add(0);
+        properties = new List<float>(2);
     }
 
     public Item(int itemId, int itemAmount, List<float> itemProperties) {

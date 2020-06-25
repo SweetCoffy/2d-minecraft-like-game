@@ -110,9 +110,9 @@ public class block : MonoBehaviour
         GameObject.Find("Canvas").transform.GetChild(0).GetComponent<Text>().text = "";
     }
 
-    public void damage(float miningPower, float breakForce) {
+    public void damage(float miningPower, float dmg) {
         if(miningPower >= minimumMiningPower) {
-            breakProgress -= miningPower - minimumMiningPower + .5f;
+            breakProgress -= miningPower - minimumMiningPower + .5f + dmg;
             GetComponent<SpriteRenderer>().color = originalColor + Color.white;
             
         }
