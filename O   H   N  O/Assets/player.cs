@@ -46,7 +46,7 @@ public class player : MonoBehaviour
         GameObject.Find("BPD").transform.position = e.placeBlockPosition + new Vector3(0, 0, -9);
 
         if(Input.GetKeyDown(KeyCode.Q)) {
-            e.dropItem(e.getSelectedItem());
+            e.dropItem(e.getSelectedItem(), false);
         }
         
         

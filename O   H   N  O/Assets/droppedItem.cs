@@ -9,11 +9,13 @@ public class droppedItem : MonoBehaviour
     public int itemId;
     public int itemAmount;
     int oldItem;
-    public List<float> properties = new List<float>(2);
+    public List<float> properties = new List<float>();
     
     // Start is called before the first frame update
     void Start()
     {
+        properties.Add(0);
+        properties.Add(0);
         if(itemId > GameObject.Find("ItemManager").GetComponent<itemManager>().itemTextures.Length - 1) {
             GetComponent<SpriteRenderer>().sprite = GameObject.Find("ItemManager").GetComponent<itemManager>().unknownTexture;
             Debug.LogWarning($"OH NO. The texture for the itemId \"{itemId}\" is not available", this);

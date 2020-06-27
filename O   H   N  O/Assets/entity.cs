@@ -189,6 +189,11 @@ public class entity : MonoBehaviour
             storedItems[item].amount -= 1;
             lastitemUpdate = item;
         }
+        if(currItem.id == 28) {
+            health = Mathf.Clamp(health + Mathf.Round(Random.Range(2, 10)), 0, maxHealth);
+            storedItems[item].amount -= 1;
+            lastitemUpdate = item;
+        }
              
         if(storedItems[item].amount <= 0 ) {
             storedItems.RemoveAt(item);
@@ -227,7 +232,7 @@ public class entity : MonoBehaviour
             spawnedItem.GetComponent<droppedItem>().properties = itemToSpawn.properties;
     }
 
-    public void dropItem(int index, bool droppAll = true) {
+    public void dropItem(int index, bool droppAll) {
         if(index > storedItems.Count - 1) {
             return;
         }
@@ -238,9 +243,13 @@ public class entity : MonoBehaviour
             lastitemUpdate = index;
         } else {
             spawnItem(new Item(storedItems[index].id, 1), transform.localScale.normalized*1.5f);
-            storedItems[index].amount--;
+            consumeItem(index);
             lastitemUpdate = index;
         }
+    }
+
+    public void dropItemAll(int index) {
+        dropItem(index, true);
     }
     
     
