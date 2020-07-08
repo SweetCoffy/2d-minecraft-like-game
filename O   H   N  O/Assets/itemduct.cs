@@ -33,7 +33,7 @@ public class itemduct : MonoBehaviour
             e.GetComponent<Rigidbody2D>().position += (Vector2)transform.right * transportSpeed * Time.deltaTime;
             e.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             //e.GetComponent<Rigidbody2D>().position = Vector3.Lerp(e.GetComponent<Rigidbody2D>().position, transform.position, pullToCenterSpeed * Time.deltaTime);
-        }
+        } 
 
         
     }

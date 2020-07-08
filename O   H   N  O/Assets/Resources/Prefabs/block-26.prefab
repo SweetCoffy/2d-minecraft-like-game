@@ -173,5 +173,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   recipe: {fileID: 11400000, guid: ea3bece49cc9aa94393d0c4e1471c2c5, type: 2}
-  smelterTier: 0.2
+  smelterTier: 1
   spawnedItemOffset: {x: 1, y: 3, z: 0}

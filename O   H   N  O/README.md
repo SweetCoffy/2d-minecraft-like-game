@@ -1,6 +1,6 @@
 # Game source code
 
-as the name suggest there is the source code of the game (the unity project)
+  as the name suggest there is the source code of the game (the unity project)
 
 # Credits
 
