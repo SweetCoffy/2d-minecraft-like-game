@@ -27,11 +27,15 @@ public class droppedItem : MonoBehaviour
             properties[1] = 2;
         } else if (itemId == 10) {
             properties[0] = 2;
-            properties[0] = 2.75f;
+            properties[1] = 2.75f;
         } else if (itemId == 21) {
             properties[0] = 3;
             properties[1] = 5;
-        } else {
+        } else if(itemId == 34) {
+            properties[0] = 5;
+            properties[1] = 10;
+        } 
+        else {
             properties[0] = 0;
             properties[1] = .1f;
         }
@@ -62,9 +66,13 @@ public class droppedItem : MonoBehaviour
         if(other.GetComponent<entity>() != null) {
             entity otherEntity = other.GetComponent<entity>();
             if(properties.Count > 0) {
-                otherEntity.pickup(itemId, itemAmount, properties);
+                if(otherEntity.pickup(itemId, itemAmount, properties)) {
+                    Destroy(gameObject);
+                }
             } else {
-                otherEntity.pickup(itemId, itemAmount);
+                if(otherEntity.pickup(itemId, itemAmount)) {
+                    Destroy(gameObject);
+                }
             }
             
             

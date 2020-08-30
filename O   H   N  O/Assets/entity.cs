@@ -95,11 +95,11 @@ public class entity : MonoBehaviour
         }
     }
 
-    public void pickup(int itemId, int itemAmount) {
+    public bool pickup(int itemId, int itemAmount) {
         if(storedItems.Count <= 0) {
             storedItems.Add(new Item(itemId, itemAmount));
             lastitemUpdate = storedItems.Count - 1;
-            return;
+            return true;
         }
         
         bool hasItem = false;
@@ -114,12 +114,16 @@ public class entity : MonoBehaviour
         if(hasItem) {
             storedItems[Mathf.Clamp(i-1, 0, storedItems.Count)].amount += itemAmount;
             lastitemUpdate = Mathf.Clamp(i-1, 0, storedItems.Count);
+            return true;
             
         } else if (storedItems.Count+ 1 < itemCapacity - 1){
             storedItems.Add(new Item(itemId, itemAmount));
             lastitemUpdate = storedItems.Count - 1;
-            
+            return true;   
+        } else {
+            return false;
         }
+       
     }
 
 
@@ -127,13 +131,13 @@ public class entity : MonoBehaviour
         Instantiate(blockToPlace, new Vector3(x, y, 0), transform.rotation);
     }
 
-    public void pickup(int itemId, int itemAmount, List<float> properties) {
+    public bool pickup(int itemId, int itemAmount, List<float> properties) {
         
     if(storedItems.Count <= 0) {
             storedItems.Add(new Item(itemId, itemAmount, properties));
             Debug.Log("AAAA");
             lastitemUpdate = storedItems.Count - 1;
-            return;
+            return true;
         }
         
         bool hasItem = false;
@@ -148,11 +152,15 @@ public class entity : MonoBehaviour
         if(hasItem) {
             storedItems[Mathf.Clamp(i-1, 0, storedItems.Count)].amount += itemAmount;
             lastitemUpdate = Mathf.Clamp(i-1, 0, storedItems.Count);
+            return true;
             
-        } else if (storedItems.Count+ 1 < 16) {
+        } else if (storedItems.Count+ 1 < itemCapacity - 1) {
             storedItems.Add(new Item(itemId, itemAmount, properties));
             lastitemUpdate = storedItems.Count - 1;
+        } else {
+            return false;
         }
+        return false;
     }
     
     
@@ -247,6 +255,23 @@ public class entity : MonoBehaviour
             lastitemUpdate = index;
         }
     }
+    public void dropItem(int index, bool droppAll, Vector2 direction) {
+        if(index > storedItems.Count - 1) {
+            return;
+        }
+
+        
+        
+        if(droppAll) {
+            spawnItem(storedItems[index], direction);
+            storedItems.RemoveAt(index);
+            lastitemUpdate = index;
+        } else {
+            spawnItem(new Item(storedItems[index].id, 1), direction);
+            consumeItem(index);
+            lastitemUpdate = index;
+        }
+    }
 
     public void dropItemAll(int index) {
         dropItem(index, true);
@@ -269,8 +294,8 @@ public class entity : MonoBehaviour
     public void setSelectedItem(int value = 0) {
         
         if(value < 0) {
-            value = 16;
-        } else if (value > 16) {
+            value = itemCapacity - 1;
+        } else if (value > itemCapacity - 1) {
             value = 0;
         } 
         

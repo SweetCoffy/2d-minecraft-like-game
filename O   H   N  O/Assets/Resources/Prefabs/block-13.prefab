@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: ee2b4a4fd69460847b984accef3b8c07, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -124,10 +124,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d2efabd516a23428ad00c7602efbeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: 06000000000000000400000013000000
-  inputAmountNeeded: 02000000010000000200000001000000
-  output: 05000000010000000900000014000000
-  outputAmount: 04000000010000000100000002000000
+  input: 06000000000000000400000014000000
+  inputAmountNeeded: 02000000010000000200000004000000
+  output: 0500000001000000090000001d000000
+  outputAmount: 04000000010000000100000001000000
   craftingTime: 1.4
   crafterName: Campfire
   b: {fileID: 0}

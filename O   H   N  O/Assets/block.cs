@@ -17,6 +17,7 @@ public class block : MonoBehaviour
     public int maxGrow;
     public int grow;
     public float growTime;
+    public bool blockGravity;
     float timeToGrow;
     public string liquidName = "water";
     public LayerMask canCollideWith;
@@ -32,12 +33,15 @@ public class block : MonoBehaviour
         originalColor = GetComponent<SpriteRenderer>().color;
         breakProgress = breakTime;
         timeToGrow = Time.time + growTime;
+        if(blockGravity) {
+            InvokeRepeating("Fall", 0.125f, 0.125f);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        GetComponent<SpriteRenderer>().color = Color.Lerp(GetComponent<SpriteRenderer>().color, originalColor, .35f);
+        
         if(breakProgress <= 0) {
             if(dropItem > -1 && dropAmount > 0) {
                 spawnItem(new Item(dropItem, dropAmount));
@@ -47,12 +51,11 @@ public class block : MonoBehaviour
         }
         if(plant) {
 
-        if(grow < maxGrow) {
-            if(Time.time >= timeToGrow)  {
-                Grow();
+            if(grow < maxGrow) {
+                if(Time.time >= timeToGrow)  {
+                    Grow();
+                }
             }
-        }
-            
         
         }
         
@@ -90,17 +93,17 @@ public class block : MonoBehaviour
 
     }
      void spawnItem(Item itemToSpawn) {
-            GameObject spawnedItem = Instantiate(Resources.Load<GameObject>("Prefabs/DroppedItem"), transform.position, transform.rotation);
+            GameObject spawnedItem = Instantiate(Resources.Load<GameObject>("Prefabs/DroppedItem"), transform.position, Quaternion.identity);
             spawnedItem.GetComponent<droppedItem>().itemId = itemToSpawn.id;
             spawnedItem.GetComponent<droppedItem>().itemAmount = itemToSpawn.amount;
     }
 
     void OnMouseOver() {
-        GetComponent<SpriteRenderer>().color = Color.Lerp(GetComponent<SpriteRenderer>().color, originalColor + Color.white*.125f, .4f);
         if(GetComponent<Crafter>() != null) {
             return;
         }
-        GameObject.Find("Canvas").transform.GetChild(0).GetComponent<Text>().text = $"Block: \n{breakProgress} / {breakTime}";
+        
+        ShowInfo();
     }
 
     void OnMouseExit() {
@@ -113,7 +116,7 @@ public class block : MonoBehaviour
     public void damage(float miningPower, float dmg) {
         if(miningPower >= minimumMiningPower) {
             breakProgress -= miningPower - minimumMiningPower + .5f + dmg;
-            GetComponent<SpriteRenderer>().color = originalColor + Color.white;
+            
             
         }
     }
@@ -131,8 +134,14 @@ public class block : MonoBehaviour
         plant = false;
         grownBlock.grow++;
     }
-
-
+    void Fall() {
+            if(Physics2D.OverlapBox(transform.position - Vector3.up, transform.localScale * .9f, 0, canCollideWith) == null) {
+                transform.position -= Vector3.up;
+            }
+    }
+    public virtual void ShowInfo() {
+        GameObject.Find("Canvas").transform.GetChild(0).GetComponent<Text>().text = $"Block: \n{breakProgress} / {breakTime}";
+    }
 }
 
 public class ItemSpawning{

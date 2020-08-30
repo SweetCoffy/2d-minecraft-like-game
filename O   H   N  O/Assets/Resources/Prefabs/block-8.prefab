@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 3f6c90cccdc9cb04b8e8b3286f566c04, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -123,10 +123,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d2efabd516a23428ad00c7602efbeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: 0400000006000000090000000f0000001400000005000000
-  inputAmountNeeded: 060000000800000002000000020000000400000002000000
-  output: 07000000090000000c0000000e0000001200000016000000
-  outputAmount: 010000000100000001000000010000000100000001000000
+  input: 0400000006000000090000000f000000140000000500000020000000
+  inputAmountNeeded: 06000000080000000200000002000000040000000200000004000000
+  output: 07000000090000000c0000000e000000120000001600000024000000
+  outputAmount: 01000000010000000100000001000000010000000100000001000000
   craftingTime: 1.5
   crafterName: Advanced crafting bench
   b: {fileID: 0}
@@ -166,6 +166,7 @@ MonoBehaviour:
   maxGrow: 0
   grow: 0
   growTime: 0
+  blockGravity: 0
   liquidName: water
   canCollideWith:
     serializedVersion: 2

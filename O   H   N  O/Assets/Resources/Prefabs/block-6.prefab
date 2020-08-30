@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6942918129493488835}
   - component: {fileID: 6942918129493488836}
   - component: {fileID: 6942918129493488832}
+  - component: {fileID: 7633160923172232073}
   m_Layer: 0
   m_Name: block-6
   m_TagString: Untagged
@@ -72,9 +73,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4b271e5556494be4fb0bafc249ca307d, type: 3}
-  m_Color: {r: 1, g: 0.88914025, b: 0.6179246, a: 1}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: f46fbb6f806349845bf37ddc65b23434, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -146,10 +147,11 @@ MonoBehaviour:
   maxGrow: 0
   grow: 0
   growTime: 0
+  blockGravity: 1
   liquidName: water
   canCollideWith:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 513
   cantCollideWith:
     serializedVersion: 2
     m_Bits: 0
@@ -159,3 +161,15 @@ MonoBehaviour:
   blocks:
     serializedVersion: 2
     m_Bits: 0
+--- !u!114 &7633160923172232073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6942918129493488837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 071855890afd98b409ad96ccd9103807, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

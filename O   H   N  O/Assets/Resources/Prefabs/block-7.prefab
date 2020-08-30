@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 2cca9cf002d3b104ba2110d86f5ec185, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -124,10 +124,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d2efabd516a23428ad00c7602efbeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: 000000000600000004000000090000000500000014000000
-  inputAmountNeeded: 020000000400000003000000030000000a00000006000000
-  output: 01000000050000000a0000000b0000001000000015000000
-  outputAmount: 020000000800000001000000010000000100000001000000
+  input: 00000000060000000400000009000000050000001400000020000000
+  inputAmountNeeded: 020000000400000003000000030000000a000000060000000c000000
+  output: 01000000050000000a0000000b000000100000001500000022000000
+  outputAmount: 02000000080000000100000001000000010000000100000001000000
   craftingTime: 0.5
   crafterName: Furnace
   b: {fileID: 0}
@@ -167,6 +167,7 @@ MonoBehaviour:
   maxGrow: 0
   grow: 0
   growTime: 0
+  blockGravity: 0
   liquidName: water
   canCollideWith:
     serializedVersion: 2
