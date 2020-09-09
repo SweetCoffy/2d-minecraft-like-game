@@ -57,6 +57,7 @@ MonoBehaviour:
   maxGrow: 0
   grow: 0
   growTime: 0
+  blockGravity: 0
   liquidName: water
   canCollideWith:
     serializedVersion: 2
@@ -88,7 +89,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 84a86711508e8e046b95b9d8b6f6df75, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
