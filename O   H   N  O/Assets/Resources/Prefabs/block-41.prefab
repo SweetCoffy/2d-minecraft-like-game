@@ -11,12 +11,11 @@ GameObject:
   - component: {fileID: 1283855765427428623}
   - component: {fileID: 1283855765427428620}
   - component: {fileID: 1283855765427428621}
-  - component: {fileID: 1283855765427428618}
   - component: {fileID: 1283855765427428619}
   - component: {fileID: 1283855765427428616}
   - component: {fileID: 1283855765427428622}
   m_Layer: 4
-  m_Name: block-0
+  m_Name: block-41
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54,7 +53,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 84a86711508e8e046b95b9d8b6f6df75, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -75,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: c152abfa047360e498e14339f54535e2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 62f4d7fa480e4ca488e3a2fbdb48d35b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -112,25 +111,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.9, y: 0.9}
   m_EdgeRadius: 0
---- !u!114 &1283855765427428618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1283855765427428617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1d2efabd516a23428ad00c7602efbeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  input: 02000000
-  inputAmountNeeded: 01000000
-  output: 00000000
-  outputAmount: 01000000
-  craftingTime: 1
-  crafterName: Water source
-  b: {fileID: 0}
 --- !u!114 &1283855765427428619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,7 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bc02a269d7c33b49aaed5ca35f702fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minimumMiningPower: 0
+  minimumMiningPower: 999999
   breakTime: 0.5
   breakProgress: 0
   dropItem: 0
@@ -169,7 +149,7 @@ MonoBehaviour:
   grow: 0
   growTime: 0
   blockGravity: 0
-  liquidName: water
+  liquidName: lava
   canCollideWith:
     serializedVersion: 2
     m_Bits: 535
@@ -182,6 +162,7 @@ MonoBehaviour:
   blocks:
     serializedVersion: 2
     m_Bits: 1
+  entityDamage: 50
 --- !u!253 &1283855765427428622
 BuoyancyEffector2D:
   m_ObjectHideFlags: 0
@@ -195,9 +176,9 @@ BuoyancyEffector2D:
     serializedVersion: 2
     m_Bits: 4294967295
   m_SurfaceLevel: 0.4
-  m_Density: 8.01
-  m_LinearDrag: 3
-  m_AngularDrag: 3
+  m_Density: 89.58
+  m_LinearDrag: 10
+  m_AngularDrag: 10
   m_FlowAngle: 0
   m_FlowMagnitude: 0
   m_FlowVariation: 0

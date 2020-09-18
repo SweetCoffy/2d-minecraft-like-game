@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class inventoryItem : MonoBehaviour
 {
     public int index;
-    public Vector2 originalPosition;
     RectTransform thisRect;
     entity playerEntity;
     public entity e;
@@ -17,7 +16,6 @@ public class inventoryItem : MonoBehaviour
         im = GameObject.Find("ItemManager").GetComponent<itemManager>();
         playerEntity = GameObject.Find("Player").GetComponent<entity>();
         thisRect = GetComponent<RectTransform>();
-        originalPosition = GetComponent<RectTransform>().anchoredPosition;
         if(e != null) {
             playerEntity = e;
         }
@@ -26,12 +24,29 @@ public class inventoryItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!playerEntity) {
+            playerEntity = GameObject.Find("Player").GetComponent<entity>();
+        }
+        
+        
         if(index > playerEntity.storedItems.Count - 1) {
             transform.GetChild(0).GetComponent<Text>().text = "";
             GetComponent<Image>().sprite = GameObject.Find("ItemManager").GetComponent<itemManager>().blankTexture;
+            GetComponent<Image>().color = new Color(0, 0, 0, 0);
             return;
+        } else {
+            GetComponent<Image>().color = new Color(1, 1, 1, 1);
         }
-        transform.GetChild(0).GetComponent<Text>().text = playerEntity.storedItems[index].amount.ToString() + "x";
+        string amountString;
+        int amount = playerEntity.storedItems[index].amount;
+
+        if (amount > 1) {
+            amountString = amount.ToString();
+        } else {
+            amountString = "";
+        }
+        
+        transform.GetChild(0).GetComponent<Text>().text = amountString;
         GetComponent<Image>().sprite = GameObject.Find("ItemManager").GetComponent<itemManager>().itemTextures[playerEntity.storedItems[index].id];
         if(playerEntity.lastitemUpdate == index) {
           playerEntity.lastitemUpdate = -1;
@@ -40,11 +55,9 @@ public class inventoryItem : MonoBehaviour
     }
 
     void FixedUpdate() {
-        thisRect.anchoredPosition = Vector2.Lerp(thisRect.anchoredPosition, originalPosition, .2f);
-        thisRect.localScale = Vector2.Lerp(thisRect.localScale, new Vector2(1, 1), .25f);
+        thisRect.localScale = Vector2.Lerp(thisRect.localScale, new Vector2(1, 1), .1f);
         if(playerEntity.getSelectedItem() == index) {
-            thisRect.anchoredPosition = Vector2.Lerp(thisRect.anchoredPosition, originalPosition + new Vector2(0, 5f), .2f);
-            thisRect.localScale = Vector2.Lerp(thisRect.localScale, new Vector2(1.5f, 1.5f), .2f);
+            thisRect.localScale = Vector2.Lerp(thisRect.localScale, new Vector2(1.5f, 1.5f), .1f);
 
         }
     }

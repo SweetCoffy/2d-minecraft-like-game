@@ -15,15 +15,17 @@ public class snap : MonoBehaviour
         return new Vector3(a.x * b.x, a.y * b.y, a.z * b.z);
     }
     public Vector3 snapSize = new Vector3(1, 1, 1);
-    // Start is called before the first frame update
+
+    public bool snapOnUpdate = false;
     void Start()
     {
-        
+        transform.position = MultiplyVector3(RoundVector3(DivideVector3(transform.position, snapSize)), snapSize);
     }
 
-    // Update is called once per frame
-    void LateUpdate()
-    {
+    void LateUpdate() {
+        if (!snapOnUpdate)
+            return;
+
         transform.position = MultiplyVector3(RoundVector3(DivideVector3(transform.position, snapSize)), snapSize);
     }
 }

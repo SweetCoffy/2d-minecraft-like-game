@@ -1,5 +1,97 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &994382402013545257
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1347731087226950203}
+  - component: {fileID: 7620920776183875211}
+  m_Layer: 4
+  m_Name: Point Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1347731087226950203
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 994382402013545257}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1283855765427428623}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!108 &7620920776183875211
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 994382402013545257}
+  m_Enabled: 1
+  serializedVersion: 10
+  m_Type: 2
+  m_Shape: 0
+  m_Color: {r: 0, g: 0.8051777, b: 1, a: 1}
+  m_Intensity: 1.7
+  m_Range: 10.63
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!1 &1283855765427428617
 GameObject:
   m_ObjectHideFlags: 0
@@ -11,12 +103,10 @@ GameObject:
   - component: {fileID: 1283855765427428623}
   - component: {fileID: 1283855765427428620}
   - component: {fileID: 1283855765427428621}
-  - component: {fileID: 1283855765427428618}
   - component: {fileID: 1283855765427428619}
   - component: {fileID: 1283855765427428616}
-  - component: {fileID: 1283855765427428622}
   m_Layer: 4
-  m_Name: block-0
+  m_Name: block-43
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +122,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5, y: -2, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1347731087226950203}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -75,7 +166,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: c152abfa047360e498e14339f54535e2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c973925a88d03a549b6538da4e85f739, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -96,8 +187,8 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 1
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
@@ -112,25 +203,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.9, y: 0.9}
   m_EdgeRadius: 0
---- !u!114 &1283855765427428618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1283855765427428617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1d2efabd516a23428ad00c7602efbeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  input: 02000000
-  inputAmountNeeded: 01000000
-  output: 00000000
-  outputAmount: 01000000
-  craftingTime: 1
-  crafterName: Water source
-  b: {fileID: 0}
 --- !u!114 &1283855765427428619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,19 +229,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bc02a269d7c33b49aaed5ca35f702fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minimumMiningPower: 0
+  minimumMiningPower: 2
   breakTime: 0.5
   breakProgress: 0
-  dropItem: 0
+  dropItem: 43
   dropAmount: 1
   liquidLevel: 7
-  fluid: 1
+  fluid: 0
   plant: 0
   maxGrow: 0
   grow: 0
   growTime: 0
   blockGravity: 0
-  liquidName: water
+  liquidName: lava
   canCollideWith:
     serializedVersion: 2
     m_Bits: 535
@@ -182,22 +254,3 @@ MonoBehaviour:
   blocks:
     serializedVersion: 2
     m_Bits: 1
---- !u!253 &1283855765427428622
-BuoyancyEffector2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1283855765427428617}
-  m_Enabled: 1
-  m_UseColliderMask: 1
-  m_ColliderMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_SurfaceLevel: 0.4
-  m_Density: 8.01
-  m_LinearDrag: 3
-  m_AngularDrag: 3
-  m_FlowAngle: 0
-  m_FlowMagnitude: 0
-  m_FlowVariation: 0

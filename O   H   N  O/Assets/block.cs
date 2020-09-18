@@ -24,6 +24,7 @@ public class block : MonoBehaviour
     public LayerMask cantCollideWith;
     public LayerMask waterMask;
     public LayerMask blocks;
+    public float entityDamage;
     
     
     
@@ -142,7 +143,22 @@ public class block : MonoBehaviour
     public virtual void ShowInfo() {
         GameObject.Find("Canvas").transform.GetChild(0).GetComponent<Text>().text = $"Block: \n{breakProgress} / {breakTime}";
     }
+
+    void OnTriggerStay2D(Collider2D col) {
+        
+        if (entityDamage <= 0)
+            return;
+        
+        entity e = col.GetComponent<entity>();
+
+        
+        
+        if (e != null) {
+            e.takeDamage(entityDamage * Time.deltaTime);
+        }
+    }
 }
+
 
 public class ItemSpawning{
     public static void Spawn(Item itemToSpawn, Vector3 position) {
@@ -151,3 +167,4 @@ public class ItemSpawning{
             spawnedItem.GetComponent<droppedItem>().itemAmount = itemToSpawn.amount;
     }
 }
+

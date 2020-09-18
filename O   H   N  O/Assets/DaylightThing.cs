@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class DaylightThing : MonoBehaviour
 {
     public Gradient gradient;
@@ -21,7 +20,6 @@ public class DaylightThing : MonoBehaviour
 
     public Transform sunRotationThing;
 
-    public SpriteRenderer sun;
 
     
 
@@ -45,6 +43,5 @@ public class DaylightThing : MonoBehaviour
         sunRotationThing.rotation = Quaternion.Euler(0, 0, 360 * sunTime * sunRotationMultiplier);
         s.color = gradient.Evaluate(time);
         RenderSettings.ambientLight = initialColor * intensityCurve.Evaluate(time);
-        sun.color = sunColorGradient.Evaluate(time);
     }
 }

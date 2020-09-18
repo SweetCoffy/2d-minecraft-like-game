@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [RequireComponent(typeof(Rigidbody2D))]
 
 public class entity : MonoBehaviour
@@ -15,6 +16,8 @@ public class entity : MonoBehaviour
     private float cooldown = 0;
     public float thirstDrainRate = .5f;
     public int itemCapacity = 17;
+    public bool canRespawn = false;
+    public Vector3 respawnPoint = Vector3.zero;
     
 
     public int lastitemUpdate;
@@ -66,6 +69,7 @@ public class entity : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if(thirst <= 0) {
             takeDamage(dryDamageRate*Time.deltaTime);
         }
@@ -174,7 +178,7 @@ public class entity : MonoBehaviour
 
     }
     
-    public void useItem(int item) {
+    public void useItem(int item, System.Nullable<Vector2> postion = null) {
         if(item > storedItems.Count - 1 || cooldown > 0) {
             return;
         }
@@ -201,6 +205,64 @@ public class entity : MonoBehaviour
             health = Mathf.Clamp(health + Mathf.Round(Random.Range(2, 10)), 0, maxHealth);
             storedItems[item].amount -= 1;
             lastitemUpdate = item;
+        }
+
+        if (currItem.id == 40) {
+            
+            
+            Vector2 pos = (Vector2)postion;
+
+            if (pos != null) {
+                if (pos.x > transform.position.x) {
+                    transform.localScale = new Vector3( Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+                } else if (pos.x < transform.position.x) {
+                    transform.localScale = new Vector3( -Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+                }
+
+                Transform heldItem = transform.GetChild(0);
+                
+                Vector2 dir = (Vector2)transform.position - pos;
+                
+                float rot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                
+                if (transform.localScale.x > 0) {
+                    heldItem.rotation = Quaternion.Euler(0, 0, rot - 180);
+                } else {
+                    heldItem.rotation = Quaternion.Euler(0, 0, rot);
+                }
+
+                if (ConsumeItemType(ItemID.Rock, 0.1f)) {
+                    GameObject b = Resources.Load<GameObject>("Prefabs/Bullet");
+
+                    GameObject bulletObject = Instantiate(b, heldItem.position, Quaternion.Euler(0, 0, rot - 180));
+
+                    Collider2D col = bulletObject.GetComponent<Collider2D>();
+
+                    // Bullet bullet = bulletObject.GetComponent<Bullet>();
+
+                    Physics2D.IgnoreCollision(GetComponent<Collider2D>(), col);
+
+                    cooldown = itemCooldown * 0.1f;
+                }
+                
+
+                
+                
+            }
+        }
+
+        if (currItem.id == 42) {
+            maxHealth += 20;
+            health += 20;
+            lastitemUpdate = item;
+            consumeItem(item);
+        }
+
+        if (currItem.id == 43) {
+            maxThirst += 20;
+            thirst += 20;
+            lastitemUpdate = item;
+            consumeItem(item);
         }
              
         if(storedItems[item].amount <= 0 ) {
@@ -233,6 +295,16 @@ public class entity : MonoBehaviour
             spawnedItem.GetComponent<droppedItem>().itemAmount = itemToSpawn.amount;
             spawnedItem.GetComponent<droppedItem>().properties = itemToSpawn.properties;
     }
+
+    public void spawnItem(Item itemToSpawn, float randomness) {
+            GameObject spawnedItem = Instantiate(Resources.Load<GameObject>("Prefabs/DroppedItem"), transform.position, transform.rotation);
+            spawnedItem.GetComponent<droppedItem>().itemId = itemToSpawn.id;
+            spawnedItem.GetComponent<droppedItem>().itemAmount = itemToSpawn.amount;
+            spawnedItem.GetComponent<droppedItem>().properties = itemToSpawn.properties;
+            Rigidbody2D rb = spawnedItem.GetComponent<Rigidbody2D>();
+            rb.AddForce(new Vector2(Random.Range(-randomness, randomness), Random.Range(-randomness, randomness)), ForceMode2D.Impulse);
+    }
+
     public void spawnItem(Item itemToSpawn, Vector3 offset) {
             GameObject spawnedItem = Instantiate(Resources.Load<GameObject>("Prefabs/DroppedItem"), transform.position + offset, transform.rotation);
             spawnedItem.GetComponent<droppedItem>().itemId = itemToSpawn.id;
@@ -288,9 +360,42 @@ public class entity : MonoBehaviour
         }
 
     void kill() {
-        Debug.Log("u ded lol");
+        
+        foreach(Item it in storedItems) {
+            spawnItem(it, 10f);
+        }
+
+        storedItems = new List<Item>();
+        
+        if (!canRespawn) {
+            Destroy(gameObject);
+        } else {
+
+            transform.position = (Vector3)respawnPoint;
+            health = maxHealth;
+            thirst = maxThirst;
+        }
+        
     }
 
+
+
+    public bool ConsumeItemType(int id, float chance = 1) {
+        for (int i = 0; i < storedItems.Count; i++) {
+            if (storedItems[i].id == id) {
+                
+                if (Random.Range(0, 1) < chance) {
+                    consumeItem(i);
+                    lastitemUpdate = i;
+                }
+                
+                
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public void setSelectedItem(int value = 0) {
         
         if(value < 0) {
@@ -300,6 +405,7 @@ public class entity : MonoBehaviour
         } 
         
         selectedItem = value;
+        transform.GetChild(0).rotation = Quaternion.identity;
     }
 
 }
@@ -324,4 +430,12 @@ public class Item {
         amount = itemAmount;
         properties = itemProperties;
     }
+}
+
+public static class ItemID {
+    public static int Rock = 4;
+    public static int BasicPick = 3;
+    public static int Bottle = 2;
+    public static int PurifiedWater = 1;
+    public static int Water = 0;
 }

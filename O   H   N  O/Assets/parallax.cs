@@ -15,6 +15,9 @@ public class parallax : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (!cam)
+            cam = Camera.main.gameObject;
+        
         transform.position = cam.transform.position*parallaxEffect;
     }
 }

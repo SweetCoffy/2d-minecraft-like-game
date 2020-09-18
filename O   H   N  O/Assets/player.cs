@@ -34,8 +34,8 @@ public class player : MonoBehaviour
         if(Input.GetAxis("Jump") > 0) {
             e.jump(e.jumpForce * Input.GetAxis("Jump"));
         }   
-        if(Input.GetAxis("Fire1") > 0) {
-            e.useItem(e.getSelectedItem());
+        if(Input.GetAxis("Fire1") > 0 || Input.GetMouseButton(0)) {
+            e.useItem(e.getSelectedItem(), Camera.main.ScreenToWorldPoint(Input.mousePosition) );
         }
     
         Vector3 pz = Camera.main.ScreenToWorldPoint(Input.mousePosition);
