@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1283855765427428619}
   - component: {fileID: 1283855765427428616}
   - component: {fileID: 1283855765427428622}
+  - component: {fileID: 2103143910845830864}
   m_Layer: 4
   m_Name: block-41
   m_TagString: Untagged
@@ -137,10 +138,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bc02a269d7c33b49aaed5ca35f702fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minimumMiningPower: 999999
+  minimumMiningPower: 0
   breakTime: 0.5
   breakProgress: 0
-  dropItem: 0
+  dropItem: 41
   dropAmount: 1
   liquidLevel: 7
   fluid: 1
@@ -182,3 +183,22 @@ BuoyancyEffector2D:
   m_FlowAngle: 0
   m_FlowMagnitude: 0
   m_FlowVariation: 0
+--- !u!114 &2103143910845830864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283855765427428617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1d2efabd516a23428ad00c7602efbeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  input: 02000000
+  inputAmountNeeded: 01000000
+  output: 29000000
+  outputAmount: 01000000
+  craftingTime: 0
+  crafterName: Lava source
+  b: {fileID: 0}

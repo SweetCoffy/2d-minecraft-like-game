@@ -21,7 +21,9 @@ public class entity : MonoBehaviour
     public GameObject deathEffect;
     public GameObject damageEffect;
     public bool keepInventory = false;
+    public List<Item> startingItems = new List<Item>();
     
+    public bool respawnWithPickaxe = false;
 
     public int lastitemUpdate;
 
@@ -237,7 +239,7 @@ public class entity : MonoBehaviour
                 if (ConsumeItemType(ItemID.Rock, 0.1f)) {
                     GameObject b = Resources.Load<GameObject>("Prefabs/Bullet");
 
-                    GameObject bulletObject = Instantiate(b, heldItem.position, Quaternion.Euler(0, 0, rot - 180));
+                    GameObject bulletObject = Instantiate(b, heldItem.position, Quaternion.Euler(0, 0, rot - 180 + Random.Range(-15, 15)));
 
                     Collider2D col = bulletObject.GetComponent<Collider2D>();
 
@@ -245,7 +247,7 @@ public class entity : MonoBehaviour
 
                     Physics2D.IgnoreCollision(GetComponent<Collider2D>(), col);
 
-                    cooldown = itemCooldown * 0.1f;
+                    cooldown = itemCooldown * 2f;
                 }
                 
 
@@ -373,24 +375,48 @@ public class entity : MonoBehaviour
             Instantiate(deathEffect, transform.position, transform.rotation);
         }
         
-        if (!keepInventory) {
-            foreach(Item it in storedItems) {
-                spawnItem(it, 10f);
-            }
+        int i = 0;
+        
+        List<Item> oldItems = storedItems;
 
-            storedItems = new List<Item>();
+        foreach(Item it in oldItems) {
+            spawnItem(it, 5f);
+            
+            
+            i++;
         }
-        
 
+        storedItems.RemoveRange(0, storedItems.Count);
         
-        if (!canRespawn) {
-            Destroy(gameObject);
-        } else {
-
+        if (canRespawn) {
             transform.position = (Vector3)respawnPoint;
             health = maxHealth;
             thirst = maxThirst;
+            
+            if (respawnWithPickaxe) {
+                storedItems.Add(new Item(ItemID.BasicPick, 1));
+                storedItems[0].properties.Add(1);
+                storedItems[0].properties.Add(2);
+            }
+
+        } else {
+            Destroy(gameObject);
         }
+            
+        
+        
+
+
+       
+
+
+  
+        
+        
+        
+
+        
+
         
     }
 
@@ -421,7 +447,9 @@ public class entity : MonoBehaviour
         } 
         
         selectedItem = value;
-        transform.GetChild(0).rotation = Quaternion.identity;
+        
+        if (value != 40)
+            transform.GetChild(0).rotation = Quaternion.identity;
     }
 
 }
