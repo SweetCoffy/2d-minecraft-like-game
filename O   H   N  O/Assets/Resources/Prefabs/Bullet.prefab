@@ -125,7 +125,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 4
   lifetime: 10
-  damage: 5
+  damage: 1
+  bloodEffect: {fileID: 4718496398526527256, guid: d32490f8317c81c42937eb9cefdf9b09,
+    type: 3}
 --- !u!50 &-8981720942204678125
 Rigidbody2D:
   serializedVersion: 4

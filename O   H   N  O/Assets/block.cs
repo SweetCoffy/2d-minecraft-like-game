@@ -154,7 +154,7 @@ public class block : MonoBehaviour
         
         
         if (e != null) {
-            e.takeDamage(entityDamage * Time.deltaTime);
+            e.takeDamage(entityDamage * Time.deltaTime, false);
         }
     }
 }

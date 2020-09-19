@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour
     public float lifetime = 10;
     public float damage = 5;
     Rigidbody2D rb;
+    public GameObject bloodEffect;
     
     void Start()
     {
@@ -21,6 +22,9 @@ public class Bullet : MonoBehaviour
 
         if (e != null) {
             e.takeDamage(damage);
+            if (bloodEffect) {
+                Instantiate(bloodEffect, transform.position, transform.rotation);
+            }
         }
         
         

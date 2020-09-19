@@ -39,37 +39,20 @@ public class cursedAi : MonoBehaviour
             }
         }
         
-
-
-
-        if(Physics2D.OverlapBox(transform.position - Vector3.up, transform.localScale, 0) != null && mining) {
-            
-            
-            block b = Physics2D.OverlapBox(transform.position - Vector3.up, transform.localScale, 0).GetComponent<block>();
-            if(b != null) {
-            
-            int i2 = 0;
-            foreach(Item item in e.storedItems) {
-                if(item.id == 21) {
-                    break;
-                }
-                if(item.id == 10) {
-                    break;
-                }
-                if(item.id == 3) {
-                    break;
-                }
-                i2++;
-        }
-                e.setSelectedItem(i2);
-                e.mineBlock(b);
-            }
-
-        }
-
-
-       
+        int i3 = 0;
         
+        foreach(Item it in e.storedItems) {
+            
+            if (it.id == 40) {
+                e.setSelectedItem(i3);
+
+                e.useItem(i3, (Vector2)target.position);
+                
+                break;
+            }
+            
+            i3++;
+        }
         
         if(e.getStat("thirst") / e.getMaxStat("thirst") > .25f) {
             return;

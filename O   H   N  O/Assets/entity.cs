@@ -18,6 +18,9 @@ public class entity : MonoBehaviour
     public int itemCapacity = 17;
     public bool canRespawn = false;
     public Vector3 respawnPoint = Vector3.zero;
+    public GameObject deathEffect;
+    public GameObject damageEffect;
+    public bool keepInventory = false;
     
 
     public int lastitemUpdate;
@@ -71,7 +74,7 @@ public class entity : MonoBehaviour
     {
         
         if(thirst <= 0) {
-            takeDamage(dryDamageRate*Time.deltaTime);
+            takeDamage(dryDamageRate*Time.deltaTime, false);
         }
         if(thirst > 0) {
             thirst = Mathf.Clamp(thirst - (thirstDrainRate * Time.deltaTime), 0, maxThirst );
@@ -351,8 +354,12 @@ public class entity : MonoBehaviour
     
     
     
-    public void takeDamage(float amount = 0) {
+    public void takeDamage(float amount = 0, bool spawnBlood = true) {
         health -= amount;
+        if (damageEffect && spawnBlood) {
+            Instantiate(damageEffect, transform.position, transform.rotation);
+        }
+        
         if(health <= 0) {
             kill();
         }
@@ -361,11 +368,20 @@ public class entity : MonoBehaviour
 
     void kill() {
         
-        foreach(Item it in storedItems) {
-            spawnItem(it, 10f);
+        
+        if (deathEffect) {
+            Instantiate(deathEffect, transform.position, transform.rotation);
         }
+        
+        if (!keepInventory) {
+            foreach(Item it in storedItems) {
+                spawnItem(it, 10f);
+            }
 
-        storedItems = new List<Item>();
+            storedItems = new List<Item>();
+        }
+        
+
         
         if (!canRespawn) {
             Destroy(gameObject);
