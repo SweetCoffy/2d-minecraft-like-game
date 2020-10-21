@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[RequireComponent(typeof(Rigidbody2D))]
 
+
+[RequireComponent(typeof(Rigidbody2D))]
 public class entity : MonoBehaviour
 {
     public float movementSpeed = 10;
@@ -19,7 +20,12 @@ public class entity : MonoBehaviour
     public bool canRespawn = false;
     public Vector3 respawnPoint = Vector3.zero;
     public GameObject deathEffect;
+    public GameObject teleportParticles;
     public GameObject damageEffect;
+    float manaRecoverTimer = 0;
+    public float maxMana = 20;
+    public float manaRecoverRate = 20f;
+    float mana;
     public bool keepInventory = false;
     public List<Item> startingItems = new List<Item>();
     
@@ -34,6 +40,8 @@ public class entity : MonoBehaviour
 
         } else if (stat == "thirst" ) {
             return thirst;
+        } else if (stat == "mana"){
+            return mana;
         } else {
             return 0;
         }
@@ -43,6 +51,8 @@ public class entity : MonoBehaviour
             return maxHealth;
         } else if(stat == "thirst") {
             return maxThirst;
+        } else if (stat == "mana") {
+            return maxMana;
         } else {
             return 0;
         }
@@ -61,6 +71,11 @@ public class entity : MonoBehaviour
             return health;
         }
     }
+
+    public void ConsumeMana(float amount) {
+        manaRecoverTimer = 0.5f;
+        mana -= amount;
+    }
     
     // Start is called before the first frame update
     void Start()
@@ -71,10 +86,22 @@ public class entity : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    
     // Update is called once per frame
+    
+    
+    
     void Update()
     {
-        
+        if (manaRecoverTimer > 0) {
+            manaRecoverTimer -= Time.deltaTime;
+        }
+        if (manaRecoverTimer <= 0) {
+            mana += manaRecoverRate * Time.deltaTime;
+            if (mana > maxMana) {
+                mana = maxMana;
+            }
+        }
         if(thirst <= 0) {
             takeDamage(dryDamageRate*Time.deltaTime, false);
         }
@@ -123,6 +150,10 @@ public class entity : MonoBehaviour
         if(hasItem) {
             storedItems[Mathf.Clamp(i-1, 0, storedItems.Count)].amount += itemAmount;
             lastitemUpdate = Mathf.Clamp(i-1, 0, storedItems.Count);
+            if (storedItems[Mathf.Clamp(i-1, 0, storedItems.Count)].properties.Count < 2) {
+                storedItems[Mathf.Clamp(i-1, 0, storedItems.Count)].properties.Add(0);
+                storedItems[Mathf.Clamp(i-1, 0, storedItems.Count)].properties.Add(0);
+            }
             return true;
             
         } else if (storedItems.Count+ 1 < itemCapacity - 1){
@@ -175,6 +206,13 @@ public class entity : MonoBehaviour
     
     
     
+    
+    void FixedUpdate() {
+        if (rb.velocity.y < -20) {
+            rb.velocity = Vector2.up * -20;
+        }
+    }
+    
     public void jump(float force = 10) {
         if(!canJump) {
             force = 0;
@@ -183,7 +221,7 @@ public class entity : MonoBehaviour
 
     }
     
-    public void useItem(int item, System.Nullable<Vector2> postion = null) {
+    public void useItem(int item, System.Nullable<Vector2> position = null) {
         if(item > storedItems.Count - 1 || cooldown > 0) {
             return;
         }
@@ -215,7 +253,7 @@ public class entity : MonoBehaviour
         if (currItem.id == 40) {
             
             
-            Vector2 pos = (Vector2)postion;
+            Vector2 pos = (Vector2)position;
 
             if (pos != null) {
                 if (pos.x > transform.position.x) {
@@ -239,7 +277,7 @@ public class entity : MonoBehaviour
                 if (ConsumeItemType(ItemID.Rock, 0.1f)) {
                     GameObject b = Resources.Load<GameObject>("Prefabs/Bullet");
 
-                    GameObject bulletObject = Instantiate(b, heldItem.position, Quaternion.Euler(0, 0, rot - 180 + Random.Range(-15, 15)));
+                    GameObject bulletObject = Instantiate(b, heldItem.position, Quaternion.Euler(0, 0, rot - 180 + Random.Range(-2, 2)));
 
                     Collider2D col = bulletObject.GetComponent<Collider2D>();
 
@@ -247,7 +285,7 @@ public class entity : MonoBehaviour
 
                     Physics2D.IgnoreCollision(GetComponent<Collider2D>(), col);
 
-                    cooldown = itemCooldown * 2f;
+                    cooldown = itemCooldown * 0.2f;
                 }
                 
 
@@ -268,6 +306,22 @@ public class entity : MonoBehaviour
             thirst += 20;
             lastitemUpdate = item;
             consumeItem(item);
+        }
+
+        if (currItem.id == 44) {
+            if (position == null) 
+                return;
+            
+            Instantiate(teleportParticles, transform.position, Quaternion.identity);
+            transform.position = (Vector3)((Vector2)position + (Vector2.up * 0.5f));
+            if (mana < 20) {
+                takeDamage(10);
+                ConsumeMana(0);
+            } else {
+                ConsumeMana(20);
+            }
+            Instantiate(teleportParticles, transform.position, Quaternion.identity);
+            
         }
              
         if(storedItems[item].amount <= 0 ) {
@@ -316,6 +370,13 @@ public class entity : MonoBehaviour
             spawnedItem.GetComponent<droppedItem>().itemAmount = itemToSpawn.amount;
             spawnedItem.GetComponent<droppedItem>().properties = itemToSpawn.properties;
     }
+    public void spawnItem(Item itemToSpawn, Vector3 offset, Vector2 force) {
+            GameObject spawnedItem = Instantiate(Resources.Load<GameObject>("Prefabs/DroppedItem"), transform.position + offset, transform.rotation);
+            spawnedItem.GetComponent<droppedItem>().itemId = itemToSpawn.id;
+            spawnedItem.GetComponent<droppedItem>().itemAmount = itemToSpawn.amount;
+            spawnedItem.GetComponent<droppedItem>().properties = itemToSpawn.properties;
+            spawnedItem.GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
+    }
 
     public void dropItem(int index, bool droppAll) {
         if(index > storedItems.Count - 1) {
@@ -327,8 +388,9 @@ public class entity : MonoBehaviour
             storedItems.RemoveAt(index);
             lastitemUpdate = index;
         } else {
-            spawnItem(new Item(storedItems[index].id, 1), transform.localScale.normalized*1.5f);
+            spawnItem(new Item(storedItems[index].id, 1), transform.localScale.normalized.x * Vector3.right * 1.2f, (Vector2)transform.localScale.normalized * Vector2.right * 7);
             consumeItem(index);
+            
             lastitemUpdate = index;
         }
     }

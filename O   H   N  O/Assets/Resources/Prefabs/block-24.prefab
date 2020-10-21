@@ -75,6 +75,7 @@ MonoBehaviour:
   blocks:
     serializedVersion: 2
     m_Bits: 0
+  entityDamage: 0
 --- !u!212 &5674063458537406102
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -90,6 +91,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -138,6 +140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snapSize: {x: 1, y: 1, z: 1}
+  snapOnUpdate: 0
 --- !u!61 &5674063458537406100
 BoxCollider2D:
   m_ObjectHideFlags: 0

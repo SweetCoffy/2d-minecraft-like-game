@@ -17,6 +17,7 @@ public class block : MonoBehaviour
     public int maxGrow;
     public int grow;
     public float growTime;
+    public bool breakOnGravityUpdate = false;
     public bool blockGravity;
     float timeToGrow;
     public string liquidName = "water";
@@ -25,17 +26,30 @@ public class block : MonoBehaviour
     public LayerMask waterMask;
     public LayerMask blocks;
     public float entityDamage;
+    public float gravityUpdateRate = 10;
+    public float liquidUpdateRate = 5;
+    private Sprite[] cachedTextures;
+    private SpriteRenderer s;
     
     
     
     // Start is called before the first frame update
     void Start()
     {
-        originalColor = GetComponent<SpriteRenderer>().color;
+        s = GetComponent<SpriteRenderer>();
+        originalColor = s.color;
         breakProgress = breakTime;
         timeToGrow = Time.time + growTime;
         if(blockGravity) {
-            InvokeRepeating("Fall", 0.125f, 0.125f);
+            InvokeRepeating("Fall", 1 / gravityUpdateRate, 1 / gravityUpdateRate);
+        }
+
+        if (fluid) {
+            cachedTextures = new Sprite[8];
+            for (int i = 0; i < cachedTextures.Length; i++) {
+                cachedTextures[i] = Resources.Load<Sprite>("Textures/" + liquidName + "-" + liquidLevel);
+            }
+            InvokeRepeating("LiquidUpdate", 1 / liquidUpdateRate, 1 / liquidUpdateRate);
         }
     }
 
@@ -43,13 +57,7 @@ public class block : MonoBehaviour
     void Update()
     {
         
-        if(breakProgress <= 0) {
-            if(dropItem > -1 && dropAmount > 0) {
-                spawnItem(new Item(dropItem, dropAmount));
-                
-            }
-            Destroy(gameObject);
-        }
+
         if(plant) {
 
             if(grow < maxGrow) {
@@ -60,35 +68,7 @@ public class block : MonoBehaviour
         
         }
         
-        
-        if(!fluid) {
-            return;
-        }
-        GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/" + liquidName + "-" + liquidLevel);
 
-        if(Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, canCollideWith) == null) {
-            GameObject flowing = Instantiate(gameObject, transform.position - transform.up, transform.rotation);
-            flowing.GetComponent<block>().liquidLevel = 7;
-        }
-        if(Physics2D.OverlapBox(transform.position, transform.localScale * .9f, 0, blocks) != null) {
-            Destroy(gameObject);
-        }
-        
-        if(liquidLevel <= 0) {
-            return;
-        }
-        if(Physics2D.OverlapBox(transform.position + transform.right, transform.localScale * .9f, 0, canCollideWith) == null && Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, ~cantCollideWith) != null) {
-            GameObject flowing = Instantiate(gameObject, transform.position + transform.right, transform.rotation);
-            flowing.GetComponent<block>().liquidLevel = liquidLevel - 1;
-        }
-        if(Physics2D.OverlapBox(transform.position - transform.right, transform.localScale * .9f, 0, canCollideWith) == null && Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, ~cantCollideWith) != null) {
-            GameObject flowing = Instantiate(gameObject, transform.position - transform.right, transform.rotation);
-            flowing.GetComponent<block>().liquidLevel = liquidLevel - 1;
-        }
-
-        if(Physics2D.OverlapBox(transform.position + transform.up, transform.localScale * .9f, 0, waterMask) != null) {
-            liquidLevel = 7;
-        }
 
 
 
@@ -120,6 +100,14 @@ public class block : MonoBehaviour
             
             
         }
+
+        if(breakProgress <= 0) {
+            if(dropItem > -1 && dropAmount > 0) {
+                spawnItem(new Item(dropItem, dropAmount));
+                
+            }
+            Destroy(gameObject);
+        }
     }
 
     void OnMouseDown() {
@@ -136,10 +124,40 @@ public class block : MonoBehaviour
         grownBlock.grow++;
     }
     void Fall() {
-            if(Physics2D.OverlapBox(transform.position - Vector3.up, transform.localScale * .9f, 0, canCollideWith) == null) {
-                transform.position -= Vector3.up;
-            }
+        
+        if(Physics2D.OverlapBox(transform.position - Vector3.up, transform.localScale * .9f, 0, canCollideWith) == null) {
+            if (breakOnGravityUpdate) damage(999999999, 999999);
+            transform.position -= Vector3.up;
+        }
     }
+    
+    public void LiquidUpdate() {
+
+        if(Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, canCollideWith) == null) {
+            GameObject flowing = Instantiate(gameObject, transform.position - transform.up, transform.rotation);
+            flowing.GetComponent<block>().liquidLevel = 7;
+        }
+        if(Physics2D.OverlapBox(transform.position, transform.localScale * .9f, 0, blocks) != null) {
+            Destroy(gameObject);
+        }
+        
+        if(liquidLevel > 0) {            
+            if(Physics2D.OverlapBox(transform.position + transform.right, transform.localScale * .9f, 0, canCollideWith) == null && Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, ~cantCollideWith) != null) {
+                GameObject flowing = Instantiate(gameObject, transform.position + transform.right, transform.rotation);
+                flowing.GetComponent<block>().liquidLevel = liquidLevel - 1;
+            }
+            if(Physics2D.OverlapBox(transform.position - transform.right, transform.localScale * .9f, 0, canCollideWith) == null && Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, ~cantCollideWith) != null) {
+                GameObject flowing = Instantiate(gameObject, transform.position - transform.right, transform.rotation);
+                flowing.GetComponent<block>().liquidLevel = liquidLevel - 1;
+            }
+
+        }
+            if(Physics2D.OverlapBox(transform.position + transform.up, transform.localScale * .9f, 0, waterMask) != null) {
+                liquidLevel = 7;
+            }
+        s.sprite = cachedTextures[liquidLevel];
+    }
+    
     public virtual void ShowInfo() {
         GameObject.Find("Canvas").transform.GetChild(0).GetComponent<Text>().text = $"Block: \n{breakProgress} / {breakTime}";
     }
@@ -165,6 +183,7 @@ public class ItemSpawning{
             GameObject spawnedItem = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/DroppedItem"), position, Quaternion.Euler(0, 0, 0));
             spawnedItem.GetComponent<droppedItem>().itemId = itemToSpawn.id;
             spawnedItem.GetComponent<droppedItem>().itemAmount = itemToSpawn.amount;
+            spawnedItem.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), ForceMode2D.Impulse);
     }
 }
 

@@ -43,8 +43,8 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0.6324958, b: 0, a: 1}
-  m_Intensity: 1
-  m_Range: 10
+  m_Intensity: 12.5
+  m_Range: 3.1
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -143,6 +143,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -236,6 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snapSize: {x: 1, y: 1, z: 1}
+  snapOnUpdate: 0
 --- !u!114 &9169558182506823350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,6 +275,7 @@ MonoBehaviour:
   blocks:
     serializedVersion: 2
     m_Bits: 0
+  entityDamage: 0
 --- !u!1 &9169558183297168840
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,6 +324,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
