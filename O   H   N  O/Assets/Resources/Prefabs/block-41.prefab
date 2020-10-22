@@ -51,6 +51,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -149,6 +150,7 @@ MonoBehaviour:
   maxGrow: 0
   grow: 0
   growTime: 0
+  breakOnGravityUpdate: 0
   blockGravity: 0
   liquidName: lava
   canCollideWith:
@@ -164,6 +166,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   entityDamage: 50
+  gravityUpdateRate: 10
+  liquidUpdateRate: 1
 --- !u!253 &1283855765427428622
 BuoyancyEffector2D:
   m_ObjectHideFlags: 0

@@ -45,7 +45,7 @@ public class block : MonoBehaviour
         }
 
         if (fluid) {
-            cachedTextures = new Sprite[8];
+            cachedTextures = new Sprite[9];
             for (int i = 0; i < cachedTextures.Length; i++) {
                 cachedTextures[i] = Resources.Load<Sprite>("Textures/" + liquidName + "-" + liquidLevel);
             }
@@ -132,29 +132,54 @@ public class block : MonoBehaviour
     }
     
     public void LiquidUpdate() {
-
+        if (liquidLevel > 7) liquidLevel = 7;
+        Collider2D left = Physics2D.OverlapBox(transform.position - transform.right, transform.localScale * .9f, 0, canCollideWith);
+        Collider2D right = Physics2D.OverlapBox(transform.position + transform.right, transform.localScale * .9f, 0, canCollideWith);
+        /*
+            if (left != null) {
+                block b = left.GetComponent<block>();
+                if (b != null) {
+                    if (liquidLevel < b.liquidLevel - 1) {
+                        Destroy(gameObject);
+                    }
+                }
+            }
+            if (right != null) {
+                block b = right.GetComponent<block>();
+                if (b != null) {
+                    if (liquidLevel < b.liquidLevel - 1) {
+                        Destroy(gameObject);
+                    }
+                }
+            }*/
         if(Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, canCollideWith) == null) {
             GameObject flowing = Instantiate(gameObject, transform.position - transform.up, transform.rotation);
-            flowing.GetComponent<block>().liquidLevel = 7;
+            flowing.GetComponent<block>().liquidLevel = 8;
         }
         if(Physics2D.OverlapBox(transform.position, transform.localScale * .9f, 0, blocks) != null) {
             Destroy(gameObject);
         }
         
         if(liquidLevel > 0) {            
-            if(Physics2D.OverlapBox(transform.position + transform.right, transform.localScale * .9f, 0, canCollideWith) == null && Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, ~cantCollideWith) != null) {
+            if(right == null && Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, ~cantCollideWith) != null) {
                 GameObject flowing = Instantiate(gameObject, transform.position + transform.right, transform.rotation);
                 flowing.GetComponent<block>().liquidLevel = liquidLevel - 1;
             }
-            if(Physics2D.OverlapBox(transform.position - transform.right, transform.localScale * .9f, 0, canCollideWith) == null && Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, ~cantCollideWith) != null) {
+            if(left == null && Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, ~cantCollideWith) != null) {
                 GameObject flowing = Instantiate(gameObject, transform.position - transform.right, transform.rotation);
                 flowing.GetComponent<block>().liquidLevel = liquidLevel - 1;
             }
+            
+
 
         }
-            if(Physics2D.OverlapBox(transform.position + transform.up, transform.localScale * .9f, 0, waterMask) != null) {
-                liquidLevel = 7;
-            }
+        if(Physics2D.OverlapBox(transform.position + transform.up, transform.localScale * .9f, 0, waterMask) != null) {
+            liquidLevel = 8;
+        }
+        if (Physics2D.OverlapBox(transform.position + transform.up, transform.localScale * .9f, 0, waterMask) == null) {
+            liquidLevel = 7;
+        }
+        
         s.sprite = cachedTextures[liquidLevel];
     }
     

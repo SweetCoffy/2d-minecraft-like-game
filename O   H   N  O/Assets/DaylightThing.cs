@@ -23,6 +23,7 @@ public class DaylightThing : MonoBehaviour
     public bool affectedBySunlight = true;
 
     public static DaylightThing m;
+    public int currBackground = 0;
 
 
     
@@ -46,7 +47,8 @@ public class DaylightThing : MonoBehaviour
         }
         
         sunRotationThing.rotation = Quaternion.Euler(0, 0, 360 * sunTime * sunRotationMultiplier);
-        s.color = gradient.Evaluate(time);
+        Color c = gradient.Evaluate(time);
+        s.color = new Color(c.r, c.g, c.b, s.color.a);
         Color target = initialColor * intensityCurve.Evaluate(time);
         if (!affectedBySunlight) target = initialColor;
         RenderSettings.ambientLight = Color.Lerp(RenderSettings.ambientLight, target, 10 * Time.deltaTime);
@@ -55,10 +57,12 @@ public class DaylightThing : MonoBehaviour
     public void SetOverworld() {
         initialColor = new Color(1, 1, 1, 1);
         affectedBySunlight = true;
+        currBackground = 0;
     }
 
     public void SetUnderworld() {
-        initialColor = new Color(0.7f, 0.18f, 0, 1);
+        initialColor = new Color(0.988f,0.254f,0.0117f, 1);
         affectedBySunlight = false;
+        currBackground = 1;
     }
 }
