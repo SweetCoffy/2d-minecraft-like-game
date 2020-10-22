@@ -99,7 +99,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.002131939, y: -0.3560055}
+  m_Offset: {x: 0.0030474663, y: -0.24723935}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -110,7 +110,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.19419193, y: 0.28798902}
+  m_Size: {x: 0.28741932, y: 0.5055213}
   m_EdgeRadius: 0
 --- !u!114 &661915731377534681
 MonoBehaviour:
@@ -144,10 +144,14 @@ MonoBehaviour:
   dropItem: 5
   dropAmount: 1
   liquidLevel: 8
+  fallDistance: 1
   fluid: 0
+  flowing: 1
   plant: 0
   maxGrow: 10
   grow: 0
+  blockDetectionOffset: {x: 0, y: 0, z: 0}
+  blockDetectionSize: {x: 0.9, y: 0.9, z: 0.9}
   growTime: 5
   breakOnGravityUpdate: 1
   blockGravity: 1
@@ -167,6 +171,7 @@ MonoBehaviour:
   entityDamage: 0
   gravityUpdateRate: 10
   liquidUpdateRate: 5
+  waterlogable: 1
 --- !u!1 &8996791629258796669
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,8 +197,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8996791629258796669}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.277, z: 0}
-  m_LocalScale: {x: 0.80682135, y: 0.80682135, z: 0.80682135}
+  m_LocalPosition: {x: 0, y: -0.1713, z: 0}
+  m_LocalScale: {x: 1.1369832, y: 1.1369832, z: 1.1369832}
   m_Children: []
   m_Father: {fileID: 661915731377534660}
   m_RootOrder: 0

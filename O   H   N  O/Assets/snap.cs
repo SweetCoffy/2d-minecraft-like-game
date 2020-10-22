@@ -22,6 +22,13 @@ public class snap : MonoBehaviour
         transform.position = MultiplyVector3(RoundVector3(DivideVector3(transform.position, snapSize)), snapSize);
     }
 
+    public void SnapToGrid() {
+        transform.position = MultiplyVector3(RoundVector3(DivideVector3(transform.position, snapSize)), snapSize);
+    }
+    void OnLiquidUpdate() {
+        SnapToGrid();
+    }
+
     void LateUpdate() {
         if (!snapOnUpdate)
             return;

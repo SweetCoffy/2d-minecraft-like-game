@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 2360857917567212727}
   - component: {fileID: 1401265846043466236}
   - component: {fileID: 6301646996232785581}
-  m_Layer: 9
+  - component: {fileID: 2847326086702592386}
+  m_Layer: 8
   m_Name: block-22
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2360857917567212724}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9, y: -1, z: 0}
+  m_LocalPosition: {x: -9, y: -1, z: -47.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -51,6 +52,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -125,6 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snapSize: {x: 1, y: 1, z: 1}
+  snapOnUpdate: 0
 --- !u!114 &2360857917567212727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,11 +146,16 @@ MonoBehaviour:
   dropItem: 22
   dropAmount: 1
   liquidLevel: 8
+  fallDistance: 1
   fluid: 0
+  flowing: 1
   plant: 0
   maxGrow: 0
   grow: 0
+  blockDetectionOffset: {x: 0, y: 0, z: 0}
+  blockDetectionSize: {x: 0.9, y: 0.9, z: 0.9}
   growTime: 0
+  breakOnGravityUpdate: 0
   blockGravity: 0
   liquidName: water
   canCollideWith:
@@ -162,6 +170,11 @@ MonoBehaviour:
   blocks:
     serializedVersion: 2
     m_Bits: 0
+  entityDamage: 0
+  gravityUpdateRate: 10
+  liquidUpdateRate: 5
+  waterlogable: 0
+  falling: 1
 --- !u!114 &1401265846043466236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,3 +203,27 @@ MonoBehaviour:
   pullToCenterSpeed: 5.7
   transportSpeed: 12.83
   effect: {r: 0, g: 1, b: 0.8793845, a: 1}
+  liquidTransportRate: 1
+  moveLiquids: 1
+  moveGravityBlocks: 1
+--- !u!50 &2847326086702592386
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2360857917567212724}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7

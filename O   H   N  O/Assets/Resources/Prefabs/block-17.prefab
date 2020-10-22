@@ -52,6 +52,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -126,6 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snapSize: {x: 1, y: 1, z: 1}
+  snapOnUpdate: 0
 --- !u!114 &5445058213316117412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,6 +151,7 @@ MonoBehaviour:
   maxGrow: 0
   grow: 0
   growTime: 0
+  breakOnGravityUpdate: 0
   blockGravity: 0
   liquidName: water
   canCollideWith:
@@ -163,6 +166,10 @@ MonoBehaviour:
   blocks:
     serializedVersion: 2
     m_Bits: 0
+  entityDamage: 0
+  gravityUpdateRate: 10
+  liquidUpdateRate: 5
+  waterlogable: 1
 --- !u!251 &-2057421373783873704
 PlatformEffector2D:
   m_ObjectHideFlags: 0

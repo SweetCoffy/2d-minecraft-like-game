@@ -144,11 +144,15 @@ MonoBehaviour:
   dropItem: 15
   dropAmount: 1
   liquidLevel: 8
+  fallDistance: 1
   fluid: 0
+  flowing: 1
   plant: 1
-  maxGrow: 10
+  maxGrow: 803
   grow: 0
-  growTime: 5
+  blockDetectionOffset: {x: 0, y: 0, z: 0}
+  blockDetectionSize: {x: 0.9, y: 0.9, z: 0.9}
+  growTime: 0.08
   breakOnGravityUpdate: 1
   blockGravity: 1
   liquidName: water
@@ -167,6 +171,8 @@ MonoBehaviour:
   entityDamage: 0
   gravityUpdateRate: 10
   liquidUpdateRate: 5
+  waterlogable: 0
+  falling: 1
 --- !u!1 &5836335717925825931
 GameObject:
   m_ObjectHideFlags: 0

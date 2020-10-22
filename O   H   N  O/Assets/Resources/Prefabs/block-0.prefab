@@ -51,6 +51,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -164,10 +165,12 @@ MonoBehaviour:
   dropAmount: 1
   liquidLevel: 7
   fluid: 1
+  flowing: 1
   plant: 0
   maxGrow: 0
   grow: 0
   growTime: 0
+  breakOnGravityUpdate: 0
   blockGravity: 0
   liquidName: water
   canCollideWith:
@@ -182,6 +185,10 @@ MonoBehaviour:
   blocks:
     serializedVersion: 2
     m_Bits: 1
+  entityDamage: 0
+  gravityUpdateRate: 20
+  liquidUpdateRate: 5
+  waterlogable: 0
 --- !u!253 &1283855765427428622
 BuoyancyEffector2D:
   m_ObjectHideFlags: 0

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2360857917567212727}
   - component: {fileID: 1401265846043466236}
   - component: {fileID: 6301646996232785581}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: block-35
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,6 +51,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -125,6 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snapSize: {x: 1, y: 1, z: 1}
+  snapOnUpdate: 0
 --- !u!114 &2360857917567212727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,10 +146,12 @@ MonoBehaviour:
   dropAmount: 1
   liquidLevel: 8
   fluid: 0
+  flowing: 1
   plant: 0
   maxGrow: 0
   grow: 0
   growTime: 0
+  breakOnGravityUpdate: 0
   blockGravity: 0
   liquidName: water
   canCollideWith:
@@ -162,6 +166,10 @@ MonoBehaviour:
   blocks:
     serializedVersion: 2
     m_Bits: 0
+  entityDamage: 0
+  gravityUpdateRate: 10
+  liquidUpdateRate: 5
+  waterlogable: 0
 --- !u!114 &1401265846043466236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,3 +198,5 @@ MonoBehaviour:
   pullToCenterSpeed: 7
   transportSpeed: 20
   effect: {r: 0.44, g: 0.70133334, b: 1, a: 1}
+  liquidTransportRate: 5
+  moveLiquids: 1

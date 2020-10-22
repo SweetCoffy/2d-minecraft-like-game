@@ -12,10 +12,14 @@ public class block : MonoBehaviour
     public int dropAmount = 1;
     Color originalColor;
     public int liquidLevel = 8;
+    public float fallDistance = 1;
     public bool fluid;
+    public bool flowing = true;
     public bool plant;
     public int maxGrow;
     public int grow;
+    public Vector3 blockDetectionOffset = Vector3.zero;
+    public Vector3 blockDetectionSize = Vector3.one * 0.9f;
     public float growTime;
     public bool breakOnGravityUpdate = false;
     public bool blockGravity;
@@ -30,6 +34,8 @@ public class block : MonoBehaviour
     public float liquidUpdateRate = 5;
     private Sprite[] cachedTextures;
     private SpriteRenderer s;
+    public bool waterlogable;
+    public bool falling = true;
     
     
     
@@ -124,60 +130,95 @@ public class block : MonoBehaviour
         grownBlock.grow++;
     }
     void Fall() {
-        
-        if(Physics2D.OverlapBox(transform.position - Vector3.up, transform.localScale * .9f, 0, canCollideWith) == null) {
+        if (!falling) return;
+        Collider2D h = Physics2D.OverlapBox(transform.position - (Vector3.up * fallDistance) + blockDetectionOffset, blockDetectionSize, 0, canCollideWith);
+        if(h == null || h.gameObject == gameObject) {
             if (breakOnGravityUpdate) damage(999999999, 999999);
-            transform.position -= Vector3.up;
+            transform.position -= Vector3.up * fallDistance;
         }
     }
     
     public void LiquidUpdate() {
         if (liquidLevel > 7) liquidLevel = 7;
-        Collider2D left = Physics2D.OverlapBox(transform.position - transform.right, transform.localScale * .9f, 0, canCollideWith);
-        Collider2D right = Physics2D.OverlapBox(transform.position + transform.right, transform.localScale * .9f, 0, canCollideWith);
-        /*
-            if (left != null) {
-                block b = left.GetComponent<block>();
-                if (b != null) {
-                    if (liquidLevel < b.liquidLevel - 1) {
-                        Destroy(gameObject);
+        if (flowing) {
+            SendMessage("OnLiquidUpdate");
+            Collider2D left = Physics2D.OverlapBox(transform.position - transform.right, transform.localScale * .9f, 0, canCollideWith);
+            Collider2D right = Physics2D.OverlapBox(transform.position + transform.right, transform.localScale * .9f, 0, canCollideWith);
+            /*
+                if (left != null) {
+                    block b = left.GetComponent<block>();
+                    if (b != null) {
+                        if (liquidLevel < b.liquidLevel - 1) {
+                            Destroy(gameObject);
+                        }
+                    }
+                }
+                if (right != null) {
+                    block b = right.GetComponent<block>();
+                    if (b != null) {
+                        if (liquidLevel < b.liquidLevel - 1) {
+                            Destroy(gameObject);
+                        }
+                    }
+                }*/
+            Collider2D _down = Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, canCollideWith);
+            if(_down == null) {
+                GameObject flowing = Instantiate(gameObject, transform.position - transform.up, transform.rotation);
+                flowing.GetComponent<block>().liquidLevel = 8;
+            } else {
+                block b = _down.GetComponent<block>();
+                if (b) {
+                    if (b.waterlogable) {
+                        GameObject flowing = Instantiate(gameObject, transform.position - transform.up, transform.rotation);
+                        flowing.GetComponent<block>().liquidLevel = 8;
                     }
                 }
             }
-            if (right != null) {
-                block b = right.GetComponent<block>();
-                if (b != null) {
-                    if (liquidLevel < b.liquidLevel - 1) {
+            Collider2D h = Physics2D.OverlapBox(transform.position, transform.localScale * .9f, 0, blocks);
+            if(h != null) {
+                block b = h.GetComponent<block>();
+                if (b) {
+                    if (!b.waterlogable) {
                         Destroy(gameObject);
                     }
                 }
-            }*/
-        if(Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, canCollideWith) == null) {
-            GameObject flowing = Instantiate(gameObject, transform.position - transform.up, transform.rotation);
-            flowing.GetComponent<block>().liquidLevel = 8;
-        }
-        if(Physics2D.OverlapBox(transform.position, transform.localScale * .9f, 0, blocks) != null) {
-            Destroy(gameObject);
-        }
-        
-        if(liquidLevel > 0) {            
-            if(right == null && Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, ~cantCollideWith) != null) {
-                GameObject flowing = Instantiate(gameObject, transform.position + transform.right, transform.rotation);
-                flowing.GetComponent<block>().liquidLevel = liquidLevel - 1;
-            }
-            if(left == null && Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, ~cantCollideWith) != null) {
-                GameObject flowing = Instantiate(gameObject, transform.position - transform.right, transform.rotation);
-                flowing.GetComponent<block>().liquidLevel = liquidLevel - 1;
             }
             
+            if(liquidLevel > 0) {            
+                if(right == null && Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, ~cantCollideWith) != null) {
+                    GameObject flowing = Instantiate(gameObject, transform.position + transform.right, transform.rotation);
+                    flowing.GetComponent<block>().liquidLevel = liquidLevel - 1;
+                } else if (right != null){
+                    block b = right.GetComponent<block>();
+                    if (b) {
+                        if (b.waterlogable) {
+                            GameObject flowing = Instantiate(gameObject, transform.position + transform.right, transform.rotation);
+                            flowing.GetComponent<block>().liquidLevel = liquidLevel - 1;
+                        }
+                    }
+                }
+                if(left == null && Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, ~cantCollideWith) != null) {
+                    GameObject flowing = Instantiate(gameObject, transform.position - transform.right, transform.rotation);
+                    flowing.GetComponent<block>().liquidLevel = liquidLevel - 1;
+                } else if (left != null){
+                    block b = left.GetComponent<block>();
+                    if (b) {
+                        if (b.waterlogable) {
+                            GameObject flowing = Instantiate(gameObject, transform.position - transform.right, transform.rotation);
+                            flowing.GetComponent<block>().liquidLevel = liquidLevel - 1;
+                        }
+                    }
+                }
+                
 
 
-        }
-        if(Physics2D.OverlapBox(transform.position + transform.up, transform.localScale * .9f, 0, waterMask) != null) {
-            liquidLevel = 8;
-        }
-        if (Physics2D.OverlapBox(transform.position + transform.up, transform.localScale * .9f, 0, waterMask) == null) {
-            liquidLevel = 7;
+            }
+            if(Physics2D.OverlapBox(transform.position + transform.up, transform.localScale * .9f, 0, waterMask) != null) {
+                liquidLevel = 8;
+            }
+            if (Physics2D.OverlapBox(transform.position + transform.up, transform.localScale * .9f, 0, waterMask) == null) {
+                liquidLevel = 7;
+            }
         }
         
         s.sprite = cachedTextures[liquidLevel];
@@ -199,6 +240,9 @@ public class block : MonoBehaviour
         if (e != null) {
             e.takeDamage(entityDamage * Time.deltaTime, false);
         }
+    }
+    void OnDrawGizmos() {
+        if (blockGravity) Gizmos.DrawWireCube(transform.position - (Vector3.up * fallDistance) + blockDetectionOffset, blockDetectionSize);
     }
 }
 
