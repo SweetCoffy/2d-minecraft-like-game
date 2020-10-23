@@ -24,6 +24,7 @@ public class DaylightThing : MonoBehaviour
 
     public static DaylightThing m;
     public int currBackground = 0;
+    public float backgroundTransitionSpeed = 5;
 
 
     

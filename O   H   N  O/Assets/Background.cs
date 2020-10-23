@@ -30,9 +30,9 @@ public class Background : MonoBehaviour
     void Update()
     {
         if (DaylightThing.m.currBackground == backgroundIndex) {
-            alpha = Mathf.Lerp(alpha, 1, 10 * Time.deltaTime);
+            alpha = Mathf.Lerp(alpha, 1, DaylightThing.m.backgroundTransitionSpeed * Time.deltaTime);
         } else {
-            alpha = Mathf.Lerp(alpha, 0, 10 * Time.deltaTime);
+            alpha = Mathf.Lerp(alpha, 0, DaylightThing.m.backgroundTransitionSpeed * Time.deltaTime);
         }
     }
 }
