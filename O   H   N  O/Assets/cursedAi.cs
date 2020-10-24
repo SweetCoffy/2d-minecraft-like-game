@@ -45,10 +45,11 @@ public class cursedAi : MonoBehaviour
             
             if (it.id == 40) {
                 e.setSelectedItem(i3);
-
                 e.useItem(i3, (Vector2)target.position);
-                
-                break;
+            }
+            if (it.id == 44) {
+                e.setSelectedItem(i3);
+                e.useItem(i3, (Vector2)target.position);
             }
             
             i3++;

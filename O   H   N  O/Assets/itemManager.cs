@@ -6,6 +6,7 @@ public class itemManager : MonoBehaviour
 {
     public Sprite[] itemTextures;
     public Sprite unknownTexture;
+    public GameObject droppedItemPrefab;
     public Sprite blankTexture;
     public string[] itemNames;
     public static entity player;
@@ -15,6 +16,8 @@ public class itemManager : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<entity>();
         InvokeRepeating("UpdateItem", 0, 15f);
     }
+
+
     void UpdateItem() {
         string t;
         if(player.getSelectedItem() < player.storedItems.Count - 1) {
@@ -28,4 +31,40 @@ public class itemManager : MonoBehaviour
     }
 
 
+}
+
+[System.Serializable]
+public class ItemData {
+    public Sprite texture {
+        get {
+            if (id > itemManager.main.itemTextures.Length - 1) return itemManager.main.unknownTexture;
+            if (id < 0) return itemManager.main.unknownTexture;
+            return itemManager.main.itemTextures[id];
+        }
+    }
+    public static string GetItemName(int id) {
+        return new ItemData(id).name;
+    }
+    public static ItemData GetItem(int id) {
+        return new ItemData(id);
+    }
+    public static bool IsValid(int id) {
+        return new ItemData(id).isValid;
+    }
+    public int id;
+    public string name {
+        get {
+            if (id > itemManager.main.itemNames.Length - 1) return "oh no";
+            if (id < 0) return "oh no";
+            return itemManager.main.itemNames[id];
+        }
+    }
+    public bool isValid {
+        get {
+            return id > 0 && id < itemManager.main.itemNames.Length;
+        }
+    }
+    public ItemData(int id) {
+        this.id = id;
+    }
 }

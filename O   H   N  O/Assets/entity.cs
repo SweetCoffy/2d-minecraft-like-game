@@ -309,6 +309,8 @@ public class entity : MonoBehaviour
         }
 
         if (currItem.id == 44) {
+            Debug.Log(this);
+            Debug.Log(position);
             if (position == null) 
                 return;
             

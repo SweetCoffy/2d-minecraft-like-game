@@ -60,10 +60,19 @@ public class DaylightThing : MonoBehaviour
         affectedBySunlight = true;
         currBackground = 0;
     }
-
     public void SetUnderworld() {
         initialColor = new Color(0.988f,0.254f,0.0117f, 1);
         affectedBySunlight = false;
         currBackground = 1;
+    }
+    public void SetFloatingIslands() {
+        initialColor = new Color(1,1,1,1);
+        affectedBySunlight = true;
+        currBackground = 2;
+    }
+    public void SetSpace() {
+        initialColor = new Color(0.1f,0.1f,0.1f,1);
+        affectedBySunlight = false;
+        currBackground = 3;
     }
 }

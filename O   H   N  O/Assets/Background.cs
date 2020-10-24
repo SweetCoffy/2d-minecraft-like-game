@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 public class Background : MonoBehaviour
 {
     SpriteRenderer s;
     public int backgroundIndex;
     private float _alpha = 1;
+    public bool useArray = false;
+    public List<int> backgroundIndexes;
     public float alpha {
         get {
             return _alpha;
@@ -29,7 +32,7 @@ public class Background : MonoBehaviour
     }
     void Update()
     {
-        if (DaylightThing.m.currBackground == backgroundIndex) {
+        if ((DaylightThing.m.currBackground == backgroundIndex && !useArray) || (backgroundIndexes.Contains(DaylightThing.m.currBackground) && useArray)) {
             alpha = Mathf.Lerp(alpha, 1, DaylightThing.m.backgroundTransitionSpeed * Time.deltaTime);
         } else {
             alpha = Mathf.Lerp(alpha, 0, DaylightThing.m.backgroundTransitionSpeed * Time.deltaTime);
