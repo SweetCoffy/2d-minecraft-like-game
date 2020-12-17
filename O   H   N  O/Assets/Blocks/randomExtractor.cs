@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class RandomExtractor : MonoBehaviour
 {
@@ -11,29 +9,33 @@ public class RandomExtractor : MonoBehaviour
     public Vector3 itemOffset = Vector3.up;
 
     public int dropAmount;
-    
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(drillProgress < drillTime) {
+        if (drillProgress < drillTime)
+        {
             drillProgress += Time.deltaTime;
         }
-        if(drillProgress >= drillTime) {
+        if (drillProgress >= drillTime)
+        {
             drillProgress = 0;
             ItemSpawning.Spawn(new Item(drops[(int)Mathf.Floor(Random.Range(0, drops.Length))], dropAmount), transform.position + itemOffset);
-            if(drillEffect != null) {
+            if (drillEffect != null)
+            {
                 Instantiate(drillEffect, transform.position + itemOffset, Quaternion.identity);
             }
         }
     }
 
-    void OnDrawGizmos() {
+    void OnDrawGizmos()
+    {
         Gizmos.DrawWireCube(transform.position + itemOffset, Vector3.one);
     }
 }

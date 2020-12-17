@@ -9,7 +9,8 @@ public class AnimationThing : MonoBehaviour
     public float rotationMultiplier = 12.5f;
     public Quaternion testQuaternion;
 
-    void Update() {
+    void Update()
+    {
         transform.localScale = originalScale + (Vector3.one * Mathf.Sin(Time.time * speed) * multiplier);
         transform.rotation = Quaternion.Euler(0, 0, Mathf.Sin(Time.time * rotationSpeed) * rotationMultiplier);
     }

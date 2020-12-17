@@ -1,8 +1,9 @@
 ﻿
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
-public class BlockMaker : EditorWindow {
+public class BlockMaker : EditorWindow
+{
     string blockName = "Block";
     float blockBreakingTime = 7.5f;
     float blockMinimumMiningPower = 1;
@@ -14,57 +15,63 @@ public class BlockMaker : EditorWindow {
     bool folded;
     bool enableDisable;
     public static bool cancelIfRecipeIsNull = true;
-    
-    
-    
+
+
+
     [MenuItem("Tools/Sebo2205's stuff/Block Creator")]
-    public static void ShowWindow() {
+    public static void ShowWindow()
+    {
         GetWindow<BlockMaker>("Block creator");
-    }    
-    void OnGUI () {
+    }
+    void OnGUI()
+    {
         GUILayout.Label("Create a new Block using the options below", EditorStyles.boldLabel);
 
         GUILayout.Label("Block Stats", EditorStyles.boldLabel);
         blockName = EditorGUILayout.TextField("Block ID", blockName);
         blockBreakingTime = EditorGUILayout.Slider("Block Breaking Time", blockBreakingTime, .1f, 50);
         blockMinimumMiningPower = EditorGUILayout.Slider("Block Minimum Mining Power", blockMinimumMiningPower, 0, 50);
-        
-        
+
+
         EditorGUILayout.Space();
-        
+
         GUILayout.Label("Block Texture and Color", EditorStyles.boldLabel);
         blockSprite = (Sprite)EditorGUILayout.ObjectField("Block Sprite", blockSprite, typeof(Sprite));
         blockColor = EditorGUILayout.ColorField("Block Color", blockColor);
 
         addSmelter = EditorGUILayout.BeginToggleGroup(new GUIContent("Smelter", "A Smelter component should be added to the Block?"), addSmelter);
-           recipe = (CraftingRecipe)EditorGUILayout.ObjectField("Smelter Recipe", recipe, typeof(CraftingRecipe)); 
-           smelterTier = EditorGUILayout.Slider("Smelter Tier", smelterTier, .1f, 10);
+        recipe = (CraftingRecipe)EditorGUILayout.ObjectField("Smelter Recipe", recipe, typeof(CraftingRecipe));
+        smelterTier = EditorGUILayout.Slider("Smelter Tier", smelterTier, .1f, 10);
         EditorGUILayout.EndToggleGroup();
-        
-        
-        if(GUILayout.Button("Create Block")) {
+
+
+        if (GUILayout.Button("Create Block"))
+        {
             NewBlock();
         }
     }
 
-    void NewBlock() {
-        
+    void NewBlock()
+    {
+
         GameObject b = new GameObject(blockName);
         Block bBlock = b.AddComponent<Block>();
         SpriteRenderer s = b.AddComponent<SpriteRenderer>();
         b.AddComponent<Snap>();
         b.AddComponent<BoxCollider2D>();
-        if(addSmelter) {
+        if (addSmelter)
+        {
             Smelter smelt = b.AddComponent<Smelter>();
             smelt.recipe = recipe;
             smelt.smelterTier = smelterTier;
-            if(recipe == null && cancelIfRecipeIsNull) {
+            if (recipe == null && cancelIfRecipeIsNull)
+            {
                 Destroy(b);
                 Debug.LogError("Error!, can't spawn the object because the smelter recipe is null, change it and try again");
                 return;
             }
         }
-        
+
         bBlock.breakTime = blockBreakingTime;
         bBlock.minimumMiningPower = blockMinimumMiningPower;
         s.color = blockColor;

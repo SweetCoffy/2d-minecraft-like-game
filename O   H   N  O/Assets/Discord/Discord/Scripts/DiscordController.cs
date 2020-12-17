@@ -27,28 +27,30 @@ public class DiscordController : MonoBehaviour
 
     DiscordRpc.EventHandlers handlers;
 
-    void Awake() {
+    void Awake()
+    {
         main = this;
 
     }
-    
-    public void UpdateHeldItem(string a) {
+
+    public void UpdateHeldItem(string a)
+    {
 
         heldItem = a;
         presence.details = $"{heldItem}";
         presence.largeImageText = "Game Thing";
         presence.largeImageKey = "img";
         presence.smallImageKey = "pickaxe";
-        
-        
+
+
 
         DiscordRpc.UpdatePresence(presence);
-        
+
     }
-            
 
 
-    
+
+
 
     public void RequestRespondYes()
     {

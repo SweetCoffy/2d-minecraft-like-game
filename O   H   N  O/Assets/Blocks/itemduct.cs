@@ -22,49 +22,61 @@ public class Itemduct : MonoBehaviour
     void Update()
     {
         s.color = Color.Lerp(s.color, original, 0.2f);
-        if (moveLiquids && liquidTransportCooldown > 0) {
+        if (moveLiquids && liquidTransportCooldown > 0)
+        {
             liquidTransportCooldown -= Time.deltaTime;
         }
     }
 
-    void OnTriggerEnter2D(Collider2D col) {
+    void OnTriggerEnter2D(Collider2D col)
+    {
         Block b = col.GetComponent<Block>();
         Debug.Log(b);
-        if ((b != null && b.fluid && moveLiquids) || (b != null && b.blockGravity && moveGravityBlocks)) {
+        if ((b != null && b.fluid && moveLiquids) || (b != null && b.blockGravity && moveGravityBlocks))
+        {
             b.flowing = false;
             b.falling = false;
             b.transform.position = transform.position;
         }
     }
-    void OnTriggerExit2D(Collider2D col) {
+    void OnTriggerExit2D(Collider2D col)
+    {
         Block b = col.GetComponent<Block>();
         Debug.Log(b);
-        if ((b != null && b.fluid && moveLiquids) || (b != null && b.blockGravity && moveGravityBlocks)) {
+        if ((b != null && b.fluid && moveLiquids) || (b != null && b.blockGravity && moveGravityBlocks))
+        {
             b.flowing = true;
             b.falling = true;
         }
     }
-    void OnTriggerStay2D(Collider2D col) {
+    void OnTriggerStay2D(Collider2D col)
+    {
         DroppedItem di = col.GetComponent<DroppedItem>();
         Entity e = col.GetComponent<Entity>();
         Block b = col.GetComponent<Block>();
 
-        if(di != null) {
+        if (di != null)
+        {
             di.GetComponent<Rigidbody2D>().position += (Vector2)transform.right * transportSpeed * Time.deltaTime;
             di.GetComponent<Rigidbody2D>().position = Vector3.Lerp(di.GetComponent<Rigidbody2D>().position, transform.position, pullToCenterSpeed * Time.deltaTime);
             di.GetComponent<Rigidbody2D>().velocity = Vector2.Lerp(di.GetComponent<Rigidbody2D>().velocity, Vector2.zero, 0.3f);
             s.color = effect;
-        } else if(e != null) {
+        }
+        else if (e != null)
+        {
             e.GetComponent<Rigidbody2D>().position += (Vector2)transform.right * transportSpeed * Time.deltaTime;
             e.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             //e.GetComponent<Rigidbody2D>().position = Vector3.Lerp(e.GetComponent<Rigidbody2D>().position, transform.position, pullToCenterSpeed * Time.deltaTime);
-        } else if ((b != null && b.fluid && moveLiquids) || (b != null && b.blockGravity && moveGravityBlocks)) {
-            if (liquidTransportCooldown <= 0) {
+        }
+        else if ((b != null && b.fluid && moveLiquids) || (b != null && b.blockGravity && moveGravityBlocks))
+        {
+            if (liquidTransportCooldown <= 0)
+            {
                 liquidTransportCooldown = 1 / liquidTransportRate;
                 b.transform.position += transform.right;
             }
         }
 
-        
+
     }
 }
