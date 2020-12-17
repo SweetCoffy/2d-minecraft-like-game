@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Entity))]
 public class Container : MonoBehaviour
@@ -13,27 +11,35 @@ public class Container : MonoBehaviour
     void Start()
     {
         e = GetComponent<Entity>();
-        InvokeRepeating("Output", 0, 1/dropRate);
+        InvokeRepeating("Output", 0, 1 / dropRate);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Physics2D.OverlapBox((Vector2)(transform.position + transform.right), Vector2.one * 0.9f, 0, mask) != null) {
+        if (Physics2D.OverlapBox((Vector2)(transform.position + transform.right), Vector2.one * 0.9f, 0, mask) != null)
+        {
             Itemduct duct = Physics2D.OverlapBox((Vector2)(transform.position + transform.right), Vector2.one * 0.9f, 0, mask).GetComponent<Itemduct>();
-            if(duct != null) {
+            if (duct != null)
+            {
                 canDrop = true;
-            } else {
+            }
+            else
+            {
                 canDrop = false;
             }
-        } else {
+        }
+        else
+        {
             canDrop = false;
         }
-        
+
     }
 
-    void Output() {
-        if(canDrop) {
+    void Output()
+    {
+        if (canDrop)
+        {
             e.DropItem(0, false, (Vector2)transform.right);
         }
     }
