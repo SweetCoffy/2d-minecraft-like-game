@@ -16,7 +16,7 @@ public class PowerGenerator : PowerBlock {
     // The current power generation
     protected float currentPowerGeneration;
 
-    public override void Update() {
+    protected override void Update() {
         base.Update();
         // Update the current power generation
         currentPowerGeneration = Mathf.Clamp(basePowerGeneration * powerGeneration, 0, maxPowerGeneration);

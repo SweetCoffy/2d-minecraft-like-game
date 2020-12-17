@@ -42,7 +42,7 @@ public class Block : MonoBehaviour
     
     
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         s = GetComponent<SpriteRenderer>();
         originalColor = s.color;
@@ -62,10 +62,8 @@ public class Block : MonoBehaviour
     }
 
     // Update is called once per frame
-    public virtual void Update()
+    protected virtual void Update()
     {
-        
-
         if(plant) {
 
             if(grow < maxGrow) {
@@ -75,19 +73,14 @@ public class Block : MonoBehaviour
             }
         
         }
-        
-
-
-
-
     }
-     void spawnItem(Item itemToSpawn) {
-            GameObject spawnedItem = Instantiate(Resources.Load<GameObject>("Prefabs/DroppedItem"), transform.position, Quaternion.identity);
-            spawnedItem.GetComponent<DroppedItem>().itemId = itemToSpawn.id;
-            spawnedItem.GetComponent<DroppedItem>().itemAmount = itemToSpawn.amount;
+    void SpawnItem(Item itemToSpawn) {
+        GameObject spawnedItem = Instantiate(Resources.Load<GameObject>("Prefabs/DroppedItem"), transform.position, Quaternion.identity);
+        spawnedItem.GetComponent<DroppedItem>().itemId = itemToSpawn.id;
+        spawnedItem.GetComponent<DroppedItem>().itemAmount = itemToSpawn.amount;
     }
 
-    void OnMouseOver() {
+    protected virtual void OnMouseOver() {
         if(GetComponent<Crafter>() != null) {
             return;
         }
@@ -95,7 +88,7 @@ public class Block : MonoBehaviour
         ShowInfo();
     }
 
-    void OnMouseExit() {
+    protected virtual void OnMouseExit() {
         if(GetComponent<Crafter>() != null) {
             return;
         }
@@ -111,18 +104,18 @@ public class Block : MonoBehaviour
 
         if(breakProgress <= 0) {
             if(dropItem > -1 && dropAmount > 0) {
-                spawnItem(new Item(dropItem, dropAmount));
+                SpawnItem(new Item(dropItem, dropAmount));
                 
             }
             Destroy(gameObject);
         }
     }
 
-    void OnMouseDown() {
+    protected virtual void OnMouseDown() {
         GameObject.Find("Player").GetComponent<Entity>().mineBlock(this);
     }
 
-    public void Grow() {
+    public virtual void Grow() {
        timeToGrow = Time.time + growTime;
         if(Physics2D.OverlapBox(transform.position + Vector3.up, transform.localScale * .9f, 0) != null) {
             return;
@@ -131,7 +124,7 @@ public class Block : MonoBehaviour
         plant = false;
         grownBlock.grow++;
     }
-    void Fall() {
+    protected virtual void Fall() {
         if (!falling) return;
         Collider2D h = Physics2D.OverlapBox(transform.position - (Vector3.up * fallDistance) + blockDetectionOffset, blockDetectionSize, 0, canCollideWith, -90, 90);
         if(h == null || h.gameObject == gameObject) {

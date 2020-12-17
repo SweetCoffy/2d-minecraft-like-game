@@ -31,18 +31,18 @@ public class PlayerHealthDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        img.fillAmount = Mathf.Lerp(img.fillAmount, Mathf.Round(e.getStat(stat))/e.getMaxStat(stat), lerpSpeed);
+        img.fillAmount = Mathf.Lerp(img.fillAmount, Mathf.Round(e.GetStat(stat))/e.GetMaxStat(stat), lerpSpeed);
 
         
         
         
-        if (e.getMaxStat(stat) > maxStatBeforeColor) {
+        if (e.GetMaxStat(stat) > maxStatBeforeColor) {
             img.color = anotherColor;
         } else {
             img.color = originalColor;
         }
         
         if (useGradient) 
-            img.color = Color.Lerp(img.color, colorGradient.Evaluate(e.getStat(stat)/e.getMaxStat(stat)), .25f);
+            img.color = Color.Lerp(img.color, colorGradient.Evaluate(e.GetStat(stat)/e.GetMaxStat(stat)), .25f);
     }
 }

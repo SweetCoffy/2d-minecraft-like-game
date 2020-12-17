@@ -59,6 +59,16 @@ public class Entity : MonoBehaviour
         manaRecoverTimer = 0.5f;
         mana -= amount;
     }
+    public float GetMaxStat(string stat) {
+        if (stat == "health") return maxHealth;
+        else if (stat == "thirst") return maxThirst;
+        else return maxMana;
+    }
+    public float GetStat(string stat) {
+        if (stat == "health") return health;
+        else if (stat == "thirst") return thirst;
+        else return mana;
+    }
     void Start()
     {
         if (airBar) defaultAirBarColor = airBar.color;
@@ -236,7 +246,7 @@ public class Entity : MonoBehaviour
             health = Mathf.Clamp(health + Mathf.Round(Random.Range(0, 1)), 0, maxHealth);
             thirst += Random.Range(1, 5);
             takeDamage(Mathf.Round(Random.Range(1, 2)));
-            spawnItem(new Item(2, 1));
+            SpawnItem(new Item(2, 1));
             storedItems[item].amount -= 1;
             lastitemUpdate = item;
 
@@ -244,7 +254,7 @@ public class Entity : MonoBehaviour
         if(currItem.id == 1) {
             health = Mathf.Clamp(health + Mathf.Round(Random.Range(1, 3)), 0, maxHealth);
             thirst += Random.Range(5, 10);
-            spawnItem(new Item(2, 1));
+            SpawnItem(new Item(2, 1));
             storedItems[item].amount -= 1;
             lastitemUpdate = item;
         }
@@ -357,14 +367,14 @@ public class Entity : MonoBehaviour
         }
     }
     
-    public void spawnItem(Item itemToSpawn) {
+    public void SpawnItem(Item itemToSpawn) {
             GameObject spawnedItem = Instantiate(Resources.Load<GameObject>("Prefabs/DroppedItem"), transform.position, transform.rotation);
             spawnedItem.GetComponent<DroppedItem>().itemId = itemToSpawn.id;
             spawnedItem.GetComponent<DroppedItem>().itemAmount = itemToSpawn.amount;
             spawnedItem.GetComponent<DroppedItem>().properties = itemToSpawn.properties;
     }
 
-    public void spawnItem(Item itemToSpawn, float randomness) {
+    public void SpawnItem(Item itemToSpawn, float randomness) {
             GameObject spawnedItem = Instantiate(Resources.Load<GameObject>("Prefabs/DroppedItem"), transform.position, transform.rotation);
             spawnedItem.GetComponent<DroppedItem>().itemId = itemToSpawn.id;
             spawnedItem.GetComponent<DroppedItem>().itemAmount = itemToSpawn.amount;
@@ -373,13 +383,13 @@ public class Entity : MonoBehaviour
             rb.AddForce(new Vector2(Random.Range(-randomness, randomness), Random.Range(-randomness, randomness)), ForceMode2D.Impulse);
     }
 
-    public void spawnItem(Item itemToSpawn, Vector3 offset) {
+    public void SpawnItem(Item itemToSpawn, Vector3 offset) {
             GameObject spawnedItem = Instantiate(Resources.Load<GameObject>("Prefabs/DroppedItem"), transform.position + offset, transform.rotation);
             spawnedItem.GetComponent<DroppedItem>().itemId = itemToSpawn.id;
             spawnedItem.GetComponent<DroppedItem>().itemAmount = itemToSpawn.amount;
             spawnedItem.GetComponent<DroppedItem>().properties = itemToSpawn.properties;
     }
-    public void spawnItem(Item itemToSpawn, Vector3 offset, Vector2 force) {
+    public void SpawnItem(Item itemToSpawn, Vector3 offset, Vector2 force) {
             GameObject spawnedItem = Instantiate(Resources.Load<GameObject>("Prefabs/DroppedItem"), transform.position + offset, transform.rotation);
             spawnedItem.GetComponent<DroppedItem>().itemId = itemToSpawn.id;
             spawnedItem.GetComponent<DroppedItem>().itemAmount = itemToSpawn.amount;
@@ -393,11 +403,11 @@ public class Entity : MonoBehaviour
         }
 
         if(droppAll) {
-            spawnItem(storedItems[index], transform.localScale.normalized*1.5f);
+            SpawnItem(storedItems[index], transform.localScale.normalized*1.5f);
             storedItems.RemoveAt(index);
             lastitemUpdate = index;
         } else {
-            spawnItem(new Item(storedItems[index].id, 1), transform.localScale.normalized.x * Vector3.right * 1.2f, (Vector2)transform.localScale.normalized * Vector2.right * 7);
+            SpawnItem(new Item(storedItems[index].id, 1), transform.localScale.normalized.x * Vector3.right * 1.2f, (Vector2)transform.localScale.normalized * Vector2.right * 7);
             consumeItem(index);
             
             lastitemUpdate = index;
@@ -411,11 +421,11 @@ public class Entity : MonoBehaviour
         
         
         if(droppAll) {
-            spawnItem(storedItems[index], direction);
+            SpawnItem(storedItems[index], direction);
             storedItems.RemoveAt(index);
             lastitemUpdate = index;
         } else {
-            spawnItem(new Item(storedItems[index].id, 1), direction);
+            SpawnItem(new Item(storedItems[index].id, 1), direction);
             consumeItem(index);
             lastitemUpdate = index;
         }
@@ -451,7 +461,7 @@ public class Entity : MonoBehaviour
         List<Item> oldItems = storedItems;
 
         foreach(Item it in oldItems) {
-            spawnItem(it, 5f);
+            SpawnItem(it, 5f);
             
             
             i++;

@@ -56,7 +56,7 @@ public class InventoryItem : MonoBehaviour
 
     void FixedUpdate() {
         thisRect.localScale = Vector2.Lerp(thisRect.localScale, new Vector2(1, 1), .1f);
-        if(playerEntity.getSelectedItem() == index) {
+        if(playerEntity.GetSelectedItem() == index) {
             thisRect.localScale = Vector2.Lerp(thisRect.localScale, new Vector2(1.5f, 1.5f), .1f);
 
         }

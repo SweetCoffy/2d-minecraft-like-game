@@ -17,10 +17,10 @@ public class SelectedItemText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(e.getSelectedItem() > e.storedItems.Count - 1) {
+        if(e.GetSelectedItem() > e.storedItems.Count - 1) {
             GetComponent<Text>().text = "0x Nothing";
             return;
         }
-        GetComponent<Text>().text = $"{e.storedItems[e.getSelectedItem()].amount}x {im.itemNames[e.storedItems[e.getSelectedItem()].id]}";
+        GetComponent<Text>().text = $"{e.storedItems[e.GetSelectedItem()].amount}x {im.itemNames[e.storedItems[e.GetSelectedItem()].id]}";
     }
 }

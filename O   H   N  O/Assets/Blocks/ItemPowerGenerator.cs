@@ -18,7 +18,7 @@ public class ItemPowerGenerator : PowerGenerator {
     // For how much time the fuel item is being used
     protected float fuelUsage = 0; 
     
-    public override void Update() {
+    protected override void Update() {
         base.Update();
         if(storedFuel > 0) {
             if(fuelUsage < fuelDuration) {

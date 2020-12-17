@@ -23,7 +23,7 @@ public class PowerBlock : Block
     
     // Whether or not the power requirements are met, useful for making blocks that require power to work
     public bool requirementsMet; 
-    public override void Update()
+    protected override void Update()
     {
         base.Update();
         // Consumes power if the Block consumes any

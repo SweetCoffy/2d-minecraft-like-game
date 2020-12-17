@@ -39,7 +39,7 @@ public class CursedAI : MonoBehaviour
             }
         }
         int i3 = 0;
-        if(e.getStat("thirst") / e.getMaxStat("thirst") > .25f) {
+        if(e.GetStat("thirst") / e.GetMaxStat("thirst") > .25f) {
             return;
         }
         int i = 0;
@@ -50,7 +50,7 @@ public class CursedAI : MonoBehaviour
             i++;
         }
         e.setSelectedItem(i);
-        e.useItem(e.getSelectedItem());
+        e.useItem(e.GetSelectedItem());
     }
 
     public void SetAutoMining(bool value) {

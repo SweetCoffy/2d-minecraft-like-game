@@ -3,7 +3,8 @@ using System.Collections.Generic;
 public class BottleFiller : PowerBlock {
     public float consumeAmount = 5;
     public Vector2 offset;
-    void Start() {
+    protected override void Start() {
+        base.Start();
         powerConsume = consumeAmount;
     }
     void OnTriggerEnter2D(Collider2D col) {

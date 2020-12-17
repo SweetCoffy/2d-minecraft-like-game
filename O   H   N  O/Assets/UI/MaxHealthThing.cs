@@ -22,9 +22,9 @@ public class MaxHealthThing : MonoBehaviour
     void Update()
     {
         if (!vertical) {
-            rect.sizeDelta = new Vector2(Mathf.Clamp(e.getMaxStat(stat), 0, maxStat) / healthPerSegmentSize * segmentSize, rect.sizeDelta.y);
+            rect.sizeDelta = new Vector2(Mathf.Clamp(e.GetMaxStat(stat), 0, maxStat) / healthPerSegmentSize * segmentSize, rect.sizeDelta.y);
         } else {
-            rect.sizeDelta = new Vector2(rect.sizeDelta.x, Mathf.Clamp(e.getMaxStat(stat), 0, maxStat) / healthPerSegmentSize * segmentSize);
+            rect.sizeDelta = new Vector2(rect.sizeDelta.x, Mathf.Clamp(e.GetMaxStat(stat), 0, maxStat) / healthPerSegmentSize * segmentSize);
         }
         
     }

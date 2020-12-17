@@ -72,14 +72,14 @@ public class Crafter : MonoBehaviour
     
     void OnMouseDown() {
         Entity e = GameObject.Find("Player").GetComponent<Entity>();
-        if(e.getSelectedItem() > e.storedItems.Count -1) {
+        if(e.GetSelectedItem() > e.storedItems.Count -1) {
             return;
         }
         int i = 0;
         foreach(int currentInput in input) {
-        if(e.storedItems[e.getSelectedItem()].id == input[i]) {
+        if(e.storedItems[e.GetSelectedItem()].id == input[i]) {
             inputItems[i] += 1;
-            e.consumeItem(e.getSelectedItem());
+            e.consumeItem(e.GetSelectedItem());
         }
         i++;
         }

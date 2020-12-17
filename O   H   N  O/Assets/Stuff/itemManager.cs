@@ -20,8 +20,8 @@ public class ItemManager : MonoBehaviour
 
     void UpdateItem() {
         string t;
-        if(player.getSelectedItem() < player.storedItems.Count - 1) {
-            t = $"{player.storedItems[player.getSelectedItem()].amount}x {itemNames[player.storedItems[player.getSelectedItem()].id]}";
+        if(player.GetSelectedItem() < player.storedItems.Count - 1) {
+            t = $"{player.storedItems[player.GetSelectedItem()].amount}x {itemNames[player.storedItems[player.GetSelectedItem()].id]}";
         } else {
             t = "Nothing";
         }
