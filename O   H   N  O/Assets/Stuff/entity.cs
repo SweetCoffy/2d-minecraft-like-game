@@ -545,6 +545,6 @@ public static class ItemID {
     public static int Rock = 4;
     public static int BasicPick = 3;
     public static int Bottle = 2;
-    public static int PurifiedWater = 1;
+    public static int ClinWater = 1;
     public static int Water = 0;
 }
