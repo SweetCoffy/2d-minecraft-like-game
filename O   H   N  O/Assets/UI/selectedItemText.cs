@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class SelectedItemText : MonoBehaviour
@@ -10,14 +8,15 @@ public class SelectedItemText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       e = GameObject.Find("Player").GetComponent<Entity>();
-       im = GameObject.Find("ItemManager").GetComponent<ItemManager>(); 
+        e = GameObject.Find("Player").GetComponent<Entity>();
+        im = GameObject.Find("ItemManager").GetComponent<ItemManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(e.GetSelectedItem() > e.storedItems.Count - 1) {
+        if (e.GetSelectedItem() > e.storedItems.Count - 1)
+        {
             GetComponent<Text>().text = "0x Nothing";
             return;
         }
