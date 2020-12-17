@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class itemExtractor : MonoBehaviour
+public class ItemExtractor : MonoBehaviour
 {
     public Vector3 offset;
     public int itemId;

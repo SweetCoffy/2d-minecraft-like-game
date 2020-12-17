@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class inventoryItem : MonoBehaviour
+public class InventoryItem : MonoBehaviour
 {
     public int index;
     RectTransform thisRect;
-    entity playerEntity;
-    public entity e;
-    itemManager im;
+    Entity playerEntity;
+    public Entity e;
+    ItemManager im;
     // Start is called before the first frame update
     void Start()
     {
-        im = GameObject.Find("ItemManager").GetComponent<itemManager>();
-        playerEntity = GameObject.Find("Player").GetComponent<entity>();
+        im = GameObject.Find("ItemManager").GetComponent<ItemManager>();
+        playerEntity = GameObject.Find("Player").GetComponent<Entity>();
         thisRect = GetComponent<RectTransform>();
         if(e != null) {
             playerEntity = e;
@@ -25,13 +25,13 @@ public class inventoryItem : MonoBehaviour
     void Update()
     {
         if (!playerEntity) {
-            playerEntity = GameObject.Find("Player").GetComponent<entity>();
+            playerEntity = GameObject.Find("Player").GetComponent<Entity>();
         }
         
         
         if(index > playerEntity.storedItems.Count - 1) {
             transform.GetChild(0).GetComponent<Text>().text = "";
-            GetComponent<Image>().sprite = GameObject.Find("ItemManager").GetComponent<itemManager>().blankTexture;
+            GetComponent<Image>().sprite = GameObject.Find("ItemManager").GetComponent<ItemManager>().blankTexture;
             GetComponent<Image>().color = new Color(0, 0, 0, 0);
             return;
         } else {
@@ -47,7 +47,7 @@ public class inventoryItem : MonoBehaviour
         }
         
         transform.GetChild(0).GetComponent<Text>().text = amountString;
-        GetComponent<Image>().sprite = GameObject.Find("ItemManager").GetComponent<itemManager>().itemTextures[playerEntity.storedItems[index].id];
+        GetComponent<Image>().sprite = GameObject.Find("ItemManager").GetComponent<ItemManager>().itemTextures[playerEntity.storedItems[index].id];
         if(playerEntity.lastitemUpdate == index) {
           playerEntity.lastitemUpdate = -1;
           thisRect.localScale = new Vector2(.6f, 1.6f);

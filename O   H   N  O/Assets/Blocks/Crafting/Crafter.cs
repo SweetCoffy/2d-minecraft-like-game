@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(block))]
+[RequireComponent(typeof(Block))]
 public class Crafter : MonoBehaviour
 {
     public int[] input;
@@ -12,7 +12,7 @@ public class Crafter : MonoBehaviour
     public int[] outputAmount;
     public float craftingTime;
     int[] inputItems;
-    itemManager im;
+    ItemManager im;
     public string crafterName;
     float[] craftingProgress;
     public string getDisplayText() {
@@ -36,16 +36,16 @@ public class Crafter : MonoBehaviour
     }
 
     GameObject itemPrefab;
-    public block b;
+    public Block b;
 
     void Start() {
         inputItems = new int[output.Length];
         craftingProgress = new float[output.Length];
         
         
-        im = GameObject.Find("ItemManager").GetComponent<itemManager>();
+        im = GameObject.Find("ItemManager").GetComponent<ItemManager>();
         itemPrefab = Resources.Load<GameObject>("Prefabs/DroppedItem");
-        b = GetComponent<block>();
+        b = GetComponent<Block>();
     }
     
     
@@ -71,7 +71,7 @@ public class Crafter : MonoBehaviour
     }
     
     void OnMouseDown() {
-        entity e = GameObject.Find("Player").GetComponent<entity>();
+        Entity e = GameObject.Find("Player").GetComponent<Entity>();
         if(e.getSelectedItem() > e.storedItems.Count -1) {
             return;
         }

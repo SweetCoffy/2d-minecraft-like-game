@@ -2,23 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class router : MonoBehaviour
+public class Router : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void OnTriggerStay2D(Collider2D col) {
         droppedItem di = col.GetComponent<droppedItem>();
-        entity e = col.GetComponent<entity>();
+        Entity e = col.GetComponent<Entity>();
 
         
         if(di != null) {
@@ -30,14 +18,14 @@ public class router : MonoBehaviour
             Collider2D d = Physics2D.OverlapBox((Vector2)transform.position - (Vector2)transform.up, Vector2.one * .9f, 0, 1021);
 
             Collider2D[] sides = new Collider2D[]{b, c, d};
-            List<itemduct> possibleOnes = new List<itemduct>();
+            List<Itemduct> possibleOnes = new List<Itemduct>();
             
             int i = 0;
             foreach(Collider2D side in sides) {
                 
                 if(side != null) {
-                    if(side.GetComponent<itemduct>() != null) {
-                        possibleOnes.Add(side.GetComponent<itemduct>());
+                    if(side.GetComponent<Itemduct>() != null) {
+                        possibleOnes.Add(side.GetComponent<Itemduct>());
                     }
                 }
 

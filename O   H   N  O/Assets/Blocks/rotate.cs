@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class rotate : MonoBehaviour
+public class Rotate : MonoBehaviour
 {
-    entity e;
+    Entity e;
     public int itemNeeded = 23;
     float h = 0;
     void Start()
     {
-        e = GameObject.Find("Player").GetComponent<entity>();
+        e = GameObject.Find("Player").GetComponent<Entity>();
     }
     void Update()
     {

@@ -3,13 +3,13 @@ using UnityEngine.UI;
 
 // Power generator that generates power using an item
 public class ItemPowerGenerator : PowerGenerator {
-    // How much fuel items can this block hold
+    // How much fuel items can this Block hold
     public int itemCapacity;
     
     // The fuel item id, used for fuel acceptance
     public int fuelItemId;
 
-    // How much fuel items is this block holding
+    // How much fuel items is this Block holding
     protected int storedFuel = 0;
     
     // How much time a fuel item lasts

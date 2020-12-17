@@ -9,12 +9,12 @@ public class MaxHealthThing : MonoBehaviour
     public float healthPerSegmentSize = 20;
     public bool vertical = false;
     RectTransform rect;
-    entity e;
+    Entity e;
     
     // Start is called before the first frame update
     void Start()
     {
-        e = GameObject.Find("Player").GetComponent<entity>();
+        e = GameObject.Find("Player").GetComponent<Entity>();
         rect = GetComponent<RectTransform>();
     }
 

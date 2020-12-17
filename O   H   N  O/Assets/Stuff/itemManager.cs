@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class itemManager : MonoBehaviour
+public class ItemManager : MonoBehaviour
 {
     public Sprite[] itemTextures;
     public Sprite unknownTexture;
     public GameObject droppedItemPrefab;
     public Sprite blankTexture;
     public string[] itemNames;
-    public static entity player;
-    public static itemManager main;
+    public static Entity player;
+    public static ItemManager main;
     void Awake() {
         main = this;
-        player = GameObject.Find("Player").GetComponent<entity>();
+        player = GameObject.Find("Player").GetComponent<Entity>();
         InvokeRepeating("UpdateItem", 0, 15f);
     }
 
@@ -37,9 +37,9 @@ public class itemManager : MonoBehaviour
 public class ItemData {
     public Sprite texture {
         get {
-            if (id > itemManager.main.itemTextures.Length - 1) return itemManager.main.unknownTexture;
-            if (id < 0) return itemManager.main.unknownTexture;
-            return itemManager.main.itemTextures[id];
+            if (id > ItemManager.main.itemTextures.Length - 1) return ItemManager.main.unknownTexture;
+            if (id < 0) return ItemManager.main.unknownTexture;
+            return ItemManager.main.itemTextures[id];
         }
     }
     public static string GetItemName(int id) {
@@ -54,14 +54,14 @@ public class ItemData {
     public int id;
     public string name {
         get {
-            if (id > itemManager.main.itemNames.Length - 1) return "oh no";
+            if (id > ItemManager.main.itemNames.Length - 1) return "oh no";
             if (id < 0) return "oh no";
-            return itemManager.main.itemNames[id];
+            return ItemManager.main.itemNames[id];
         }
     }
     public bool isValid {
         get {
-            return id > 0 && id < itemManager.main.itemNames.Length;
+            return id > 0 && id < ItemManager.main.itemNames.Length;
         }
     }
     public ItemData(int id) {

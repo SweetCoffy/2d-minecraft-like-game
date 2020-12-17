@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class randomExtractor : MonoBehaviour
+public class RandomExtractor : MonoBehaviour
 {
     public float drillTime = 2;
     float drillProgress;

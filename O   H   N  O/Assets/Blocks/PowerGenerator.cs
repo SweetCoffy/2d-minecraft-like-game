@@ -8,7 +8,7 @@ public class PowerGenerator : PowerBlock {
     // Multiplies the base power generation to get the power generation
     protected float powerGeneration = 0;
 
-    // Maximum power generation that can be achieved with this block
+    // Maximum power generation that can be achieved with this Block
     public float maxPowerGeneration; 
 
     

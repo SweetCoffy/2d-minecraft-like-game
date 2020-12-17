@@ -12,7 +12,7 @@ public class CollisionEvent : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col) {
         if (!affectedObjects.Contains(col.gameObject) && useAfectedObjects) return;
-        entity e = col.GetComponent<entity>();
+        Entity e = col.GetComponent<Entity>();
 
         if (e) {
             if (onTriggerEnter != null) {

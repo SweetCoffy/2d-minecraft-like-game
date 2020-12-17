@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class selectedItemText : MonoBehaviour
+public class SelectedItemText : MonoBehaviour
 {
-    entity e;
-    itemManager im;
+    Entity e;
+    ItemManager im;
     // Start is called before the first frame update
     void Start()
     {
-       e = GameObject.Find("Player").GetComponent<entity>();
-       im = GameObject.Find("ItemManager").GetComponent<itemManager>(); 
+       e = GameObject.Find("Player").GetComponent<Entity>();
+       im = GameObject.Find("ItemManager").GetComponent<ItemManager>(); 
     }
 
     // Update is called once per frame

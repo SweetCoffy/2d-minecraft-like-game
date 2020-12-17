@@ -21,7 +21,7 @@ public class Bullet : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col) {
         if (col.gameObject == shooter) return;
         if (col.isTrigger) return;
-        entity e = col.GetComponent<entity>();
+        Entity e = col.GetComponent<Entity>();
 
         if (e != null) {
             e.takeDamage(damage);

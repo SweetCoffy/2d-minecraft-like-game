@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 [ExecuteInEditMode]
-public class snap : MonoBehaviour
+public class Snap : MonoBehaviour
 {
     public Vector3 RoundVector3(Vector3 a) {
         return new Vector3(Mathf.Round(a.x), Mathf.Round(a.y), Mathf.Round(a.z) );

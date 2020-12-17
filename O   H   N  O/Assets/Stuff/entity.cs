@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class entity : MonoBehaviour
+public class Entity : MonoBehaviour
 {
     public float movementSpeed = 10;
     public float jumpForce = 10;
@@ -17,7 +17,7 @@ public class entity : MonoBehaviour
     float health, thirst;
     public float maxFallDmg = 100;
     public float itemCooldown = .5f;
-    public block selectedBlock;
+    public Block selectedBlock;
     private float cooldown = 0;
     public float thirstDrainRate = .5f;
     public float minFallDist = 50;
@@ -370,7 +370,7 @@ public class entity : MonoBehaviour
         }
     }
 
-    public void mineBlock(block blockToMine) {
+    public void mineBlock(Block blockToMine) {
         if(selectedItem > storedItems.Count -1) {
             return;
         }

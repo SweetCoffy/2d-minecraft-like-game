@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEditor;
 
 public class BlockMaker : EditorWindow {
-    string blockName = "block";
+    string blockName = "Block";
     float blockBreakingTime = 7.5f;
     float blockMinimumMiningPower = 1;
     Sprite blockSprite;
@@ -22,7 +22,7 @@ public class BlockMaker : EditorWindow {
         GetWindow<BlockMaker>("Block creator");
     }    
     void OnGUI () {
-        GUILayout.Label("Create a new block using the options below", EditorStyles.boldLabel);
+        GUILayout.Label("Create a new Block using the options below", EditorStyles.boldLabel);
 
         GUILayout.Label("Block Stats", EditorStyles.boldLabel);
         blockName = EditorGUILayout.TextField("Block ID", blockName);
@@ -36,13 +36,13 @@ public class BlockMaker : EditorWindow {
         blockSprite = (Sprite)EditorGUILayout.ObjectField("Block Sprite", blockSprite, typeof(Sprite));
         blockColor = EditorGUILayout.ColorField("Block Color", blockColor);
 
-        addSmelter = EditorGUILayout.BeginToggleGroup(new GUIContent("Smelter", "A Smelter component should be added to the block?"), addSmelter);
+        addSmelter = EditorGUILayout.BeginToggleGroup(new GUIContent("Smelter", "A Smelter component should be added to the Block?"), addSmelter);
            recipe = (CraftingRecipe)EditorGUILayout.ObjectField("Smelter Recipe", recipe, typeof(CraftingRecipe)); 
            smelterTier = EditorGUILayout.Slider("Smelter Tier", smelterTier, .1f, 10);
         EditorGUILayout.EndToggleGroup();
         
         
-        if(GUILayout.Button("Create block")) {
+        if(GUILayout.Button("Create Block")) {
             NewBlock();
         }
     }
@@ -50,9 +50,9 @@ public class BlockMaker : EditorWindow {
     void NewBlock() {
         
         GameObject b = new GameObject(blockName);
-        block bBlock = b.AddComponent<block>();
+        Block bBlock = b.AddComponent<Block>();
         SpriteRenderer s = b.AddComponent<SpriteRenderer>();
-        b.AddComponent<snap>();
+        b.AddComponent<Snap>();
         b.AddComponent<BoxCollider2D>();
         if(addSmelter) {
             Smelter smelt = b.AddComponent<Smelter>();

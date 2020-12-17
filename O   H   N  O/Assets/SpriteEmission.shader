@@ -6,7 +6,7 @@
 		_EmissionTex ("Emission Texture", 2D) = "white"{}
 		[HDR]
 		_Color ("Tint", Color) = (1,1,1,1)
-		[MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
+		[MaterialToggle] PixelSnap ("Pixel Snap", Float) = 0
 		[ColorUsage(true, true)]	
 		_EmissionMultiplier ("Emission multiplier", Float) = 1
 	}

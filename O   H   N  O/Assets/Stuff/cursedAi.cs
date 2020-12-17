@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(entity))]
-public class cursedAi : MonoBehaviour
+[RequireComponent(typeof(Entity))]
+public class CursedAI : MonoBehaviour
 {
     
-    entity e;
+    Entity e;
     public Transform target;
     public bool ignoreCollisions = true;
     public ContactFilter2D filter;
@@ -17,7 +17,7 @@ public class cursedAi : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        e = GetComponent<entity>();
+        e = GetComponent<Entity>();
         if(!ignoreCollisions) {
             return;
         }

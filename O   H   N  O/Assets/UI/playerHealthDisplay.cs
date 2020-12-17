@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class playerHealthDisplay : MonoBehaviour
+public class PlayerHealthDisplay : MonoBehaviour
 {
     public Gradient colorGradient;
     public float lerpSpeed = .4f;
-    entity e;
-    public entity target;
+    Entity e;
+    public Entity target;
     public bool useGradient = false;
     public string stat = "health";
     public float maxStatBeforeColor = 600;
@@ -21,7 +21,7 @@ public class playerHealthDisplay : MonoBehaviour
     void Start()
     {
         img = GetComponent<Image>();
-        e = GameObject.Find("Player").GetComponent<entity>();
+        e = GameObject.Find("Player").GetComponent<Entity>();
         if(target != null) {
             e = target;
         }

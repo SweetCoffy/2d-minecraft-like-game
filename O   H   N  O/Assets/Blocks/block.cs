@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class block : MonoBehaviour
+public class Block : MonoBehaviour
 {
     public float minimumMiningPower = 1;
     public float breakTime = 1f;
@@ -119,7 +119,7 @@ public class block : MonoBehaviour
     }
 
     void OnMouseDown() {
-        GameObject.Find("Player").GetComponent<entity>().mineBlock(this);
+        GameObject.Find("Player").GetComponent<Entity>().mineBlock(this);
     }
 
     public void Grow() {
@@ -127,7 +127,7 @@ public class block : MonoBehaviour
         if(Physics2D.OverlapBox(transform.position + Vector3.up, transform.localScale * .9f, 0) != null) {
             return;
         }
-        block grownBlock = Instantiate(gameObject, transform.position + Vector3.up, transform.rotation).GetComponent<block>();
+        Block grownBlock = Instantiate(gameObject, transform.position + Vector3.up, transform.rotation).GetComponent<Block>();
         plant = false;
         grownBlock.grow++;
     }
@@ -148,7 +148,7 @@ public class block : MonoBehaviour
             Collider2D right = Physics2D.OverlapBox(transform.position + transform.right, transform.localScale * .9f, 0, canCollideWith, -90, 90);
             /*
                 if (left != null) {
-                    block b = left.GetComponent<block>();
+                    Block b = left.GetComponent<Block>();
                     if (b != null) {
                         if (liquidLevel < b.liquidLevel - 1) {
                             Destroy(gameObject);
@@ -156,7 +156,7 @@ public class block : MonoBehaviour
                     }
                 }
                 if (right != null) {
-                    block b = right.GetComponent<block>();
+                    Block b = right.GetComponent<Block>();
                     if (b != null) {
                         if (liquidLevel < b.liquidLevel - 1) {
                             Destroy(gameObject);
@@ -166,19 +166,19 @@ public class block : MonoBehaviour
             Collider2D _down = Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, canCollideWith, -90, 90);
             if(_down == null) {
                 GameObject flowing = Instantiate(gameObject, transform.position - transform.up, transform.rotation);
-                flowing.GetComponent<block>().liquidLevel = 8;
+                flowing.GetComponent<Block>().liquidLevel = 8;
             } else {
-                block b = _down.GetComponent<block>();
+                Block b = _down.GetComponent<Block>();
                 if (b) {
                     if (b.waterlogable) {
                         GameObject flowing = Instantiate(gameObject, transform.position - transform.up, transform.rotation);
-                        flowing.GetComponent<block>().liquidLevel = 8;
+                        flowing.GetComponent<Block>().liquidLevel = 8;
                     }
                 }
             }
             Collider2D h = Physics2D.OverlapBox(transform.position, transform.localScale * .9f, 0, blocks, -90, 90);
             if(h != null) {
-                block b = h.GetComponent<block>();
+                Block b = h.GetComponent<Block>();
                 if (b) {
                     if (!b.waterlogable) {
                         Destroy(gameObject);
@@ -189,25 +189,25 @@ public class block : MonoBehaviour
             if(liquidLevel > 0) {            
                 if(right == null && Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, ~cantCollideWith, -90, 90) != null) {
                     GameObject flowing = Instantiate(gameObject, transform.position + transform.right, transform.rotation);
-                    flowing.GetComponent<block>().liquidLevel = liquidLevel - 1;
+                    flowing.GetComponent<Block>().liquidLevel = liquidLevel - 1;
                 } else if (right != null){
-                    block b = right.GetComponent<block>();
+                    Block b = right.GetComponent<Block>();
                     if (b) {
                         if (b.waterlogable) {
                             GameObject flowing = Instantiate(gameObject, transform.position + transform.right, transform.rotation);
-                            flowing.GetComponent<block>().liquidLevel = liquidLevel - 1;
+                            flowing.GetComponent<Block>().liquidLevel = liquidLevel - 1;
                         }
                     }
                 }
                 if(left == null && Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, ~cantCollideWith, -90, 90) != null) {
                     GameObject flowing = Instantiate(gameObject, transform.position - transform.right, transform.rotation);
-                    flowing.GetComponent<block>().liquidLevel = liquidLevel - 1;
+                    flowing.GetComponent<Block>().liquidLevel = liquidLevel - 1;
                 } else if (left != null){
-                    block b = left.GetComponent<block>();
+                    Block b = left.GetComponent<Block>();
                     if (b) {
                         if (b.waterlogable) {
                             GameObject flowing = Instantiate(gameObject, transform.position - transform.right, transform.rotation);
-                            flowing.GetComponent<block>().liquidLevel = liquidLevel - 1;
+                            flowing.GetComponent<Block>().liquidLevel = liquidLevel - 1;
                         }
                     }
                 }
@@ -232,13 +232,13 @@ public class block : MonoBehaviour
     void OnTriggerExit2D(Collider2D col) {
         if (!fluid)
             return;
-        entity e = col.GetComponent<entity>();        
+        Entity e = col.GetComponent<Entity>();        
         if (e != null) {
             e.canBreathe = true;
         }
     }
     void OnTriggerStay2D(Collider2D col) {
-        entity e = col.GetComponent<entity>();
+        Entity e = col.GetComponent<Entity>();
         if (e && fluid) {e.canBreathe = false; if (e.airBar) e.airBar.color = liquidColor;}
         if (entityDamage <= 0)
             return;

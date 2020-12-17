@@ -16,11 +16,11 @@ public class droppedItem : MonoBehaviour
     {
         properties.Add(0);
         properties.Add(0);
-        if(itemId > GameObject.Find("ItemManager").GetComponent<itemManager>().itemTextures.Length - 1) {
-            GetComponent<SpriteRenderer>().sprite = GameObject.Find("ItemManager").GetComponent<itemManager>().unknownTexture;
+        if(itemId > GameObject.Find("ItemManager").GetComponent<ItemManager>().itemTextures.Length - 1) {
+            GetComponent<SpriteRenderer>().sprite = GameObject.Find("ItemManager").GetComponent<ItemManager>().unknownTexture;
             Debug.LogWarning($"OH NO. The texture for the itemId \"{itemId}\" is not available", this);
         } else {
-            GetComponent<SpriteRenderer>().sprite = GameObject.Find("ItemManager").GetComponent<itemManager>().itemTextures[itemId];
+            GetComponent<SpriteRenderer>().sprite = GameObject.Find("ItemManager").GetComponent<ItemManager>().itemTextures[itemId];
         }
         if(itemId == 3) {
             properties[0] = 1;
@@ -53,18 +53,18 @@ public class droppedItem : MonoBehaviour
     void Update()
     {
         if(oldItem != itemId) {
-            if(itemId > GameObject.Find("ItemManager").GetComponent<itemManager>().itemTextures.Length - 1) {
-                    GetComponent<SpriteRenderer>().sprite = GameObject.Find("ItemManager").GetComponent<itemManager>().unknownTexture;
+            if(itemId > GameObject.Find("ItemManager").GetComponent<ItemManager>().itemTextures.Length - 1) {
+                    GetComponent<SpriteRenderer>().sprite = GameObject.Find("ItemManager").GetComponent<ItemManager>().unknownTexture;
                 } else {
-                    GetComponent<SpriteRenderer>().sprite = GameObject.Find("ItemManager").GetComponent<itemManager>().itemTextures[itemId];
+                    GetComponent<SpriteRenderer>().sprite = GameObject.Find("ItemManager").GetComponent<ItemManager>().itemTextures[itemId];
                 }
         }
     }
 
     void OnCollisionStay2D(Collision2D col) {
         GameObject other = col.gameObject;
-        if(other.GetComponent<entity>() != null) {
-            entity otherEntity = other.GetComponent<entity>();
+        if(other.GetComponent<Entity>() != null) {
+            Entity otherEntity = other.GetComponent<Entity>();
             if(properties.Count > 0) {
                 if(otherEntity.pickup(itemId, itemAmount, properties)) {
                     Destroy(gameObject);

@@ -22,10 +22,10 @@ public class PlayerData {
     public float maxThirst;
     public float maxMana;
     public Item[] items;
-    public PlayerData(entity player) {
+    public PlayerData(Entity player) {
         Save(player);
     } 
-    public void Save(entity e) {
+    public void Save(Entity e) {
         items = new Item[e.storedItems.Count];
         for (int i = 0; i < items.Length; i++) {
             items[i] = e.storedItems[i];
@@ -41,10 +41,10 @@ public class BlockData {
     public int liquidLevel = 8;
     public float x;
     public float y;
-    public BlockData(block b) {
+    public BlockData(Block b) {
         Save(b);
     }
-    public void Save(block b) {
+    public void Save(Block b) {
         id = b.id;
         liquidLevel = b.liquidLevel;
         y = b.transform.position.y;

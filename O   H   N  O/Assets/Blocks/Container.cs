@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(entity))]
+[RequireComponent(typeof(Entity))]
 public class Container : MonoBehaviour
 {
-    entity e;
+    Entity e;
     public LayerMask mask;
     public float dropRate = 5;
     bool canDrop = false;
     // Start is called before the first frame update
     void Start()
     {
-        e = GetComponent<entity>();
+        e = GetComponent<Entity>();
         InvokeRepeating("Output", 0, 1/dropRate);
     }
 
@@ -20,7 +20,7 @@ public class Container : MonoBehaviour
     void Update()
     {
         if(Physics2D.OverlapBox((Vector2)(transform.position + transform.right), Vector2.one * 0.9f, 0, mask) != null) {
-            itemduct duct = Physics2D.OverlapBox((Vector2)(transform.position + transform.right), Vector2.one * 0.9f, 0, mask).GetComponent<itemduct>();
+            Itemduct duct = Physics2D.OverlapBox((Vector2)(transform.position + transform.right), Vector2.one * 0.9f, 0, mask).GetComponent<Itemduct>();
             if(duct != null) {
                 canDrop = true;
             } else {

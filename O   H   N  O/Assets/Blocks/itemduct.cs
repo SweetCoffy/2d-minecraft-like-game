@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class itemduct : MonoBehaviour
+public class Itemduct : MonoBehaviour
 {
     public float pullToCenterSpeed = 10;
     public float transportSpeed = 15;
@@ -28,7 +28,7 @@ public class itemduct : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D col) {
-        block b = col.GetComponent<block>();
+        Block b = col.GetComponent<Block>();
         Debug.Log(b);
         if ((b != null && b.fluid && moveLiquids) || (b != null && b.blockGravity && moveGravityBlocks)) {
             b.flowing = false;
@@ -37,7 +37,7 @@ public class itemduct : MonoBehaviour
         }
     }
     void OnTriggerExit2D(Collider2D col) {
-        block b = col.GetComponent<block>();
+        Block b = col.GetComponent<Block>();
         Debug.Log(b);
         if ((b != null && b.fluid && moveLiquids) || (b != null && b.blockGravity && moveGravityBlocks)) {
             b.flowing = true;
@@ -46,8 +46,8 @@ public class itemduct : MonoBehaviour
     }
     void OnTriggerStay2D(Collider2D col) {
         droppedItem di = col.GetComponent<droppedItem>();
-        entity e = col.GetComponent<entity>();
-        block b = col.GetComponent<block>();
+        Entity e = col.GetComponent<Entity>();
+        Block b = col.GetComponent<Block>();
 
         if(di != null) {
             di.GetComponent<Rigidbody2D>().position += (Vector2)transform.right * transportSpeed * Time.deltaTime;

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[RequireComponent(typeof(entity))]
+[RequireComponent(typeof(Entity))]
 
-public class player : MonoBehaviour
+public class Player : MonoBehaviour
 {
-    entity e;
+    Entity e;
     Vector2 cursorPos = Vector2.zero;
     public Vector2 cursorBoundsMax;
     public Vector2 cursorBoundsMin;
@@ -15,7 +15,7 @@ public class player : MonoBehaviour
     float h = 0;
     void Start()
     {
-        e = GetComponent<entity>();
+        e = GetComponent<Entity>();
         SaveData.playerData = new PlayerData(e);
     }
     void Update()
@@ -60,7 +60,7 @@ public class player : MonoBehaviour
             return;
         }
         if(Input.GetAxis("Place") > 0) {
-            if (e.startBlockPlace(Resources.Load<GameObject>("Prefabs/block-" + e.storedItems[e.getSelectedItem()].id), (int)Mathf.Round(pz.x), (int)Mathf.Round(pz.y)))
+            if (e.startBlockPlace(Resources.Load<GameObject>("Prefabs/Block-" + e.storedItems[e.getSelectedItem()].id), (int)Mathf.Round(pz.x), (int)Mathf.Round(pz.y)))
             e.consumeItem(e.getSelectedItem());
         }
     }

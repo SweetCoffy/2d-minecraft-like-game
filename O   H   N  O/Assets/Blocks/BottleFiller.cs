@@ -8,7 +8,7 @@ public class BottleFiller : PowerBlock {
     }
     void OnTriggerEnter2D(Collider2D col) {
         if (!requirementsMet) return;
-        block b = col.GetComponent<block>();
+        Block b = col.GetComponent<Block>();
         if (b) {
             if (b.fluid) {
                 ItemSpawning.Spawn(new Item(b.dropItem, b.dropAmount), transform.position + (Vector3)offset);
