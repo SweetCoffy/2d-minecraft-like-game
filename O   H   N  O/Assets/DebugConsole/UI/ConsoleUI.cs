@@ -1,8 +1,7 @@
 ﻿using GameThing.DebugConsole.Commands;
 using UnityEngine;
 using UnityEngine.UI;
-namespace GameThing.DebugConsole.UI
-{
+namespace GameThing.DebugConsole.UI {
     public class ConsoleUI : MonoBehaviour
     {
 
@@ -12,21 +11,18 @@ namespace GameThing.DebugConsole.UI
         public InputField field;
         public ConsoleMessageContainer messageContainer;
 
-        private Console console
-        {
-            get
-            {
+        private Console console {
+            get {
                 if (c != null) return c;
                 return c = new Console(prefix, commands);
             }
         }
-        public void ExecuteCommand(string name)
-        {
+        public void ExecuteCommand(string name) {
             CommandResponse response = console.ExecuteCommand(name);
             if (response.IsCode("error")) messageContainer.Add($"<color=red>{response.message}</color>");
             if (response.IsCode("ok")) messageContainer.Add($"<color=gray>{response.message}</color>");
             field.text = "";
         }
-
+        
     }
 }

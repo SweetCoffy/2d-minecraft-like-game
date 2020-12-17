@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class InventoryItem : MonoBehaviour
@@ -14,8 +16,7 @@ public class InventoryItem : MonoBehaviour
         im = GameObject.Find("ItemManager").GetComponent<ItemManager>();
         playerEntity = GameObject.Find("Player").GetComponent<Entity>();
         thisRect = GetComponent<RectTransform>();
-        if (e != null)
-        {
+        if(e != null) {
             playerEntity = e;
         }
     }
@@ -23,49 +24,39 @@ public class InventoryItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!playerEntity)
-        {
+        if (!playerEntity) {
             playerEntity = GameObject.Find("Player").GetComponent<Entity>();
         }
-
-
-        if (index > playerEntity.storedItems.Count - 1)
-        {
+        
+        
+        if(index > playerEntity.storedItems.Count - 1) {
             transform.GetChild(0).GetComponent<Text>().text = "";
             GetComponent<Image>().sprite = GameObject.Find("ItemManager").GetComponent<ItemManager>().blankTexture;
             GetComponent<Image>().color = new Color(0, 0, 0, 0);
             return;
-        }
-        else
-        {
+        } else {
             GetComponent<Image>().color = new Color(1, 1, 1, 1);
         }
         string amountString;
         int amount = playerEntity.storedItems[index].amount;
 
-        if (amount > 1)
-        {
+        if (amount > 1) {
             amountString = amount.ToString();
-        }
-        else
-        {
+        } else {
             amountString = "";
         }
-
+        
         transform.GetChild(0).GetComponent<Text>().text = amountString;
         GetComponent<Image>().sprite = GameObject.Find("ItemManager").GetComponent<ItemManager>().itemTextures[playerEntity.storedItems[index].id];
-        if (playerEntity.lastitemUpdate == index)
-        {
-            playerEntity.lastitemUpdate = -1;
-            thisRect.localScale = new Vector2(.6f, 1.6f);
+        if(playerEntity.lastitemUpdate == index) {
+          playerEntity.lastitemUpdate = -1;
+          thisRect.localScale = new Vector2(.6f, 1.6f);
         }
     }
 
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         thisRect.localScale = Vector2.Lerp(thisRect.localScale, new Vector2(1, 1), .1f);
-        if (playerEntity.GetSelectedItem() == index)
-        {
+        if(playerEntity.GetSelectedItem() == index) {
             thisRect.localScale = Vector2.Lerp(thisRect.localScale, new Vector2(1.5f, 1.5f), .1f);
 
         }

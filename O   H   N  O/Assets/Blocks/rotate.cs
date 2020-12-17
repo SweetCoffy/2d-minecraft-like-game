@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class Rotate : MonoBehaviour
 {
@@ -13,12 +15,9 @@ public class Rotate : MonoBehaviour
     {
         if (h > 0) h -= Time.deltaTime;
     }
-    void OnMouseDown()
-    {
-        if (e.GetSelectedItem() < e.storedItems.Count - 1)
-        {
-            if (e.storedItems[e.GetSelectedItem()].id == itemNeeded && h <= 0)
-            {
+    void OnMouseDown() {
+        if(e.GetSelectedItem() < e.storedItems.Count - 1) {
+            if(e.storedItems[e.GetSelectedItem()].id == itemNeeded && h <= 0) {
                 transform.Rotate(0, 0, 90);
                 h = 0.3f;
             }

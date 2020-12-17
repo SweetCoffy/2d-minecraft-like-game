@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class MaxHealthThing : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class MaxHealthThing : MonoBehaviour
     public bool vertical = false;
     RectTransform rect;
     Entity e;
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -20,14 +21,11 @@ public class MaxHealthThing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!vertical)
-        {
+        if (!vertical) {
             rect.sizeDelta = new Vector2(Mathf.Clamp(e.GetMaxStat(stat), 0, maxStat) / healthPerSegmentSize * segmentSize, rect.sizeDelta.y);
-        }
-        else
-        {
+        } else {
             rect.sizeDelta = new Vector2(rect.sizeDelta.x, Mathf.Clamp(e.GetMaxStat(stat), 0, maxStat) / healthPerSegmentSize * segmentSize);
         }
-
+        
     }
 }
