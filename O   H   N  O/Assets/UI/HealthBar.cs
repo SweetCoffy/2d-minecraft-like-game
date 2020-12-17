@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class PlayerHealthDisplay : MonoBehaviour
+public class HealthBar : MonoBehaviour
 {
     public Gradient colorGradient;
     public float lerpSpeed = .4f;
