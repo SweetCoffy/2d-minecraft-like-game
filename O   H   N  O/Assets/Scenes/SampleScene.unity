@@ -22409,7 +22409,7 @@ MonoBehaviour:
   minFallDist: 50
   dmgPerFallDistUnit: 0.4
   itemCapacity: 9
-  maxAir: 30
+  maxAir: 15
   canBreathe: 1
   air: 0
   canRespawn: 1
