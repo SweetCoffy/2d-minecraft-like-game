@@ -38,16 +38,15 @@ public class Entity : MonoBehaviour
     public float airRecoverRate = 10;
     public float manaRecoverRate = 20f;
     float mana;
+    public bool moveAirBar = true;
     public CanvasGroup airThing;
     public Image airBar;
     public bool keepInventory = false;
     public List<Item> startingItems = new List<Item>();
-    
     public bool respawnWithPickaxe = false;
     Color defaultAirBarColor;
     public int lastitemUpdate;
     public Text countdown;
-
     public float thihstrstDamageRate = .5f;
     bool canJump;
     public List<Item> storedItems = new List<Item>();
@@ -84,7 +83,7 @@ public class Entity : MonoBehaviour
         else if (!canBreathe && air > 0) air -= Time.deltaTime;
         if (air <= 0) Kill();
         if (airBar && airThing) {
-            airThing.transform.position = transform.position + (Vector3.one * 1.5f);
+            if (moveAirBar) airThing.transform.position = transform.position + (Vector3.one * 1.5f);
             if (air < maxAir) airThing.alpha = 1;
             else airThing.alpha *= 0.8f;
             airBar.fillAmount = air / maxAir;
