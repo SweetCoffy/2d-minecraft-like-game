@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+
+// to do: actually finish this thing
 [System.Serializable]
 public static class SaveData {
     public static PlayerData playerData;
