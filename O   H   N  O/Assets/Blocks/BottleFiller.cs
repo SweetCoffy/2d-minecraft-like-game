@@ -12,7 +12,7 @@ public class BottleFiller : PowerBlock {
         Block b = col.GetComponent<Block>();
         if (b) {
             if (b.fluid) {
-                ItemSpawning.Spawn(new Item(b.dropItem, b.dropAmount), transform.position + (Vector3)offset);
+                ItemSpawning.Spawn(new Item(b.DropItem, b.dropAmount), transform.position + (Vector3)offset);
                 Destroy(b.gameObject);
             }
         }

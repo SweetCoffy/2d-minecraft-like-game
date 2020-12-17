@@ -24,7 +24,7 @@ public class Bullet : MonoBehaviour
         Entity e = col.GetComponent<Entity>();
 
         if (e != null) {
-            e.takeDamage(damage);
+            e.TakeDamage(damage);
             if (bloodEffect) {
                 Instantiate(bloodEffect, transform.position, transform.rotation);
             }

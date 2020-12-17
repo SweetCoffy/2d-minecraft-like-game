@@ -8,7 +8,7 @@ public class Block : MonoBehaviour
     public float minimumMiningPower = 1;
     public float breakTime = 1f;
     public float breakProgress;
-    public int dropItem;
+    public int DropItem;
     public int id = 0;
     public int dropAmount = 1;
     Color originalColor;
@@ -95,7 +95,7 @@ public class Block : MonoBehaviour
         GameObject.Find("Canvas").transform.GetChild(0).GetComponent<Text>().text = "";
     }
 
-    public void damage(float miningPower, float dmg, float multiplier = 1) {
+    public void Damage(float miningPower, float dmg, float multiplier = 1) {
         if(miningPower >= minimumMiningPower) {
             breakProgress -= (miningPower - minimumMiningPower + .5f + dmg) * multiplier;
             
@@ -103,8 +103,8 @@ public class Block : MonoBehaviour
         }
 
         if(breakProgress <= 0) {
-            if(dropItem > -1 && dropAmount > 0) {
-                SpawnItem(new Item(dropItem, dropAmount));
+            if(DropItem > -1 && dropAmount > 0) {
+                SpawnItem(new Item(DropItem, dropAmount));
                 
             }
             Destroy(gameObject);
@@ -112,7 +112,7 @@ public class Block : MonoBehaviour
     }
 
     protected virtual void OnMouseDown() {
-        GameObject.Find("Player").GetComponent<Entity>().mineBlock(this);
+        GameObject.Find("Player").GetComponent<Entity>().MineBlock(this);
     }
 
     public virtual void Grow() {
@@ -128,7 +128,7 @@ public class Block : MonoBehaviour
         if (!falling) return;
         Collider2D h = Physics2D.OverlapBox(transform.position - (Vector3.up * fallDistance) + blockDetectionOffset, blockDetectionSize, 0, canCollideWith, -90, 90);
         if(h == null || h.gameObject == gameObject) {
-            if (breakOnGravityUpdate) damage(999999999, 999999);
+            if (breakOnGravityUpdate) Damage(999999999, 999999);
             transform.position -= Vector3.up * fallDistance;
         }
     }
@@ -240,7 +240,7 @@ public class Block : MonoBehaviour
         
         
         if (e != null) {
-            e.takeDamage(entityDamage * Time.deltaTime, false);
+            e.TakeDamage(entityDamage * Time.deltaTime, false);
         }
     }
     void OnDrawGizmos() {

@@ -34,7 +34,7 @@ public class Container : MonoBehaviour
 
     void Output() {
         if(canDrop) {
-            e.dropItem(0, false, (Vector2)transform.right);
+            e.DropItem(0, false, (Vector2)transform.right);
         }
     }
 }

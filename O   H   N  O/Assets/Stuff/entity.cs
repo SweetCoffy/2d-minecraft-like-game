@@ -13,7 +13,8 @@ public class Entity : MonoBehaviour
     public float jumpForce = 10;
     public Vector3 placeBlockPosition;
     public float drag = 5;
-    public float maxHealth = 10; public float maxThirst = 10;
+    public float maxHealth = 10; 
+    public float maxThirst = 10;
     float health, thirst;
     public float maxFallDmg = 100;
     public float itemCooldown = .5f;
@@ -73,21 +74,15 @@ public class Entity : MonoBehaviour
     {
         if (airBar) defaultAirBarColor = airBar.color;
         air = maxAir;
-        //storedItems.Add(new Item(0, 5));
         health = maxHealth;
         thirst = maxThirst;
         rb = GetComponent<Rigidbody2D>();
     }
-
-    
-    // Update is called once per frame
-    
-    
     void Update()
     {
         if (canBreathe && air < maxAir) air += airRecoverRate * Time.deltaTime;
         else if (!canBreathe && air > 0) air -= Time.deltaTime;
-        if (air <= 0) kill();
+        if (air <= 0) Kill();
         if (airBar && airThing) {
             airThing.transform.position = transform.position + (Vector3.one * 1.5f);
             if (air < maxAir) airThing.alpha = 1;
@@ -108,7 +103,7 @@ public class Entity : MonoBehaviour
             }
         }
         if(thirst <= 0) {
-            takeDamage(thihstrstDamageRate*Time.deltaTime, false);
+            TakeDamage(thihstrstDamageRate*Time.deltaTime, false);
         }
         if(thirst > 0) {
             thirst = Mathf.Clamp(thirst - (thirstDrainRate * Time.deltaTime), 0, maxThirst );
@@ -134,7 +129,6 @@ public class Entity : MonoBehaviour
             transform.localScale = new Vector3( -Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
     }
-
     public bool pickup(int itemId, int itemAmount) {
         if(storedItems.Count <= 0) {
             storedItems.Add(new Item(itemId, itemAmount));
@@ -170,7 +164,6 @@ public class Entity : MonoBehaviour
        
     }
     public bool canPlace = true;
-
     public bool startBlockPlace(GameObject blockToPlace, int x, int y) {
         if (!blockToPlace) return false;
         if (!canPlace) return false;
@@ -179,15 +172,13 @@ public class Entity : MonoBehaviour
         return true;
     }
 
-    public bool pickup(int itemId, int itemAmount, List<float> properties) {
-        
+    public bool pickup(int itemId, int itemAmount, List<float> properties) { 
     if(storedItems.Count <= 0) {
             storedItems.Add(new Item(itemId, itemAmount, properties));
             Debug.Log("AAAA");
             lastitemUpdate = storedItems.Count - 1;
             return true;
         }
-        
         bool hasItem = false;
         int i = 0;
         foreach(Item currItem in storedItems) {
@@ -210,11 +201,6 @@ public class Entity : MonoBehaviour
         }
         return false;
     }
-    
-    
-    
-    
-    
     void FixedUpdate() {
         if (rb.velocity.y < -20) {
             rb.velocity = Vector2.up * -20;
@@ -222,20 +208,18 @@ public class Entity : MonoBehaviour
         fallDist -= rb.velocity.y * Time.deltaTime;
         if (canJump) {
             var dmg = Mathf.Clamp((fallDist - minFallDist) * dmgPerFallDistUnit, 0, maxFallDmg);
-            if (dmg > 1) takeDamage(dmg);
+            if (dmg > 1) TakeDamage(dmg);
             fallDist = 0;
         }
     }
-    
-    public void jump(float force = 10) {
+    public void Jump(float force = 10) {
         if(!canJump) {
             force = 0;
         }
         rb.velocity += Vector2.up * force;
 
     }
-    
-    public void useItem(int item, System.Nullable<Vector2> position = null) {
+    public void UseItem(int item, System.Nullable<Vector2> position = null) {
         if(item > storedItems.Count - 1 || cooldown > 0) {
             return;
         }
@@ -245,7 +229,7 @@ public class Entity : MonoBehaviour
         if(currItem.id == 0) {
             health = Mathf.Clamp(health + Mathf.Round(Random.Range(0, 1)), 0, maxHealth);
             thirst += Random.Range(1, 5);
-            takeDamage(Mathf.Round(Random.Range(1, 2)));
+            TakeDamage(Mathf.Round(Random.Range(1, 2)));
             SpawnItem(new Item(2, 1));
             storedItems[item].amount -= 1;
             lastitemUpdate = item;
@@ -314,14 +298,14 @@ public class Entity : MonoBehaviour
             maxHealth += 20;
             health += 20;
             lastitemUpdate = item;
-            consumeItem(item);
+            ConsumeItem(item);
         }
 
         if (currItem.id == 43) {
             maxThirst += 20;
             thirst += 20;
             lastitemUpdate = item;
-            consumeItem(item);
+            ConsumeItem(item);
         }
 
         if (currItem.id == 44) {
@@ -333,7 +317,7 @@ public class Entity : MonoBehaviour
             Instantiate(teleportParticles, transform.position, Quaternion.identity);
             transform.position = (Vector3)((Vector2)position + (Vector2.up * 0.5f));
             if (mana < 20) {
-                takeDamage(10);
+                TakeDamage(10);
                 ConsumeMana(0);
             } else {
                 ConsumeMana(20);
@@ -347,15 +331,15 @@ public class Entity : MonoBehaviour
         }
     }
 
-    public void mineBlock(Block blockToMine) {
+    public void MineBlock(Block blockToMine) {
         if(selectedItem > storedItems.Count -1) {
             return;
         }
         if (!blockToMine) return;
-        blockToMine.damage(storedItems[selectedItem].properties[0], storedItems[selectedItem].properties[1], Time.deltaTime);
+        blockToMine.Damage(storedItems[selectedItem].properties[0], storedItems[selectedItem].properties[1], Time.deltaTime);
     }
     
-    public void consumeItem(int item) {
+    public void ConsumeItem(int item) {
         if(item > storedItems.Count - 1 || storedItems[item].amount <= 0) {
             return;
         }
@@ -397,7 +381,7 @@ public class Entity : MonoBehaviour
             spawnedItem.GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
     }
 
-    public void dropItem(int index, bool droppAll) {
+    public void DropItem(int index, bool droppAll) {
         if(index > storedItems.Count - 1) {
             return;
         }
@@ -408,12 +392,12 @@ public class Entity : MonoBehaviour
             lastitemUpdate = index;
         } else {
             SpawnItem(new Item(storedItems[index].id, 1), transform.localScale.normalized.x * Vector3.right * 1.2f, (Vector2)transform.localScale.normalized * Vector2.right * 7);
-            consumeItem(index);
+            ConsumeItem(index);
             
             lastitemUpdate = index;
         }
     }
-    public void dropItem(int index, bool droppAll, Vector2 direction) {
+    public void DropItem(int index, bool droppAll, Vector2 direction) {
         if(index > storedItems.Count - 1) {
             return;
         }
@@ -426,30 +410,30 @@ public class Entity : MonoBehaviour
             lastitemUpdate = index;
         } else {
             SpawnItem(new Item(storedItems[index].id, 1), direction);
-            consumeItem(index);
+            ConsumeItem(index);
             lastitemUpdate = index;
         }
     }
 
-    public void dropItemAll(int index) {
-        dropItem(index, true);
+    public void DropItemAll(int index) {
+        DropItem(index, true);
     }
     
     
     
-    public void takeDamage(float amount = 0, bool spawnBlood = true) {
+    public void TakeDamage(float amount = 0, bool spawnBlood = true) {
         health -= amount;
         if (damageEffect && spawnBlood) {
             Instantiate(damageEffect, transform.position, transform.rotation);
         }
         
         if(health <= 0) {
-            kill();
+            Kill();
         }
         
         }
 
-    void kill() {
+    void Kill() {
         
         
         if (deathEffect) {
@@ -508,7 +492,7 @@ public class Entity : MonoBehaviour
             if (storedItems[i].id == id) {
                 
                 if (Random.Range(0, 1) < chance) {
-                    consumeItem(i);
+                    ConsumeItem(i);
                     lastitemUpdate = i;
                 }
                 
@@ -519,7 +503,7 @@ public class Entity : MonoBehaviour
         return false;
     }
     
-    public void setSelectedItem(int value = 0) {
+    public void SetSelectedItem(int value = 0) {
         
         if(value < 0) {
             value = itemCapacity - 1;

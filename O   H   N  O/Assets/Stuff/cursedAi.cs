@@ -35,7 +35,7 @@ public class CursedAI : MonoBehaviour
                 e.Move(-e.movementSpeed);
             }
             if(target.position.y - (target.localScale.y * 1.5) > transform.position.y) {
-                e.jump(e.jumpForce);
+                e.Jump(e.jumpForce);
             }
         }
         int i3 = 0;
@@ -49,8 +49,8 @@ public class CursedAI : MonoBehaviour
             }
             i++;
         }
-        e.setSelectedItem(i);
-        e.useItem(e.GetSelectedItem());
+        e.SetSelectedItem(i);
+        e.UseItem(e.GetSelectedItem());
     }
 
     public void SetAutoMining(bool value) {

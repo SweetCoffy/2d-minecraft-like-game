@@ -79,7 +79,7 @@ public class Crafter : MonoBehaviour
         foreach(int currentInput in input) {
         if(e.storedItems[e.GetSelectedItem()].id == input[i]) {
             inputItems[i] += 1;
-            e.consumeItem(e.GetSelectedItem());
+            e.ConsumeItem(e.GetSelectedItem());
         }
         i++;
         }
