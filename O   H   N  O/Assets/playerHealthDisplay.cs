@@ -16,31 +16,33 @@ public class playerHealthDisplay : MonoBehaviour
     public Color anotherColor = Color.yellow;
     public bool useText;
     Color originalColor;
+    Image img;
     // Start is called before the first frame update
     void Start()
     {
+        img = GetComponent<Image>();
         e = GameObject.Find("Player").GetComponent<entity>();
         if(target != null) {
             e = target;
         }
-        originalColor = GetComponent<Image>().color;
+        originalColor = img.color;
     }
 
     // Update is called once per frame
     void Update()
     {
-        GetComponent<Image>().fillAmount = Mathf.Lerp(GetComponent<Image>().fillAmount, Mathf.Round(e.getStat(stat))/e.getMaxStat(stat), lerpSpeed);
+        img.fillAmount = Mathf.Lerp(img.fillAmount, Mathf.Round(e.getStat(stat))/e.getMaxStat(stat), lerpSpeed);
 
         
         
         
         if (e.getMaxStat(stat) > maxStatBeforeColor) {
-            GetComponent<Image>().color = anotherColor;
+            img.color = anotherColor;
         } else {
-            GetComponent<Image>().color = originalColor;
+            img.color = originalColor;
         }
         
         if (useGradient) 
-            GetComponent<Image>().color = Color.Lerp(GetComponent<Image>().color, colorGradient.Evaluate(e.getStat(stat)/e.getMaxStat(stat)), .25f);
+            img.color = Color.Lerp(img.color, colorGradient.Evaluate(e.getStat(stat)/e.getMaxStat(stat)), .25f);
     }
 }

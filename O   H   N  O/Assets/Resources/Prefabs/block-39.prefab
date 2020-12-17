@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8999620398256253035}
   - component: {fileID: 8999620398256253034}
   - component: {fileID: 8999620398256253045}
-  - component: {fileID: 8999620398256253044}
   - component: {fileID: 6981250772316819678}
   - component: {fileID: 88271528647561266}
   m_Layer: 0
@@ -51,6 +50,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -125,43 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snapSize: {x: 1, y: 1, z: 1}
---- !u!114 &8999620398256253044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8999620398256253047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bc02a269d7c33b49aaed5ca35f702fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minimumMiningPower: 0.75
-  breakTime: 5
-  breakProgress: 0
-  dropItem: 39
-  dropAmount: 1
-  liquidLevel: 8
-  fluid: 0
-  plant: 0
-  maxGrow: 0
-  grow: 0
-  growTime: 0
-  blockGravity: 0
-  liquidName: water
-  canCollideWith:
-    serializedVersion: 2
-    m_Bits: 0
-  cantCollideWith:
-    serializedVersion: 2
-    m_Bits: 0
-  waterMask:
-    serializedVersion: 2
-    m_Bits: 0
-  blocks:
-    serializedVersion: 2
-    m_Bits: 0
+  snapOnUpdate: 0
 --- !u!114 &6981250772316819678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,14 +141,19 @@ MonoBehaviour:
   minimumMiningPower: 1
   breakTime: 10
   breakProgress: 0
-  dropItem: 0
+  dropItem: 39
   dropAmount: 1
   liquidLevel: 8
+  fallDistance: 1
   fluid: 0
+  flowing: 1
   plant: 0
   maxGrow: 0
   grow: 0
+  blockDetectionOffset: {x: 0, y: 0, z: 0}
+  blockDetectionSize: {x: 0.9, y: 0.9, z: 0.9}
   growTime: 0
+  breakOnGravityUpdate: 0
   blockGravity: 0
   liquidName: water
   canCollideWith:
@@ -199,7 +168,12 @@ MonoBehaviour:
   blocks:
     serializedVersion: 2
     m_Bits: 0
-  powerCapacity: 20
+  entityDamage: 0
+  gravityUpdateRate: 10
+  liquidUpdateRate: 5
+  waterlogable: 0
+  falling: 1
+  powerCapacity: 200
   storedPower: 0
   outputsPower: 1
   receivesPower: 0

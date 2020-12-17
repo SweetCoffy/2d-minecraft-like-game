@@ -139,11 +139,16 @@ MonoBehaviour:
   dropItem: 29
   dropAmount: 1
   liquidLevel: 8
+  fallDistance: 1
   fluid: 0
+  flowing: 1
   plant: 0
   maxGrow: 0
   grow: 0
+  blockDetectionOffset: {x: 0, y: 0, z: 0}
+  blockDetectionSize: {x: 0.9, y: 0.9, z: 0.9}
   growTime: 0
+  breakOnGravityUpdate: 0
   blockGravity: 0
   liquidName: water
   canCollideWith:
@@ -159,6 +164,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   entityDamage: 0
+  gravityUpdateRate: 10
+  liquidUpdateRate: 5
+  waterlogable: 0
+  falling: 1
 --- !u!212 &961315615586628898
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -286,7 +295,7 @@ MonoBehaviour:
   movementSpeed: 10
   jumpForce: 10
   placeBlockPosition: {x: 0, y: 0, z: 0}
-  maxHealth: 9999
+  maxHealth: 50
   maxThirst: 9999
   itemCooldown: 0
   thirstDrainRate: 0

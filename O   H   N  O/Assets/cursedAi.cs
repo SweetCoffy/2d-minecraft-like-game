@@ -38,23 +38,7 @@ public class cursedAi : MonoBehaviour
                 e.jump(e.jumpForce);
             }
         }
-        
         int i3 = 0;
-        
-        foreach(Item it in e.storedItems) {
-            
-            if (it.id == 40) {
-                e.setSelectedItem(i3);
-                e.useItem(i3, (Vector2)target.position);
-            }
-            if (it.id == 44) {
-                e.setSelectedItem(i3);
-                e.useItem(i3, (Vector2)target.position);
-            }
-            
-            i3++;
-        }
-        
         if(e.getStat("thirst") / e.getMaxStat("thirst") > .25f) {
             return;
         }
@@ -65,14 +49,8 @@ public class cursedAi : MonoBehaviour
             }
             i++;
         }
-
         e.setSelectedItem(i);
         e.useItem(e.getSelectedItem());
-
-        
-
-    
-    
     }
 
     public void SetAutoMining(bool value) {

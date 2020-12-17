@@ -145,10 +145,15 @@ MonoBehaviour:
   dropItem: 41
   dropAmount: 1
   liquidLevel: 7
+  liquidColor: {r: 1, g: 0.3397382, b: 0, a: 1}
+  fallDistance: 1
   fluid: 1
+  flowing: 1
   plant: 0
   maxGrow: 0
   grow: 0
+  blockDetectionOffset: {x: 0, y: 0, z: 0}
+  blockDetectionSize: {x: 0.9, y: 0.9, z: 0.9}
   growTime: 0
   breakOnGravityUpdate: 0
   blockGravity: 0
@@ -168,6 +173,8 @@ MonoBehaviour:
   entityDamage: 50
   gravityUpdateRate: 10
   liquidUpdateRate: 1
+  waterlogable: 0
+  falling: 1
 --- !u!253 &1283855765427428622
 BuoyancyEffector2D:
   m_ObjectHideFlags: 0

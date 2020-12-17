@@ -16,16 +16,15 @@ public class Crafter : MonoBehaviour
     public string crafterName;
     float[] craftingProgress;
     public string getDisplayText() {
-        string currText = $"{crafterName}: ";
-
-        for(int i = 0; i < output.Length; i++) {
-
-            currText = currText + $"\n{im.itemNames[input[i]]}: {inputItems[i]} / {inputAmountNeeded[i]} \n{Mathf.Round(getProgressNormalized(i))}%\n{outputAmount[i]}x {im.itemNames[output[i]]}\n";
-        
+        try {
+            string currText = $"{crafterName}: ";
+            for(int i = 0; i < output.Length; i++) {
+                currText = currText + $"\n{im.itemNames[input[i]]}: {inputItems[i]} / {inputAmountNeeded[i]} \n{Mathf.Round(getProgressNormalized(i))}%\n{outputAmount[i]}x {im.itemNames[output[i]]}\n";
+            }
+            return currText;
+        } catch (System.Exception) {
+            return "";
         }
-    
-    
-    return currText;
     }
     public float getProgressNormalized(int index = 0, bool percent = true) {
         

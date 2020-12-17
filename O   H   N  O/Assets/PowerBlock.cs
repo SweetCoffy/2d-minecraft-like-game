@@ -9,7 +9,6 @@ public class PowerBlock : block
     // Variables
     public float powerCapacity; // How much power the block can hold
     public float storedPower; // How much power the block currently has
-
     // How much power this blocks consumes per second, negative values can be used to generate power instead of consuming
     protected float powerConsume = 0;
 
@@ -24,17 +23,9 @@ public class PowerBlock : block
     
     // Whether or not the power requirements are met, useful for making blocks that require power to work
     public bool requirementsMet; 
-    
-    
-    // Start is called before the first frame update
-    void Start()
+    public override void Update()
     {
-        
-    }
-
-    // Update is called once per frame
-    public void UpdatePower()
-    {
+        base.Update();
         // Consumes power if the block consumes any
         if(powerConsume != 0) {
             storedPower = Mathf.Clamp(storedPower - (powerConsume * Time.deltaTime), 0, powerCapacity);

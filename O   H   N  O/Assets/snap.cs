@@ -10,7 +10,7 @@ public class snap : MonoBehaviour
     public Vector3 DivideVector3(Vector3 a, Vector3 b) {
         return new Vector3(a.x / b.x, a.y / b.y, a.z / b.z);
     }
-
+    public Transform teleportTo;
     public Vector3 MultiplyVector3(Vector3 a, Vector3 b) {
         return new Vector3(a.x * b.x, a.y * b.y, a.z * b.z);
     }
@@ -28,11 +28,10 @@ public class snap : MonoBehaviour
     void OnLiquidUpdate() {
         SnapToGrid();
     }
-
     void LateUpdate() {
         if (!snapOnUpdate)
             return;
-
+        if (teleportTo) transform.position = teleportTo.position;
         transform.position = MultiplyVector3(RoundVector3(DivideVector3(transform.position, snapSize)), snapSize);
     }
 }

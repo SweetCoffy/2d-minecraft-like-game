@@ -6,22 +6,20 @@ public class rotate : MonoBehaviour
 {
     entity e;
     public int itemNeeded = 23;
-    // Start is called before the first frame update
+    float h = 0;
     void Start()
     {
         e = GameObject.Find("Player").GetComponent<entity>();
     }
-
-    // Update is called once per frame
     void Update()
     {
-        
+        if (h > 0) h -= Time.deltaTime;
     }
-
     void OnMouseDown() {
         if(e.getSelectedItem() < e.storedItems.Count - 1) {
-            if(e.storedItems[e.getSelectedItem()].id == itemNeeded) {
+            if(e.storedItems[e.getSelectedItem()].id == itemNeeded && h <= 0) {
                 transform.Rotate(0, 0, 90);
+                h = 0.3f;
             }
         }
     }

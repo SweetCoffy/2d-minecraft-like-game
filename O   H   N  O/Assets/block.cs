@@ -9,9 +9,11 @@ public class block : MonoBehaviour
     public float breakTime = 1f;
     public float breakProgress;
     public int dropItem;
+    public int id = 0;
     public int dropAmount = 1;
     Color originalColor;
     public int liquidLevel = 8;
+    public Color liquidColor;
     public float fallDistance = 1;
     public bool fluid;
     public bool flowing = true;
@@ -60,7 +62,7 @@ public class block : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         
 
@@ -100,9 +102,9 @@ public class block : MonoBehaviour
         GameObject.Find("Canvas").transform.GetChild(0).GetComponent<Text>().text = "";
     }
 
-    public void damage(float miningPower, float dmg) {
+    public void damage(float miningPower, float dmg, float multiplier = 1) {
         if(miningPower >= minimumMiningPower) {
-            breakProgress -= miningPower - minimumMiningPower + .5f + dmg;
+            breakProgress -= (miningPower - minimumMiningPower + .5f + dmg) * multiplier;
             
             
         }
@@ -131,7 +133,7 @@ public class block : MonoBehaviour
     }
     void Fall() {
         if (!falling) return;
-        Collider2D h = Physics2D.OverlapBox(transform.position - (Vector3.up * fallDistance) + blockDetectionOffset, blockDetectionSize, 0, canCollideWith);
+        Collider2D h = Physics2D.OverlapBox(transform.position - (Vector3.up * fallDistance) + blockDetectionOffset, blockDetectionSize, 0, canCollideWith, -90, 90);
         if(h == null || h.gameObject == gameObject) {
             if (breakOnGravityUpdate) damage(999999999, 999999);
             transform.position -= Vector3.up * fallDistance;
@@ -142,8 +144,8 @@ public class block : MonoBehaviour
         if (liquidLevel > 7) liquidLevel = 7;
         if (flowing) {
             SendMessage("OnLiquidUpdate");
-            Collider2D left = Physics2D.OverlapBox(transform.position - transform.right, transform.localScale * .9f, 0, canCollideWith);
-            Collider2D right = Physics2D.OverlapBox(transform.position + transform.right, transform.localScale * .9f, 0, canCollideWith);
+            Collider2D left = Physics2D.OverlapBox(transform.position - transform.right, transform.localScale * .9f, 0, canCollideWith, -90, 90);
+            Collider2D right = Physics2D.OverlapBox(transform.position + transform.right, transform.localScale * .9f, 0, canCollideWith, -90, 90);
             /*
                 if (left != null) {
                     block b = left.GetComponent<block>();
@@ -161,7 +163,7 @@ public class block : MonoBehaviour
                         }
                     }
                 }*/
-            Collider2D _down = Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, canCollideWith);
+            Collider2D _down = Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, canCollideWith, -90, 90);
             if(_down == null) {
                 GameObject flowing = Instantiate(gameObject, transform.position - transform.up, transform.rotation);
                 flowing.GetComponent<block>().liquidLevel = 8;
@@ -174,7 +176,7 @@ public class block : MonoBehaviour
                     }
                 }
             }
-            Collider2D h = Physics2D.OverlapBox(transform.position, transform.localScale * .9f, 0, blocks);
+            Collider2D h = Physics2D.OverlapBox(transform.position, transform.localScale * .9f, 0, blocks, -90, 90);
             if(h != null) {
                 block b = h.GetComponent<block>();
                 if (b) {
@@ -185,7 +187,7 @@ public class block : MonoBehaviour
             }
             
             if(liquidLevel > 0) {            
-                if(right == null && Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, ~cantCollideWith) != null) {
+                if(right == null && Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, ~cantCollideWith, -90, 90) != null) {
                     GameObject flowing = Instantiate(gameObject, transform.position + transform.right, transform.rotation);
                     flowing.GetComponent<block>().liquidLevel = liquidLevel - 1;
                 } else if (right != null){
@@ -197,7 +199,7 @@ public class block : MonoBehaviour
                         }
                     }
                 }
-                if(left == null && Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, ~cantCollideWith) != null) {
+                if(left == null && Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, ~cantCollideWith, -90, 90) != null) {
                     GameObject flowing = Instantiate(gameObject, transform.position - transform.right, transform.rotation);
                     flowing.GetComponent<block>().liquidLevel = liquidLevel - 1;
                 } else if (left != null){
@@ -213,10 +215,10 @@ public class block : MonoBehaviour
 
 
             }
-            if(Physics2D.OverlapBox(transform.position + transform.up, transform.localScale * .9f, 0, waterMask) != null) {
+            if(Physics2D.OverlapBox(transform.position + transform.up, transform.localScale * .9f, 0, waterMask, -90, 90) != null) {
                 liquidLevel = 8;
             }
-            if (Physics2D.OverlapBox(transform.position + transform.up, transform.localScale * .9f, 0, waterMask) == null) {
+            if (Physics2D.OverlapBox(transform.position + transform.up, transform.localScale * .9f, 0, waterMask, -90, 90) == null) {
                 liquidLevel = 7;
             }
         }
@@ -227,13 +229,20 @@ public class block : MonoBehaviour
     public virtual void ShowInfo() {
         GameObject.Find("Canvas").transform.GetChild(0).GetComponent<Text>().text = $"Block: \n{breakProgress} / {breakTime}";
     }
-
+    void OnTriggerExit2D(Collider2D col) {
+        if (!fluid)
+            return;
+        entity e = col.GetComponent<entity>();        
+        if (e != null) {
+            e.canBreathe = true;
+        }
+    }
     void OnTriggerStay2D(Collider2D col) {
-        
+        entity e = col.GetComponent<entity>();
+        if (e && fluid) {e.canBreathe = false; if (e.airBar) e.airBar.color = liquidColor;}
         if (entityDamage <= 0)
             return;
         
-        entity e = col.GetComponent<entity>();
 
         
         

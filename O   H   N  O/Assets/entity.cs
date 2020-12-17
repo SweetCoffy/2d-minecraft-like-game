@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 
@@ -11,27 +12,40 @@ public class entity : MonoBehaviour
     public float movementSpeed = 10;
     public float jumpForce = 10;
     public Vector3 placeBlockPosition;
+    public float drag = 5;
     public float maxHealth = 10; public float maxThirst = 10;
     float health, thirst;
+    public float maxFallDmg = 100;
     public float itemCooldown = .5f;
+    public block selectedBlock;
     private float cooldown = 0;
     public float thirstDrainRate = .5f;
+    public float minFallDist = 50;
+    public float dmgPerFallDistUnit = 0.4f;
     public int itemCapacity = 17;
+    public float maxAir = 30;
+    public bool canBreathe = true;
+    [HideInInspector] public float air;
     public bool canRespawn = false;
     public Vector3 respawnPoint = Vector3.zero;
     public GameObject deathEffect;
+    private float fallDist = 0;
     public GameObject teleportParticles;
     public GameObject damageEffect;
     float manaRecoverTimer = 0;
     public float maxMana = 20;
+    public float airRecoverRate = 10;
     public float manaRecoverRate = 20f;
     float mana;
+    public CanvasGroup airThing;
+    public Image airBar;
     public bool keepInventory = false;
     public List<Item> startingItems = new List<Item>();
     
     public bool respawnWithPickaxe = false;
-
+    Color defaultAirBarColor;
     public int lastitemUpdate;
+    public Text countdown;
 
     public float dryDamageRate = .5f;
     public float getStat(string stat) {
@@ -80,6 +94,8 @@ public class entity : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (airBar) defaultAirBarColor = airBar.color;
+        air = maxAir;
         //storedItems.Add(new Item(0, 5));
         health = maxHealth;
         thirst = maxThirst;
@@ -90,9 +106,21 @@ public class entity : MonoBehaviour
     // Update is called once per frame
     
     
-    
     void Update()
     {
+        if (canBreathe && air < maxAir) air += airRecoverRate * Time.deltaTime;
+        else if (!canBreathe && air > 0) air -= Time.deltaTime;
+        if (air <= 0) kill();
+        if (airBar && airThing) {
+            airThing.transform.position = transform.position + (Vector3.one * 1.5f);
+            if (air < maxAir) airThing.alpha = 1;
+            else airThing.alpha *= 0.8f;
+            airBar.fillAmount = air / maxAir;
+            if (countdown && air < 5) {
+                countdown.enabled = true;
+                countdown.text = Mathf.Clamp(Mathf.Ceil(air), 0, 5) + "";
+            } else countdown.enabled = false;
+        }
         if (manaRecoverTimer > 0) {
             manaRecoverTimer -= Time.deltaTime;
         }
@@ -112,14 +140,13 @@ public class entity : MonoBehaviour
             cooldown -= Time.deltaTime;
         }
         canJump = rb.velocity.y <0.02 && rb.velocity.y > -0.02;
-        rb.velocity = Vector2.Lerp(rb.velocity, rb.velocity * Vector2.up, .2f);
+        rb.velocity = Vector2.Lerp(rb.velocity, rb.velocity * Vector2.up, drag * Time.deltaTime);
     
-    if(selectedItem > storedItems.Count-1) {
-        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = null;
-        return;
-    }
-    transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/item/item-" + storedItems[selectedItem].id );
-    
+        if(selectedItem > storedItems.Count-1) {
+            transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = null;
+            return;
+        }
+        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/item/item-" + storedItems[selectedItem].id );
     }
     
     public void movementHorizontal(float speed) {
@@ -165,10 +192,14 @@ public class entity : MonoBehaviour
         }
        
     }
+    public bool canPlace = true;
 
-
-    public void startBlockPlace(GameObject blockToPlace, int x, int y) {
+    public bool startBlockPlace(GameObject blockToPlace, int x, int y) {
+        if (!blockToPlace) return false;
+        if (!canPlace) return false;
         Instantiate(blockToPlace, new Vector3(x, y, 0), transform.rotation);
+        canPlace = false;
+        return true;
     }
 
     public bool pickup(int itemId, int itemAmount, List<float> properties) {
@@ -210,6 +241,12 @@ public class entity : MonoBehaviour
     void FixedUpdate() {
         if (rb.velocity.y < -20) {
             rb.velocity = Vector2.up * -20;
+        }
+        fallDist -= rb.velocity.y * Time.deltaTime;
+        if (canJump) {
+            var dmg = Mathf.Clamp((fallDist - minFallDist) * dmgPerFallDistUnit, 0, maxFallDmg);
+            if (dmg > 1) takeDamage(dmg);
+            fallDist = 0;
         }
     }
     
@@ -275,17 +312,19 @@ public class entity : MonoBehaviour
                 }
 
                 if (ConsumeItemType(ItemID.Rock, 0.1f)) {
-                    GameObject b = Resources.Load<GameObject>("Prefabs/Bullet");
+                    for (int i = 0; i < 6; i++) {
+                        GameObject b = Resources.Load<GameObject>("Prefabs/Bullet");
 
-                    GameObject bulletObject = Instantiate(b, heldItem.position, Quaternion.Euler(0, 0, rot - 180 + Random.Range(-2, 2)));
+                        GameObject bulletObject = Instantiate(b, heldItem.position, Quaternion.Euler(0, 0, rot - 180 + Random.Range(-12, 12)));
 
-                    Collider2D col = bulletObject.GetComponent<Collider2D>();
+                        Collider2D col = bulletObject.GetComponent<Collider2D>();
 
-                    // Bullet bullet = bulletObject.GetComponent<Bullet>();
+                        Bullet bullet = bulletObject.GetComponent<Bullet>();
+                        bullet.shooter = gameObject;
+                        Physics2D.IgnoreCollision(GetComponent<Collider2D>(), col);
 
-                    Physics2D.IgnoreCollision(GetComponent<Collider2D>(), col);
-
-                    cooldown = itemCooldown * 0.2f;
+                        cooldown = itemCooldown * 1.2f;
+                    }
                 }
                 
 
@@ -335,7 +374,8 @@ public class entity : MonoBehaviour
         if(selectedItem > storedItems.Count -1) {
             return;
         }
-        blockToMine.damage(storedItems[selectedItem].properties[0], storedItems[selectedItem].properties[1] );
+        if (!blockToMine) return;
+        blockToMine.damage(storedItems[selectedItem].properties[0], storedItems[selectedItem].properties[1], Time.deltaTime);
     }
     
     public void consumeItem(int item) {
@@ -524,6 +564,7 @@ public class Item {
     public int id;
     public int amount;
     public List<float> properties = new List<float>();
+
     
     
     

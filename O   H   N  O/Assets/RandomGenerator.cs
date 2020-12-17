@@ -7,9 +7,9 @@ public class RandomGenerator : PowerGenerator {
     public float minProduction = 0.75f;
     public float lerpSpeed = 0.1f;
     
-    void Update() {
+    public override void Update() {
+        base.Update();
         powerGeneration = Mathf.Lerp(powerGeneration, Random.Range(minProduction, maxProduction), lerpSpeed);
-        UpdateConsume();
     }
 
     public override void ShowInfo() {

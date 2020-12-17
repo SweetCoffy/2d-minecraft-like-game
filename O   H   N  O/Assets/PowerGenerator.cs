@@ -16,13 +16,10 @@ public class PowerGenerator : PowerBlock {
     // The current power generation
     protected float currentPowerGeneration;
 
-    public void UpdateConsume() {
-        UpdatePower();
-        
-        
+    public override void Update() {
+        base.Update();
         // Update the current power generation
         currentPowerGeneration = Mathf.Clamp(basePowerGeneration * powerGeneration, 0, maxPowerGeneration);
-
         // Update the power consumption
         powerConsume = -currentPowerGeneration;
     }
