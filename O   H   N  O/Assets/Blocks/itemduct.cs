@@ -45,7 +45,7 @@ public class Itemduct : MonoBehaviour
         }
     }
     void OnTriggerStay2D(Collider2D col) {
-        droppedItem di = col.GetComponent<droppedItem>();
+        DroppedItem di = col.GetComponent<DroppedItem>();
         Entity e = col.GetComponent<Entity>();
         Block b = col.GetComponent<Block>();
 

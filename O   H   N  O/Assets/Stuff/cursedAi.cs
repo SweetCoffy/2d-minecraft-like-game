@@ -29,10 +29,10 @@ public class CursedAI : MonoBehaviour
     {
         if(follow) {
             if(transform.position.x < target.position.x - (target.localScale.x * 1.5)) {
-                e.movementHorizontal(e.movementSpeed);
+                e.Move(e.movementSpeed);
             } 
             if(transform.position.x > target.position.x + (target.localScale.x * 1.5)) {
-                e.movementHorizontal(-e.movementSpeed);
+                e.Move(-e.movementSpeed);
             }
             if(target.position.y - (target.localScale.y * 1.5) > transform.position.y) {
                 e.jump(e.jumpForce);

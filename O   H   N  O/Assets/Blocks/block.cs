@@ -83,8 +83,8 @@ public class Block : MonoBehaviour
     }
      void spawnItem(Item itemToSpawn) {
             GameObject spawnedItem = Instantiate(Resources.Load<GameObject>("Prefabs/DroppedItem"), transform.position, Quaternion.identity);
-            spawnedItem.GetComponent<droppedItem>().itemId = itemToSpawn.id;
-            spawnedItem.GetComponent<droppedItem>().itemAmount = itemToSpawn.amount;
+            spawnedItem.GetComponent<DroppedItem>().itemId = itemToSpawn.id;
+            spawnedItem.GetComponent<DroppedItem>().itemAmount = itemToSpawn.amount;
     }
 
     void OnMouseOver() {
@@ -259,8 +259,8 @@ public class Block : MonoBehaviour
 public class ItemSpawning{
     public static void Spawn(Item itemToSpawn, Vector3 position) {
             GameObject spawnedItem = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/DroppedItem"), position, Quaternion.Euler(0, 0, 0));
-            spawnedItem.GetComponent<droppedItem>().itemId = itemToSpawn.id;
-            spawnedItem.GetComponent<droppedItem>().itemAmount = itemToSpawn.amount;
+            spawnedItem.GetComponent<DroppedItem>().itemId = itemToSpawn.id;
+            spawnedItem.GetComponent<DroppedItem>().itemAmount = itemToSpawn.amount;
             spawnedItem.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), ForceMode2D.Impulse);
     }
 }

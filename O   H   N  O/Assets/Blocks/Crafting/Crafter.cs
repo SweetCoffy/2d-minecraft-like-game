@@ -59,8 +59,8 @@ public class Crafter : MonoBehaviour
             craftingProgress[i] += Time.deltaTime;
             if(craftingProgress[i] >= craftingTime) {
                 GameObject outputItem = Instantiate(itemPrefab, transform.position, transform.rotation);
-                outputItem.GetComponent<droppedItem>().itemId = o;
-                outputItem.GetComponent<droppedItem>().itemAmount = outputAmount[i];
+                outputItem.GetComponent<DroppedItem>().itemId = o;
+                outputItem.GetComponent<DroppedItem>().itemAmount = outputAmount[i];
                 craftingProgress[i] = 0;
                 inputItems[i] -= inputAmountNeeded[i];
             }
@@ -98,8 +98,8 @@ public class Crafter : MonoBehaviour
     void OnCollisionStay2D(Collision2D col) {
         GameObject other = col.gameObject;
         int ii = 0;
-        if(other.GetComponent<droppedItem>() != null) {
-            droppedItem i = other.GetComponent<droppedItem>();
+        if(other.GetComponent<DroppedItem>() != null) {
+            DroppedItem i = other.GetComponent<DroppedItem>();
             foreach(int inputItem in input) {
             if(i.itemId == inputItem) {
                 inputItems[ii] += i.itemAmount;

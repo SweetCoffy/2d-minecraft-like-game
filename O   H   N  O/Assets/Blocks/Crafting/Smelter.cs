@@ -49,8 +49,8 @@ public class Smelter : MonoBehaviour
     void OnCollisionStay2D(Collision2D col) {
         GameObject other = col.gameObject;
         int ii = 0;
-        if(other.GetComponent<droppedItem>() != null) {
-            droppedItem i = other.GetComponent<droppedItem>();
+        if(other.GetComponent<DroppedItem>() != null) {
+            DroppedItem i = other.GetComponent<DroppedItem>();
             foreach(Item item in storedItems) {
             if(i.itemId == item.id) {
                 storedItems[ii].amount += i.itemAmount;

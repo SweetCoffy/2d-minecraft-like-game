@@ -47,51 +47,18 @@ public class Entity : MonoBehaviour
     public int lastitemUpdate;
     public Text countdown;
 
-    public float dryDamageRate = .5f;
-    public float getStat(string stat) {
-        if(stat == "health") {
-                return health;
-
-        } else if (stat == "thirst" ) {
-            return thirst;
-        } else if (stat == "mana"){
-            return mana;
-        } else {
-            return 0;
-        }
-    }
-    public float getMaxStat(string stat) {
-        if(stat == "health") {
-            return maxHealth;
-        } else if(stat == "thirst") {
-            return maxThirst;
-        } else if (stat == "mana") {
-            return maxMana;
-        } else {
-            return 0;
-        }
-    }
+    public float thihstrstDamageRate = .5f;
     bool canJump;
     public List<Item> storedItems = new List<Item>();
     int selectedItem = 0;
-    public int getSelectedItem() {
+    public int GetSelectedItem() {
         return selectedItem;
     }
     public Rigidbody2D rb;
-    public float getHealth(bool normalize = false) {
-        if(normalize) {
-            return health/maxHealth;
-        } else {
-            return health;
-        }
-    }
-
     public void ConsumeMana(float amount) {
         manaRecoverTimer = 0.5f;
         mana -= amount;
     }
-    
-    // Start is called before the first frame update
     void Start()
     {
         if (airBar) defaultAirBarColor = airBar.color;
@@ -131,7 +98,7 @@ public class Entity : MonoBehaviour
             }
         }
         if(thirst <= 0) {
-            takeDamage(dryDamageRate*Time.deltaTime, false);
+            takeDamage(thihstrstDamageRate*Time.deltaTime, false);
         }
         if(thirst > 0) {
             thirst = Mathf.Clamp(thirst - (thirstDrainRate * Time.deltaTime), 0, maxThirst );
@@ -149,7 +116,7 @@ public class Entity : MonoBehaviour
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Textures/item/item-" + storedItems[selectedItem].id );
     }
     
-    public void movementHorizontal(float speed) {
+    public void Move(float speed) {
         rb.AddForce(Vector2.right * speed, ForceMode2D.Impulse);
         if(speed > 0) {
             transform.localScale = new Vector3( Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
@@ -392,31 +359,31 @@ public class Entity : MonoBehaviour
     
     public void spawnItem(Item itemToSpawn) {
             GameObject spawnedItem = Instantiate(Resources.Load<GameObject>("Prefabs/DroppedItem"), transform.position, transform.rotation);
-            spawnedItem.GetComponent<droppedItem>().itemId = itemToSpawn.id;
-            spawnedItem.GetComponent<droppedItem>().itemAmount = itemToSpawn.amount;
-            spawnedItem.GetComponent<droppedItem>().properties = itemToSpawn.properties;
+            spawnedItem.GetComponent<DroppedItem>().itemId = itemToSpawn.id;
+            spawnedItem.GetComponent<DroppedItem>().itemAmount = itemToSpawn.amount;
+            spawnedItem.GetComponent<DroppedItem>().properties = itemToSpawn.properties;
     }
 
     public void spawnItem(Item itemToSpawn, float randomness) {
             GameObject spawnedItem = Instantiate(Resources.Load<GameObject>("Prefabs/DroppedItem"), transform.position, transform.rotation);
-            spawnedItem.GetComponent<droppedItem>().itemId = itemToSpawn.id;
-            spawnedItem.GetComponent<droppedItem>().itemAmount = itemToSpawn.amount;
-            spawnedItem.GetComponent<droppedItem>().properties = itemToSpawn.properties;
+            spawnedItem.GetComponent<DroppedItem>().itemId = itemToSpawn.id;
+            spawnedItem.GetComponent<DroppedItem>().itemAmount = itemToSpawn.amount;
+            spawnedItem.GetComponent<DroppedItem>().properties = itemToSpawn.properties;
             Rigidbody2D rb = spawnedItem.GetComponent<Rigidbody2D>();
             rb.AddForce(new Vector2(Random.Range(-randomness, randomness), Random.Range(-randomness, randomness)), ForceMode2D.Impulse);
     }
 
     public void spawnItem(Item itemToSpawn, Vector3 offset) {
             GameObject spawnedItem = Instantiate(Resources.Load<GameObject>("Prefabs/DroppedItem"), transform.position + offset, transform.rotation);
-            spawnedItem.GetComponent<droppedItem>().itemId = itemToSpawn.id;
-            spawnedItem.GetComponent<droppedItem>().itemAmount = itemToSpawn.amount;
-            spawnedItem.GetComponent<droppedItem>().properties = itemToSpawn.properties;
+            spawnedItem.GetComponent<DroppedItem>().itemId = itemToSpawn.id;
+            spawnedItem.GetComponent<DroppedItem>().itemAmount = itemToSpawn.amount;
+            spawnedItem.GetComponent<DroppedItem>().properties = itemToSpawn.properties;
     }
     public void spawnItem(Item itemToSpawn, Vector3 offset, Vector2 force) {
             GameObject spawnedItem = Instantiate(Resources.Load<GameObject>("Prefabs/DroppedItem"), transform.position + offset, transform.rotation);
-            spawnedItem.GetComponent<droppedItem>().itemId = itemToSpawn.id;
-            spawnedItem.GetComponent<droppedItem>().itemAmount = itemToSpawn.amount;
-            spawnedItem.GetComponent<droppedItem>().properties = itemToSpawn.properties;
+            spawnedItem.GetComponent<DroppedItem>().itemId = itemToSpawn.id;
+            spawnedItem.GetComponent<DroppedItem>().itemAmount = itemToSpawn.amount;
+            spawnedItem.GetComponent<DroppedItem>().properties = itemToSpawn.properties;
             spawnedItem.GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
     }
 

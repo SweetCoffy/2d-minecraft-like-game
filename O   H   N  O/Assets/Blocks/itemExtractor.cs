@@ -34,7 +34,7 @@ public class ItemExtractor : MonoBehaviour
     public void drill() {
         progress = 0;
         GameObject spawned = Instantiate(Resources.Load<GameObject>("Prefabs/DroppedItem"), transform.position + offset, transform.rotation);
-        droppedItem i = spawned.GetComponent<droppedItem>();
+        DroppedItem i = spawned.GetComponent<DroppedItem>();
         i.itemId = itemId;
         i.itemAmount = itemAmount;
         if(drillEffect != null) {

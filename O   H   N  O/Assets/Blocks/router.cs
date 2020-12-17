@@ -5,7 +5,7 @@ using UnityEngine;
 public class Router : MonoBehaviour
 {
     void OnTriggerStay2D(Collider2D col) {
-        droppedItem di = col.GetComponent<droppedItem>();
+        DroppedItem di = col.GetComponent<DroppedItem>();
         Entity e = col.GetComponent<Entity>();
 
         

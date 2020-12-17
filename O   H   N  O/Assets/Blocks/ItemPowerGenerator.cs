@@ -41,7 +41,7 @@ public class ItemPowerGenerator : PowerGenerator {
         if(storedFuel >= itemCapacity) {
             return;
         }
-        droppedItem it = col.gameObject.GetComponent<droppedItem>();
+        DroppedItem it = col.gameObject.GetComponent<DroppedItem>();
         if(it != null) {
             if(it.itemId == fuelItemId) {
                 storedFuel += it.itemAmount;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteRenderer))]
-public class droppedItem : MonoBehaviour
+public class DroppedItem : MonoBehaviour
 {
     public int itemId;
     public int itemAmount;
@@ -18,7 +18,6 @@ public class droppedItem : MonoBehaviour
         properties.Add(0);
         if(itemId > GameObject.Find("ItemManager").GetComponent<ItemManager>().itemTextures.Length - 1) {
             GetComponent<SpriteRenderer>().sprite = GameObject.Find("ItemManager").GetComponent<ItemManager>().unknownTexture;
-            Debug.LogWarning($"OH NO. The texture for the itemId \"{itemId}\" is not available", this);
         } else {
             GetComponent<SpriteRenderer>().sprite = GameObject.Find("ItemManager").GetComponent<ItemManager>().itemTextures[itemId];
         }

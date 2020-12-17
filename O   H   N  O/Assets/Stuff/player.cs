@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         if (h > 0) h -= Time.deltaTime;
-        e.movementHorizontal(Input.GetAxis("Horizontal") * e.movementSpeed);
+        e.Move(Input.GetAxis("Horizontal") * e.movementSpeed);
         if(Input.GetAxis("Switch Item") < 0 && h <= 0) {
             e.setSelectedItem(e.getSelectedItem() - 1);
             h = 0.1f;
