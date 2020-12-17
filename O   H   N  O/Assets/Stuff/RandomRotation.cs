@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class RandomRotation : MonoBehaviour
 {
@@ -8,11 +6,16 @@ public class RandomRotation : MonoBehaviour
     void Start()
     {
         int rotationInt = (int)Mathf.Round(Random.Range(0, 3));
-        if(rotationInt == 1) {
+        if (rotationInt == 1)
+        {
             transform.Rotate(0, 0, 90);
-        } else if(rotationInt == 2) {
+        }
+        else if (rotationInt == 2)
+        {
             transform.Rotate(0, 0, 180);
-        } else if(rotationInt == 3) {
+        }
+        else if (rotationInt == 3)
+        {
             transform.Rotate(0, 0, 270);
         }
     }

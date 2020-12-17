@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [System.Serializable]
 [CreateAssetMenu(fileName = "New Recipe", menuName = "Items/Crafting Recipe")]

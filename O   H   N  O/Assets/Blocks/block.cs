@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class Block : MonoBehaviour
@@ -38,9 +36,9 @@ public class Block : MonoBehaviour
     private SpriteRenderer s;
     public bool waterlogable;
     public bool falling = true;
-    
-    
-    
+
+
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -48,13 +46,16 @@ public class Block : MonoBehaviour
         originalColor = s.color;
         breakProgress = breakTime;
         timeToGrow = Time.time + growTime;
-        if(blockGravity) {
+        if (blockGravity)
+        {
             InvokeRepeating("Fall", 1 / gravityUpdateRate, 1 / gravityUpdateRate);
         }
 
-        if (fluid) {
+        if (fluid)
+        {
             cachedTextures = new Sprite[9];
-            for (int i = 0; i < cachedTextures.Length; i++) {
+            for (int i = 0; i < cachedTextures.Length; i++)
+            {
                 cachedTextures[i] = Resources.Load<Sprite>("Textures/" + liquidName + "-" + liquidLevel);
             }
             InvokeRepeating("LiquidUpdate", 1 / liquidUpdateRate, 1 / liquidUpdateRate);
@@ -64,78 +65,97 @@ public class Block : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        if(plant) {
+        if (plant)
+        {
 
-            if(grow < maxGrow) {
-                if(Time.time >= timeToGrow)  {
+            if (grow < maxGrow)
+            {
+                if (Time.time >= timeToGrow)
+                {
                     Grow();
                 }
             }
-        
+
         }
     }
-    void SpawnItem(Item itemToSpawn) {
+    void SpawnItem(Item itemToSpawn)
+    {
         GameObject spawnedItem = Instantiate(Resources.Load<GameObject>("Prefabs/DroppedItem"), transform.position, Quaternion.identity);
         spawnedItem.GetComponent<DroppedItem>().itemId = itemToSpawn.id;
         spawnedItem.GetComponent<DroppedItem>().itemAmount = itemToSpawn.amount;
     }
 
-    protected virtual void OnMouseOver() {
-        if(GetComponent<Crafter>() != null) {
+    protected virtual void OnMouseOver()
+    {
+        if (GetComponent<Crafter>() != null)
+        {
             return;
         }
-        
+
         ShowInfo();
     }
 
-    protected virtual void OnMouseExit() {
-        if(GetComponent<Crafter>() != null) {
+    protected virtual void OnMouseExit()
+    {
+        if (GetComponent<Crafter>() != null)
+        {
             return;
         }
         GameObject.Find("Canvas").transform.GetChild(0).GetComponent<Text>().text = "";
     }
 
-    public void damage(float miningPower, float dmg, float multiplier = 1) {
-        if(miningPower >= minimumMiningPower) {
+    public void damage(float miningPower, float dmg, float multiplier = 1)
+    {
+        if (miningPower >= minimumMiningPower)
+        {
             breakProgress -= (miningPower - minimumMiningPower + .5f + dmg) * multiplier;
-            
-            
+
+
         }
 
-        if(breakProgress <= 0) {
-            if(dropItem > -1 && dropAmount > 0) {
+        if (breakProgress <= 0)
+        {
+            if (dropItem > -1 && dropAmount > 0)
+            {
                 SpawnItem(new Item(dropItem, dropAmount));
-                
+
             }
             Destroy(gameObject);
         }
     }
 
-    protected virtual void OnMouseDown() {
+    protected virtual void OnMouseDown()
+    {
         GameObject.Find("Player").GetComponent<Entity>().mineBlock(this);
     }
 
-    public virtual void Grow() {
-       timeToGrow = Time.time + growTime;
-        if(Physics2D.OverlapBox(transform.position + Vector3.up, transform.localScale * .9f, 0) != null) {
+    public virtual void Grow()
+    {
+        timeToGrow = Time.time + growTime;
+        if (Physics2D.OverlapBox(transform.position + Vector3.up, transform.localScale * .9f, 0) != null)
+        {
             return;
         }
         Block grownBlock = Instantiate(gameObject, transform.position + Vector3.up, transform.rotation).GetComponent<Block>();
         plant = false;
         grownBlock.grow++;
     }
-    protected virtual void Fall() {
+    protected virtual void Fall()
+    {
         if (!falling) return;
         Collider2D h = Physics2D.OverlapBox(transform.position - (Vector3.up * fallDistance) + blockDetectionOffset, blockDetectionSize, 0, canCollideWith, -90, 90);
-        if(h == null || h.gameObject == gameObject) {
+        if (h == null || h.gameObject == gameObject)
+        {
             if (breakOnGravityUpdate) damage(999999999, 999999);
             transform.position -= Vector3.up * fallDistance;
         }
     }
-    
-    public void LiquidUpdate() {
+
+    public void LiquidUpdate()
+    {
         if (liquidLevel > 7) liquidLevel = 7;
-        if (flowing) {
+        if (flowing)
+        {
             SendMessage("OnLiquidUpdate");
             Collider2D left = Physics2D.OverlapBox(transform.position - transform.right, transform.localScale * .9f, 0, canCollideWith, -90, 90);
             Collider2D right = Physics2D.OverlapBox(transform.position + transform.right, transform.localScale * .9f, 0, canCollideWith, -90, 90);
@@ -157,104 +177,133 @@ public class Block : MonoBehaviour
                     }
                 }*/
             Collider2D _down = Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, canCollideWith, -90, 90);
-            if(_down == null) {
+            if (_down == null)
+            {
                 GameObject flowing = Instantiate(gameObject, transform.position - transform.up, transform.rotation);
                 flowing.GetComponent<Block>().liquidLevel = 8;
-            } else {
+            }
+            else
+            {
                 Block b = _down.GetComponent<Block>();
-                if (b) {
-                    if (b.waterlogable) {
+                if (b)
+                {
+                    if (b.waterlogable)
+                    {
                         GameObject flowing = Instantiate(gameObject, transform.position - transform.up, transform.rotation);
                         flowing.GetComponent<Block>().liquidLevel = 8;
                     }
                 }
             }
             Collider2D h = Physics2D.OverlapBox(transform.position, transform.localScale * .9f, 0, blocks, -90, 90);
-            if(h != null) {
+            if (h != null)
+            {
                 Block b = h.GetComponent<Block>();
-                if (b) {
-                    if (!b.waterlogable) {
+                if (b)
+                {
+                    if (!b.waterlogable)
+                    {
                         Destroy(gameObject);
                     }
                 }
             }
-            
-            if(liquidLevel > 0) {            
-                if(right == null && Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, ~cantCollideWith, -90, 90) != null) {
+
+            if (liquidLevel > 0)
+            {
+                if (right == null && Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, ~cantCollideWith, -90, 90) != null)
+                {
                     GameObject flowing = Instantiate(gameObject, transform.position + transform.right, transform.rotation);
                     flowing.GetComponent<Block>().liquidLevel = liquidLevel - 1;
-                } else if (right != null){
+                }
+                else if (right != null)
+                {
                     Block b = right.GetComponent<Block>();
-                    if (b) {
-                        if (b.waterlogable) {
+                    if (b)
+                    {
+                        if (b.waterlogable)
+                        {
                             GameObject flowing = Instantiate(gameObject, transform.position + transform.right, transform.rotation);
                             flowing.GetComponent<Block>().liquidLevel = liquidLevel - 1;
                         }
                     }
                 }
-                if(left == null && Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, ~cantCollideWith, -90, 90) != null) {
+                if (left == null && Physics2D.OverlapBox(transform.position - transform.up, transform.localScale * .9f, 0, ~cantCollideWith, -90, 90) != null)
+                {
                     GameObject flowing = Instantiate(gameObject, transform.position - transform.right, transform.rotation);
                     flowing.GetComponent<Block>().liquidLevel = liquidLevel - 1;
-                } else if (left != null){
+                }
+                else if (left != null)
+                {
                     Block b = left.GetComponent<Block>();
-                    if (b) {
-                        if (b.waterlogable) {
+                    if (b)
+                    {
+                        if (b.waterlogable)
+                        {
                             GameObject flowing = Instantiate(gameObject, transform.position - transform.right, transform.rotation);
                             flowing.GetComponent<Block>().liquidLevel = liquidLevel - 1;
                         }
                     }
                 }
-                
+
 
 
             }
-            if(Physics2D.OverlapBox(transform.position + transform.up, transform.localScale * .9f, 0, waterMask, -90, 90) != null) {
+            if (Physics2D.OverlapBox(transform.position + transform.up, transform.localScale * .9f, 0, waterMask, -90, 90) != null)
+            {
                 liquidLevel = 8;
             }
-            if (Physics2D.OverlapBox(transform.position + transform.up, transform.localScale * .9f, 0, waterMask, -90, 90) == null) {
+            if (Physics2D.OverlapBox(transform.position + transform.up, transform.localScale * .9f, 0, waterMask, -90, 90) == null)
+            {
                 liquidLevel = 7;
             }
         }
-        
+
         s.sprite = cachedTextures[liquidLevel];
     }
-    
-    public virtual void ShowInfo() {
+
+    public virtual void ShowInfo()
+    {
         GameObject.Find("Canvas").transform.GetChild(0).GetComponent<Text>().text = $"Block: \n{breakProgress} / {breakTime}";
     }
-    void OnTriggerExit2D(Collider2D col) {
+    void OnTriggerExit2D(Collider2D col)
+    {
         if (!fluid)
             return;
-        Entity e = col.GetComponent<Entity>();        
-        if (e != null) {
+        Entity e = col.GetComponent<Entity>();
+        if (e != null)
+        {
             e.canBreathe = true;
         }
     }
-    void OnTriggerStay2D(Collider2D col) {
+    void OnTriggerStay2D(Collider2D col)
+    {
         Entity e = col.GetComponent<Entity>();
-        if (e && fluid) {e.canBreathe = false; if (e.airBar) e.airBar.color = liquidColor;}
+        if (e && fluid) { e.canBreathe = false; if (e.airBar) e.airBar.color = liquidColor; }
         if (entityDamage <= 0)
             return;
-        
 
-        
-        
-        if (e != null) {
+
+
+
+        if (e != null)
+        {
             e.takeDamage(entityDamage * Time.deltaTime, false);
         }
     }
-    void OnDrawGizmos() {
+    void OnDrawGizmos()
+    {
         if (blockGravity) Gizmos.DrawWireCube(transform.position - (Vector3.up * fallDistance) + blockDetectionOffset, blockDetectionSize);
     }
 }
 
 
-public class ItemSpawning{
-    public static void Spawn(Item itemToSpawn, Vector3 position) {
-            GameObject spawnedItem = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/DroppedItem"), position, Quaternion.Euler(0, 0, 0));
-            spawnedItem.GetComponent<DroppedItem>().itemId = itemToSpawn.id;
-            spawnedItem.GetComponent<DroppedItem>().itemAmount = itemToSpawn.amount;
-            spawnedItem.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), ForceMode2D.Impulse);
+public class ItemSpawning
+{
+    public static void Spawn(Item itemToSpawn, Vector3 position)
+    {
+        GameObject spawnedItem = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/DroppedItem"), position, Quaternion.Euler(0, 0, 0));
+        spawnedItem.GetComponent<DroppedItem>().itemId = itemToSpawn.id;
+        spawnedItem.GetComponent<DroppedItem>().itemAmount = itemToSpawn.amount;
+        spawnedItem.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), ForceMode2D.Impulse);
     }
 }
 

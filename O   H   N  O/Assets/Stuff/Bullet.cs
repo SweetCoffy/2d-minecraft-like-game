@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
@@ -10,7 +8,7 @@ public class Bullet : MonoBehaviour
     public GameObject shooter;
     Rigidbody2D rb;
     public GameObject bloodEffect;
-    
+
     void Start()
     {
         Destroy(gameObject, lifetime);
@@ -18,18 +16,21 @@ public class Bullet : MonoBehaviour
         rb.AddForce(transform.right * speed, ForceMode2D.Impulse);
     }
 
-    void OnTriggerEnter2D(Collider2D col) {
+    void OnTriggerEnter2D(Collider2D col)
+    {
         if (col.gameObject == shooter) return;
         if (col.isTrigger) return;
         Entity e = col.GetComponent<Entity>();
 
-        if (e != null) {
+        if (e != null)
+        {
             e.takeDamage(damage);
-            if (bloodEffect) {
+            if (bloodEffect)
+            {
                 Instantiate(bloodEffect, transform.position, transform.rotation);
             }
         }
-        
+
         if (col.GetComponent<Bullet>()) return;
         Destroy(gameObject);
     }

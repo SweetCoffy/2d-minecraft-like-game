@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 
@@ -22,7 +20,8 @@ public class HealthBar : MonoBehaviour
     {
         img = GetComponent<Image>();
         e = GameObject.Find("Player").GetComponent<Entity>();
-        if(target != null) {
+        if (target != null)
+        {
             e = target;
         }
         originalColor = img.color;
@@ -31,18 +30,21 @@ public class HealthBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        img.fillAmount = Mathf.Lerp(img.fillAmount, Mathf.Round(e.GetStat(stat))/e.GetMaxStat(stat), lerpSpeed);
+        img.fillAmount = Mathf.Lerp(img.fillAmount, Mathf.Round(e.GetStat(stat)) / e.GetMaxStat(stat), lerpSpeed);
 
-        
-        
-        
-        if (e.GetMaxStat(stat) > maxStatBeforeColor) {
+
+
+
+        if (e.GetMaxStat(stat) > maxStatBeforeColor)
+        {
             img.color = anotherColor;
-        } else {
+        }
+        else
+        {
             img.color = originalColor;
         }
-        
-        if (useGradient) 
-            img.color = Color.Lerp(img.color, colorGradient.Evaluate(e.GetStat(stat)/e.GetMaxStat(stat)), .25f);
+
+        if (useGradient)
+            img.color = Color.Lerp(img.color, colorGradient.Evaluate(e.GetStat(stat) / e.GetMaxStat(stat)), .25f);
     }
 }

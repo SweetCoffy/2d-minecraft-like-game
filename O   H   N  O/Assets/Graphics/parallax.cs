@@ -7,7 +7,7 @@ public class Parallax : MonoBehaviour
     {
         if (!cam)
             cam = Camera.main.gameObject;
-        
-        transform.position = cam.transform.position*parallaxEffect;
+
+        transform.position = cam.transform.position * parallaxEffect;
     }
 }

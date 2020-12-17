@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Entity))]
 public class CursedAI : MonoBehaviour
 {
-    
+
     Entity e;
     public Transform target;
     public bool ignoreCollisions = true;
@@ -13,12 +11,13 @@ public class CursedAI : MonoBehaviour
     public bool mining = false;
     public bool follow = true;
 
-    
+
     // Start is called before the first frame update
     void Start()
     {
         e = GetComponent<Entity>();
-        if(!ignoreCollisions) {
+        if (!ignoreCollisions)
+        {
             return;
         }
         Physics2D.IgnoreCollision(GetComponent<Collider2D>(), target.GetComponent<Collider2D>());
@@ -27,24 +26,31 @@ public class CursedAI : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(follow) {
-            if(transform.position.x < target.position.x - (target.localScale.x * 1.5)) {
+        if (follow)
+        {
+            if (transform.position.x < target.position.x - (target.localScale.x * 1.5))
+            {
                 e.Move(e.movementSpeed);
-            } 
-            if(transform.position.x > target.position.x + (target.localScale.x * 1.5)) {
+            }
+            if (transform.position.x > target.position.x + (target.localScale.x * 1.5))
+            {
                 e.Move(-e.movementSpeed);
             }
-            if(target.position.y - (target.localScale.y * 1.5) > transform.position.y) {
+            if (target.position.y - (target.localScale.y * 1.5) > transform.position.y)
+            {
                 e.jump(e.jumpForce);
             }
         }
         int i3 = 0;
-        if(e.GetStat("thirst") / e.GetMaxStat("thirst") > .25f) {
+        if (e.GetStat("thirst") / e.GetMaxStat("thirst") > .25f)
+        {
             return;
         }
         int i = 0;
-        foreach(Item item in e.storedItems) {
-            if(item.id == 1) {
+        foreach (Item item in e.storedItems)
+        {
+            if (item.id == 1)
+            {
                 break;
             }
             i++;
@@ -53,10 +59,12 @@ public class CursedAI : MonoBehaviour
         e.useItem(e.GetSelectedItem());
     }
 
-    public void SetAutoMining(bool value) {
+    public void SetAutoMining(bool value)
+    {
         mining = value;
     }
-    public void SetFollow(bool value) {
+    public void SetFollow(bool value)
+    {
         follow = value;
     }
 }
