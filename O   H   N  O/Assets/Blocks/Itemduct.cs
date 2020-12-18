@@ -2,7 +2,6 @@
 
 public class Itemduct : MonoBehaviour
 {
-    public float pullToCenterSpeed = 10;
     public float transportSpeed = 15;
     public Color effect;
     Color original;
@@ -57,15 +56,13 @@ public class Itemduct : MonoBehaviour
 
         if (di != null)
         {
-            di.GetComponent<Rigidbody2D>().position += (Vector2)transform.right * transportSpeed * Time.deltaTime;
-            di.GetComponent<Rigidbody2D>().position = Vector3.Lerp(di.GetComponent<Rigidbody2D>().position, transform.position, pullToCenterSpeed * Time.deltaTime);
-            di.GetComponent<Rigidbody2D>().velocity = Vector2.Lerp(di.GetComponent<Rigidbody2D>().velocity, Vector2.zero, 0.3f);
+            di.GetComponent<Rigidbody2D>().velocity = (Vector2)transform.right * transportSpeed;
             s.color = effect;
         }
         else if (e != null)
         {
             e.GetComponent<Rigidbody2D>().position += (Vector2)transform.right * transportSpeed * Time.deltaTime;
-            e.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            e.GetComponent<Rigidbody2D>().velocity *= 0.9f;
             //e.GetComponent<Rigidbody2D>().position = Vector3.Lerp(e.GetComponent<Rigidbody2D>().position, transform.position, pullToCenterSpeed * Time.deltaTime);
         }
         else if ((b != null && b.fluid && moveLiquids) || (b != null && b.blockGravity && moveGravityBlocks))
